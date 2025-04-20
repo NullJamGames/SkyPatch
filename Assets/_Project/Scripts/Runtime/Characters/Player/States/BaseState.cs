@@ -1,7 +1,8 @@
 ﻿using NJG.Runtime.Characters;
+using NJG.Runtime.StateMachine;
 using UnityEngine;
 
-namespace NJG.Runtime.StateMachine
+namespace NJG.Runtime.Characters
 {
     public abstract class BaseState : IState
     {
@@ -10,6 +11,7 @@ namespace NJG.Runtime.StateMachine
         
         protected static readonly int _locomotionHash = Animator.StringToHash("Locomotion");
         protected static readonly int _jumpHash = Animator.StringToHash("Jump");
+        protected static readonly int _dashHash = Animator.StringToHash("Dash");
 
         protected const float _crossFadeDuration = 0.1f;
 

@@ -19,6 +19,7 @@ namespace NJG.Runtime.Input
         public event UnityAction EnableMouseControlCamera = delegate { };
         public event UnityAction DisableMouseControlCamera = delegate { };
         public event UnityAction<bool> JumpEvent = delegate { };
+        public event UnityAction<bool> DashEvent = delegate { };
 
         public PlayerInputActions InputActions;
 
@@ -81,7 +82,18 @@ namespace NJG.Runtime.Input
 
         public void OnNext(InputAction.CallbackContext context) { }
 
-        public void OnSprint(InputAction.CallbackContext context) { }
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    DashEvent.Invoke(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    DashEvent.Invoke(false);
+                    break;
+            }
+        }
 
         public void OnMouseControlCamera(InputAction.CallbackContext context)
         {

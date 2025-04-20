@@ -14,32 +14,39 @@ namespace NJG.Runtime.Characters
 {
     public class PlayerController : ValidatedMonoBehaviour
     {
-        [BoxGroup("References"), SerializeField, Self]
+        [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
-        [BoxGroup("References"), SerializeField, Self]
+        [FoldoutGroup("References"), SerializeField, Self]
         private GroundChecker _groundChecker;
-        [BoxGroup("References"), SerializeField, Anywhere]
+        [FoldoutGroup("References"), SerializeField, Anywhere]
         private Animator _animator;
-        [BoxGroup("References"), SerializeField, Anywhere]
+        [FoldoutGroup("References"), SerializeField, Anywhere]
         private CinemachineCamera _virtualCamera;
-        [BoxGroup("References"), SerializeField, Anywhere]
+        [FoldoutGroup("References"), SerializeField, Anywhere]
         private InputReader _input;
         
-        [BoxGroup("Movement Settings"), SerializeField]
+        [FoldoutGroup("Movement Settings"), SerializeField]
         private float _moveSpeed = 6f;
-        [BoxGroup("Movement Settings"), SerializeField]
+        [FoldoutGroup("Movement Settings"), SerializeField]
         private float _rotationSpeed = 15f;
-        [BoxGroup("Movement Settings"), SerializeField]
+        [FoldoutGroup("Movement Settings"), SerializeField]
         private float _smoothTime = 0.2f;
 
-        [BoxGroup("Jump Settings"), SerializeField]
+        [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpForce = 10f;
-        [BoxGroup("Jump Settings"), SerializeField]
+        [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpDuration = 0.5f;
-        [BoxGroup("Jump Settings"), SerializeField]
+        [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpCooldown = 0f;
-        [BoxGroup("Jump Settings"), SerializeField]
+        [FoldoutGroup("Jump Settings"), SerializeField]
         private float _gravityMultiplier = 3f;
+
+        [FoldoutGroup("Dash Settings"), SerializeField]
+        private float _dashForce = 10f;
+        [FoldoutGroup("Dash Settings"), SerializeField]
+        private float _dashDuration = 1f;
+        [FoldoutGroup("Dash Settings"), SerializeField]
+        private float _dashCooldown = 2f;
         
         private Camera _mainCamera;
         private StateMachine.StateMachine _stateMachine;
@@ -47,10 +54,13 @@ namespace NJG.Runtime.Characters
         private float _currentSpeed;
         private float _velocity;
         private float _jumpVelocity;
+        private float _dashVelocity = 1f;
         private Vector3 _movement;
         private List<Timer> _timers;
         private CountdownTimer _jumpTimer;
         private CountdownTimer _jumpCooldownTimer;
+        private CountdownTimer _dashTimer;
+        private CountdownTimer _dashCooldownTimer;
 
         private const float ZERO_F = 0f;
         
@@ -69,10 +79,21 @@ namespace NJG.Runtime.Characters
             // Setup timers
             _jumpTimer = new CountdownTimer(_jumpDuration);
             _jumpCooldownTimer = new CountdownTimer(_jumpCooldown);
-            _timers = new List<Timer>(2) { _jumpTimer, _jumpCooldownTimer };
+            
 
             _jumpTimer.OnTimerStart += () => _jumpVelocity = _jumpForce;
             _jumpTimer.OnTimerStop += () => _jumpCooldownTimer.Start();
+
+            _dashTimer = new CountdownTimer(_dashDuration);
+            _dashCooldownTimer = new CountdownTimer(_dashCooldown);
+            _dashTimer.OnTimerStart += () => _dashVelocity = _dashForce;
+            _dashTimer.OnTimerStop += () =>
+            {
+                _dashVelocity = 1f;
+                _dashCooldownTimer.Start();
+            };
+                
+            _timers = new List<Timer>(4) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer };
             
             // State Machine
             _stateMachine = new StateMachine.StateMachine();
@@ -80,10 +101,12 @@ namespace NJG.Runtime.Characters
             // Declare States
             LocomotionState _locomotionState = new LocomotionState(this, _animator);
             JumpState _jumpState = new JumpState(this, _animator);
+            DashState _dashState = new DashState(this, _animator);
             
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
-            At(_jumpState, _locomotionState, new FuncPredicate(() => _groundChecker.IsGrounded && !_jumpTimer.IsRunning));
+            At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
+            Any(_locomotionState, new FuncPredicate(() => _groundChecker.IsGrounded && !_jumpTimer.IsRunning && !_dashTimer.IsRunning));
             
             // Set initial state
             _stateMachine.SetState(_locomotionState);
@@ -92,6 +115,7 @@ namespace NJG.Runtime.Characters
         private void OnEnable()
         {
             _input.JumpEvent += OnJump;
+            _input.DashEvent += OnDash;
         }
 
         private void Start()
@@ -116,6 +140,7 @@ namespace NJG.Runtime.Characters
         private void OnDisable()
         {
             _input.JumpEvent -= OnJump;
+            _input.DashEvent -= OnDash;
             
             if (_input != null)
                 _input.DisablePlayerActions();
@@ -142,6 +167,18 @@ namespace NJG.Runtime.Characters
             else if (!performed && _jumpTimer.IsRunning)
             {
                 _jumpTimer.Stop();
+            }
+        }
+
+        private void OnDash(bool performed)
+        {
+            if (performed && !_dashTimer.IsRunning && !_dashCooldownTimer.IsRunning)
+            {
+                _dashTimer.Start();
+            }
+            else if (!performed && _dashTimer.IsRunning)
+            {
+                _dashTimer.Stop();
             }
         }
 
@@ -182,31 +219,6 @@ namespace NJG.Runtime.Characters
                 // Reset horizontal velocity for a snappy stop
                 _rigidBody.linearVelocity = new Vector3(ZERO_F, _rigidBody.linearVelocity.y, ZERO_F);
             }
-
-            // Vector2 moveInput = _input.Direction;
-            //
-            // Vector3 worldMovement = new (moveInput.x, 0f, moveInput.y);
-            // if (worldMovement.sqrMagnitude > ZERO_F)
-            // {
-            //     HandleRotation(worldMovement);
-            //     HandleCharacterController(worldMovement.normalized);
-            //     SmoothSpeed(worldMovement.magnitude);
-            // }
-
-
-            //Vector3 movementDirection = new Vector3(_input.Direction.x, 0f, _input.Direction.y).normalized;
-            // Rotate movement direction to match camera rotation
-            //Vector3 adjustedDirection = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * movementDirection;
-            // Vector3 adjustedDirection = _mainCamera.transform.TransformDirection(movementDirection);
-            // adjustedDirection.y = 0f;
-            // adjustedDirection.Normalize();
-
-            // if (adjustedDirection.magnitude > ZERO_F)
-            // {
-            //     HandleRotation(adjustedDirection);
-            //     HandleCharacterController(adjustedDirection);
-            //     SmoothSpeed(adjustedDirection.magnitude);
-            // }
         }
 
         private void HandleRotation(Vector3 adjustedDirection)
@@ -219,7 +231,7 @@ namespace NJG.Runtime.Characters
         private void HandleHorizontalMovement(Vector3 adjustedDirection)
         {
             // Move the player
-            Vector3 velocity = adjustedDirection * (_moveSpeed * Time.deltaTime);
+            Vector3 velocity = adjustedDirection * (_moveSpeed * _dashVelocity * Time.deltaTime);
             _rigidBody.linearVelocity = new Vector3(velocity.x, _rigidBody.linearVelocity.y, velocity.z);
         }
 
