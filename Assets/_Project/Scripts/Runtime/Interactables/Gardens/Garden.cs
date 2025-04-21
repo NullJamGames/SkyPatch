@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using NJG.Runtime.EventChannel;
+using DistantLands.Cozy;
+using NJG.Runtime.Events;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,6 +32,26 @@ namespace NJG.Runtime.Interactables
         private void OnDisable()
         {
             UnregisterPlots();
+        }
+
+        public void OnDaytime()
+        {
+            Debug.Log("It's daytime!");
+            
+            foreach (Plot plot in _plots)
+            {
+                plot.SetDaytime();
+            }
+        }
+        
+        public void OnNighttime()
+        {
+            Debug.Log("It's nighttime!");
+            
+            foreach (Plot plot in _plots)
+            {
+                plot.SetNighttime();
+            }
         }
 
         [Button(ButtonSizes.Large)]

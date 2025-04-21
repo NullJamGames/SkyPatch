@@ -1,4 +1,4 @@
-﻿using NJG.Runtime.EventChannel;
+﻿using NJG.Runtime.Events;
 using UnityEngine;
 
 namespace NJG.Runtime.Entity

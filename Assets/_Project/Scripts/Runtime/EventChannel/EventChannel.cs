@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace NJG.Runtime.EventChannel
+namespace NJG.Runtime.Events
 {
     public abstract class EventChannel<T> : ScriptableObject
     {

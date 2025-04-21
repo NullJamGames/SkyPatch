@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NJG.Runtime.EventChannel
+namespace NJG.Runtime.Events
 {
     public abstract class EventListener<T> : MonoBehaviour
     {

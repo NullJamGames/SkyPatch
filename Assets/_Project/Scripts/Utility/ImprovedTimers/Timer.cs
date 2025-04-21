@@ -7,6 +7,7 @@ namespace NJG.Utilities.ImprovedTimers
         protected float _initialTime;
         public float Time { get; set; }
         public bool IsRunning { get; protected set; }
+        public bool IsPaused { get; protected set; }
 
         public float Progress => Time / _initialTime;
 
@@ -25,6 +26,7 @@ namespace NJG.Utilities.ImprovedTimers
             if (IsRunning) return;
             
             IsRunning = true;
+            IsPaused = false;
             TimerManager.RegisterTimer(this);
             OnTimerStart.Invoke();
         }
@@ -34,12 +36,22 @@ namespace NJG.Utilities.ImprovedTimers
             if (!IsRunning) return;
             
             IsRunning = false;
+            IsPaused = false;
             TimerManager.DeregisterTimer(this);
             OnTimerStop.Invoke();
         }
 
-        public void Resume() => IsRunning = true;
-        public void Pause() => IsRunning = false;
+        public void Resume()
+        {
+            IsRunning = true;
+            IsPaused = false;
+        }
+
+        public void Pause()
+        {
+            IsRunning = false;
+            IsPaused = true;
+        }
 
         public abstract void Tick(float deltaTime);
     }

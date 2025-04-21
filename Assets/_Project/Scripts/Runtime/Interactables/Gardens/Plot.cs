@@ -10,25 +10,19 @@ namespace NJG.Runtime.Interactables
         private GameObject _growingVarient;
         [SerializeField]
         private GameObject _harvestableVarient;
-        
-        private enum PlotStage { Empty, Planted, Harvestable }
-        
-        private PlotStage _stage = PlotStage.Empty;
         private float _growTime;
         private CountdownTimer _growTimer;
+        private bool _isDaytime;
+
+        private PlotStage _stage = PlotStage.Empty;
         
         public event Action OnHarvested;
         
+        private enum PlotStage { Empty, Planted, Harvestable }
+
         private void Update()
         {
             _growTimer?.Tick(Time.deltaTime);
-        }
-        
-        public void Initialize(float growthTime)
-        {
-            _growTime = growthTime;
-            _growTimer = new CountdownTimer(_growTime);
-            _growTimer.OnTimerStop += SetHarvestable;
         }
 
         public void Interact()
@@ -49,11 +43,41 @@ namespace NJG.Runtime.Interactables
             }
         }
 
+        public void Initialize(float growthTime)
+        {
+            _growTime = growthTime;
+            _growTimer = new CountdownTimer(_growTime);
+            _growTimer.OnTimerStop += SetHarvestable;
+        }
+
+        public void SetDaytime()
+        {
+            _isDaytime = true;
+
+            if (_stage != PlotStage.Planted)
+                return;
+
+            if (_growTimer.IsPaused)
+                _growTimer.Resume();
+            else
+                _growTimer.Start();
+        }
+
+        public void SetNighttime()
+        {
+            _isDaytime = false;
+
+            if (_growTimer.IsRunning)
+                _growTimer.Pause();
+        }
+
         private void Plant()
         {
             _stage = PlotStage.Planted;
             _growingVarient.SetActive(true);
-            _growTimer.Start();
+
+            if (_isDaytime)
+                _growTimer.Start();
         }
 
         private void SetHarvestable()
