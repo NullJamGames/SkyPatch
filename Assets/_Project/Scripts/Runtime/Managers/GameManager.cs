@@ -1,35 +1,14 @@
-﻿using System;
-using NJG.Runtime.Input;
-using NJG.Utilities.Singletons;
+﻿using NJG.Utilities.Singletons;
 
 namespace NJG.Runtime.Managers
 {
     public class GameManager : SingletonPersistent<GameManager>
     {
-        //private PlayerInputActions _playerInputActions;
-        //private InputReader _inputReader;
+        public int Score { get; private set; }
 
-        public override void Awake()
+        public void AddScore(int score)
         {
-            base.Awake();
-            
-            //_playerInputActions = new PlayerInputActions();
-            //_inputReader = new InputReader();
+            Score += score;
         }
-
-        // private void OnEnable()
-        // {
-        //     _playerInputActions.Enable();
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     _playerInputActions.Disable();
-        // }
-        //
-        // public IInputReader GetInputProvider()
-        // {
-        //     return _inputReader;
-        // }
     }
 }

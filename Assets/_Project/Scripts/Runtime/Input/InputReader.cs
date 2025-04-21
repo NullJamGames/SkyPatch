@@ -1,4 +1,5 @@
 ﻿using System;
+using NJG.Runtime.Entity;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -20,6 +21,7 @@ namespace NJG.Runtime.Input
         public event UnityAction DisableMouseControlCamera = delegate { };
         public event UnityAction<bool> JumpEvent = delegate { };
         public event UnityAction<bool> DashEvent = delegate { };
+        public event UnityAction InteractEvent = delegate { };
 
         public PlayerInputActions InputActions;
 
@@ -63,7 +65,11 @@ namespace NJG.Runtime.Input
 
         public void OnRotate(InputAction.CallbackContext context) { }
 
-        public void OnInteract(InputAction.CallbackContext context) { }
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+                InteractEvent.Invoke();
+        }
 
         public void OnJump(InputAction.CallbackContext context)
         {
