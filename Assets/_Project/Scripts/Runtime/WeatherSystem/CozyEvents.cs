@@ -25,13 +25,13 @@ namespace NJG.Runtime.WeatherSystem
 
         public void TriggerDayTimeEvent()
         {
-            Debug.Log("Day time event");
+            Debug.Log("Morning");
             _dayTimeEvent?.Invoke(_empty);
         }
 
         public void TriggerNightTimeEvent()
         {
-            Debug.Log("Night time event");
+            Debug.Log("Evening");
             _nightTimeEvent?.Invoke(_empty);
         }
     }

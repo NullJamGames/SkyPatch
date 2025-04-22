@@ -4,11 +4,16 @@ namespace NJG.Runtime.Managers
 {
     public class GameManager : SingletonPersistent<GameManager>
     {
-        public int Score { get; private set; }
+        public int Energy { get; private set; }
 
-        public void AddScore(int score)
+        public void AddEnergy(int energy)
         {
-            Score += score;
+            Energy += energy;
+        }
+        
+        public bool HasEnoughEnergy(int energy)
+        {
+            return Energy >= energy;
         }
     }
 }

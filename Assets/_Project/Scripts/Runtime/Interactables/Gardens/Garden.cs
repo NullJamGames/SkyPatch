@@ -21,11 +21,12 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Settings"), SerializeField]
         private int _energyPerHarvest = 10;
         
-        [SerializeField, ReadOnly]
-        private List<Plot> _plots;
+        private Plot[] _plots;
         
         private void OnEnable()
         {
+            _plots = GetComponentsInChildren<Plot>();
+            
             RegisterPlots();
         }
 
@@ -36,8 +37,6 @@ namespace NJG.Runtime.Interactables
 
         public void OnDaytime()
         {
-            Debug.Log("It's daytime!");
-            
             foreach (Plot plot in _plots)
             {
                 plot.SetDaytime();
@@ -46,8 +45,6 @@ namespace NJG.Runtime.Interactables
         
         public void OnNighttime()
         {
-            Debug.Log("It's nighttime!");
-            
             foreach (Plot plot in _plots)
             {
                 plot.SetNighttime();
@@ -57,14 +54,17 @@ namespace NJG.Runtime.Interactables
         [Button(ButtonSizes.Large)]
         private void GeneratePlots()
         {
-            _plots ??= new List<Plot>();
-
-            foreach (Plot plot in _plots)
+            if (_plotSize.x > 50 || _plotSize.y > 50)
+            {
+                Debug.LogError("Plot size is too large, stop trying to break things...");
+                return;
+            }
+            
+            Plot[] plots = GetComponentsInChildren<Plot>();
+            foreach (Plot plot in plots)
             {
                 DestroyImmediate(plot.gameObject);
             }
-            
-            _plots.Clear();
 
             for (int x = 0; x < _plotSize.x; x++)
             {
@@ -72,7 +72,6 @@ namespace NJG.Runtime.Interactables
                 {
                     Plot plot = Instantiate(_plotPrefab, transform);
                     plot.transform.localPosition = new Vector3(x, 0, y);
-                    _plots.Add(plot);
                 }
             }
         }

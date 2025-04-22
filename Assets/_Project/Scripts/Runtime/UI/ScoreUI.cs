@@ -26,7 +26,7 @@ namespace NJG.Runtime.UI
         {
             yield return Timing.WaitForOneFrame;
             
-            int score = GameManager.Instance.Score;
+            int score = GameManager.Instance.Energy;
             _scoreText.text = $"Energy: {score}";
         }
     }
