@@ -8,7 +8,6 @@ namespace NJG.Runtime.Interactables
 {
     public class Plot : MonoBehaviour, IInteractable
     {
-        [FoldoutGroup("SO Dependencies"), SerializeField]
         private PlotData _plotData;
         
         [FoldoutGroup("SO Dependencies"), SerializeField]
@@ -33,6 +32,54 @@ namespace NJG.Runtime.Interactables
             _growTimer?.Tick(Time.deltaTime);
         }
         
+        public void Interact()
+        {
+            if(!_state.IsInteractable)
+                return;
+            
+            foreach (var plotInteraction in _state.Interactions)
+                if (!plotInteraction.CanInteract(this))
+                {
+                    Debug.Log("Cant interact");
+                    return;
+                }
+            
+            foreach (var plotInteraction in _state.Interactions)
+                plotInteraction.Interact(this);
+        }
+        
+        public void ChangeState(int newStateIndex)
+        {
+            if (_state != null) 
+                ExitState();
+            EnterState(newStateIndex);
+        }
+
+        public void SetPlotData(PlotData plotData)
+        {
+            _plotData = plotData;
+        }
+        
+        public void Initialize()
+        {
+            _growTimer = new CountdownTimer(_growtCalculationTime);
+            _growTimer.OnTimerStop += CalculatePlantGrowt;
+            _growTimer.Start();
+            
+            _emptyState = _emptyPlotStateSO.State;
+            ChangeState(-1);
+        }
+
+        public void SetDayTime(bool isDayTime)
+        {
+            IsDaytime = isDayTime;
+        }
+
+        public void OnHarvest()
+        {
+            OnHarvested?.Invoke();
+        }
+        
         private void CalculatePlantGrowt()
         {
             _growTimer.Reset();
@@ -52,12 +99,6 @@ namespace NJG.Runtime.Interactables
                 ChangeState(_stateIndex + 1);
         }
         
-        private void ChangeState(int newStateIndex)
-        {
-            if (_state != null) 
-                ExitState();
-            EnterState(newStateIndex);
-        }
 
         private void ExitState()
         {
@@ -81,52 +122,5 @@ namespace NJG.Runtime.Interactables
             if(_state.ModelPrefab != null)
                 _model = Instantiate(_state.ModelPrefab, transform);
         }
-
-        public void Interact()
-        {/*
-            switch (_stage)
-            {
-                case PlotStage.Empty:
-                    Plant();
-                    break;
-                case PlotStage.Planted:
-                    Debug.Log("Plot is growing...");
-                    break;
-                case PlotStage.Harvestable:
-                    Harvest();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }*/
-        }
-
-        public void Initialize()
-        {
-            _growTimer = new CountdownTimer(_growtCalculationTime);
-            _growTimer.OnTimerStop += CalculatePlantGrowt;
-            _growTimer.Start();
-            
-            _emptyState = _emptyPlotStateSO.State;
-            ChangeState(-1);
-        }
-
-        [Button]
-        public void Seed()
-        {
-            ChangeState(0);
-        }
-
-        public void SetDayTime(bool isDayTime)
-        {
-            IsDaytime = isDayTime;
-        }
-/*
-
-        private void Harvest()
-        {
-            _stage = PlotStage.Empty;
-            _harvestableVarient.SetActive(false);
-            OnHarvested?.Invoke();
-        }*/
     }
 }

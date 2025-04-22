@@ -1,7 +1,16 @@
-namespace NJG.Runtime.PlantSystem.PlotInteractions
+using NJG.Runtime.Interactables;
+
+namespace NJG.Runtime.PlantSystem
 {
-    public class PlotInteraction
+    [System.Serializable]
+    public abstract class PlotInteraction
     {
+        public virtual bool CanInteract(Plot plot)
+        {
+            return true;
+        }
+
+        public abstract void Interact(Plot plot);
         
     }
 }
