@@ -123,8 +123,6 @@ namespace NJG.Runtime.Interactables
             else
                 _state = _plotData.GetState(_stateIndex);
             
-            print("state : " + _stateIndex);
-            
             _growtAmount = 0;
             
             if(_state.ModelPrefab != null)
