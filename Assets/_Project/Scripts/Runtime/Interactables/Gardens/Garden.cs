@@ -17,8 +17,6 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Settings"), SerializeField]
         private Vector2 _plotSize;
         [FoldoutGroup("Settings"), SerializeField]
-        private float _growTime = 2f;
-        [FoldoutGroup("Settings"), SerializeField]
         private int _energyPerHarvest = 10;
         
         private Plot[] _plots;
@@ -39,7 +37,7 @@ namespace NJG.Runtime.Interactables
         {
             foreach (Plot plot in _plots)
             {
-                plot.SetDaytime();
+                plot.SetDayTime(true);
             }
         }
         
@@ -47,7 +45,7 @@ namespace NJG.Runtime.Interactables
         {
             foreach (Plot plot in _plots)
             {
-                plot.SetNighttime();
+                plot.SetDayTime(false);
             }
         }
 
@@ -83,7 +81,7 @@ namespace NJG.Runtime.Interactables
 
             foreach (Plot plot in _plots)
             {
-                plot.Initialize(_growTime);
+                plot.Initialize();
                 plot.OnHarvested += OnPlotHarvested;
             }
         }
