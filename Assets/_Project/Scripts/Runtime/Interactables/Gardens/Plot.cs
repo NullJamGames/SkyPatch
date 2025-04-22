@@ -16,6 +16,8 @@ namespace NJG.Runtime.Interactables
         
         public bool IsDaytime { get; private set; }
         public event Action OnHarvested;
+
+        public bool HasCompost => _compostAmount > 0;
         
         private const float _growtCalculationTime = 0.25f;
         private CountdownTimer _growTimer;
@@ -26,6 +28,8 @@ namespace NJG.Runtime.Interactables
         
         private float _growtAmount;
         private GameObject _model;
+        
+        private float _compostAmount;
         
         private void Update()
         {
@@ -79,6 +83,11 @@ namespace NJG.Runtime.Interactables
         {
             OnHarvested?.Invoke();
         }
+
+        public void AddCompost(float amount)
+        {
+            _compostAmount += amount;
+        }
         
         private void CalculatePlantGrowt()
         {
@@ -86,14 +95,13 @@ namespace NJG.Runtime.Interactables
             _growTimer.Start();
             
             float growtAmount = 1;
-            
-            if(_state == null)
-                return;
 
             foreach (var VARIABLE in _state.GrowtModifiers)
                 growtAmount *= VARIABLE.CalculateGrowth(this);
             
             _growtAmount += growtAmount * _growtCalculationTime;
+
+            _compostAmount -= _growtCalculationTime;
             
             if(_growtAmount >_state.NecesseryGrowt)
                 ChangeState(_stateIndex + 1);

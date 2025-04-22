@@ -14,6 +14,7 @@ namespace NJG.Runtime.PlantSystem
 			
             list.Add("No Growt", new NoGrowthModifier());
             list.Add("Day Time", new DayTimeGrowtModifier());
+            list.Add("Compost", new CompostGrowtModifier());
 			
             return list;
         }
