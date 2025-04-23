@@ -58,6 +58,8 @@ namespace NJG.Runtime.Entity
         private Camera _mainCamera;
         private StateMachine _stateMachine;
 
+        private CarryComponent _carryComponent;
+
         private float _currentSpeed;
         private float _velocity;
         private float _jumpVelocity;
@@ -147,6 +149,9 @@ namespace NJG.Runtime.Entity
             _input.JumpEvent += OnJump;
             _input.DashEvent += OnDash;
             _input.InteractEvent += OnInteract;
+            _input.CarryEvent += OnCarry;
+            
+            _carryComponent = GetComponent<CarryComponent>();
         }
 
         private void Start()
@@ -247,6 +252,14 @@ namespace NJG.Runtime.Entity
             {
                 _dashTimer.Stop();
             }
+        }
+
+        private void OnCarry()
+        {
+            if (_carryComponent.Carryable == null)
+                _carryComponent.TryToPickUp();
+            else
+                _carryComponent.TryToDrop();
         }
 
         public void HandleJump()

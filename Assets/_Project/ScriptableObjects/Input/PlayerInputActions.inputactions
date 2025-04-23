@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Carry",
+                    "type": "Button",
+                    "id": "90f13e82-edb7-4ca1-a648-bd109aa6bba1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
@@ -479,6 +488,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e189631-7ad0-43f4-aef9-de2cf9ad18fd",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Carry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class SolarPanel : MonoBehaviour, IInteractable
+    public class SolarPanel : MonoBehaviour, IInteractable, ICarryable
     {
         [FoldoutGroup("References"), SerializeField]
         private GameObject _brokenVariant;
@@ -25,6 +25,8 @@ namespace NJG.Runtime.Interactables
         private bool _isFixed;
         private bool _isDaytime;
         private CountdownTimer _intervalTimer;
+        
+        public Transform Transform => transform;
 
         private void Awake()
         {
