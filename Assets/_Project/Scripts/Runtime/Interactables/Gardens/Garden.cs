@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DistantLands.Cozy;
-using NJG.Runtime.Events;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
@@ -11,8 +7,6 @@ namespace NJG.Runtime.Interactables
     {
         [FoldoutGroup("References"), SerializeField]
         private Plot _plotPrefab;
-        [FoldoutGroup("References"), SerializeField]
-        private IntEventChannel _energyEventChannel;
         
         [FoldoutGroup("Settings"), SerializeField]
         private Vector2 _plotSize;
@@ -82,7 +76,7 @@ namespace NJG.Runtime.Interactables
             foreach (Plot plot in _plots)
             {
                 plot.Initialize();
-                plot.OnHarvested += OnPlotHarvested;
+                //plot.OnHarvested += OnPlotHarvested;
             }
         }
         
@@ -93,13 +87,13 @@ namespace NJG.Runtime.Interactables
 
             foreach (Plot plot in _plots)
             {
-                plot.OnHarvested -= OnPlotHarvested;
+                //plot.OnHarvested -= OnPlotHarvested;
             }
         }
 
         private void OnPlotHarvested()
         {
-            _energyEventChannel.Invoke(_energyPerHarvest);
+            //_energyEventChannel.Invoke(_energyPerHarvest);
         }
     }
 }

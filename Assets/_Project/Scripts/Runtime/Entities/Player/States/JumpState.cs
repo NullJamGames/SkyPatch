@@ -1,4 +1,4 @@
-﻿using NJG.Runtime.StateSystem;
+﻿using NJG.Utilities.PredicateStateMachines;
 using UnityEngine;
 
 namespace NJG.Runtime.Entity

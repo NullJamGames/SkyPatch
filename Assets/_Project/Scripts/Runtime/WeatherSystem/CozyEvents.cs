@@ -1,18 +1,20 @@
 ﻿using DistantLands.Cozy;
-using NJG.Runtime.Events;
+using NJG.Runtime.Signals;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.WeatherSystem
 {
     public class CozyEvents : MonoBehaviour
     {
-        [SerializeField]
-        private EventChannel _dayTimeEvent;
-        [SerializeField]
-        private EventChannel _nightTimeEvent;
+        private SignalBus _signalBus;
 
-        private readonly Empty _empty = new();
-
+        [Inject]
+        private void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+        
         private void Start()
         {
             float currentTime = CozyWeather.instance.timeModule.currentTime;
@@ -25,14 +27,12 @@ namespace NJG.Runtime.WeatherSystem
 
         public void TriggerDayTimeEvent()
         {
-            Debug.Log("Morning");
-            _dayTimeEvent?.Invoke(_empty);
+            _signalBus.Fire(new DayTimeChangeSignal(true));
         }
 
         public void TriggerNightTimeEvent()
         {
-            Debug.Log("Evening");
-            _nightTimeEvent?.Invoke(_empty);
+            _signalBus.Fire(new DayTimeChangeSignal(false));
         }
     }
 }

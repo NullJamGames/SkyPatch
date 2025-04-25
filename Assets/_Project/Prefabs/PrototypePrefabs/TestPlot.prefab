@@ -255,17 +255,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HarvestedPlant
       objectReference: {fileID: 0}
+    - target: {fileID: 3671515670479367982, guid: 02634e0744f787a4baff8b43b6250367, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6709808734059812145, guid: 02634e0744f787a4baff8b43b6250367, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.983
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6709808734059812145, guid: 02634e0744f787a4baff8b43b6250367, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.323
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6709808734059812145, guid: 02634e0744f787a4baff8b43b6250367, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.931
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6709808734059812145, guid: 02634e0744f787a4baff8b43b6250367, type: 3}
       propertyPath: m_LocalRotation.w

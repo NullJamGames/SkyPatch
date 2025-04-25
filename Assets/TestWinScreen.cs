@@ -48,6 +48,8 @@ namespace NJG
                 if (treesAlive >= _revivableTrees.Count)
                 {
                     _winScreen.SetActive(true);
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                     yield break;
                 }
                 

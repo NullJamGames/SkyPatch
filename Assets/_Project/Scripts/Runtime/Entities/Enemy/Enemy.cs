@@ -1,5 +1,5 @@
 using KBCore.Refs;
-using NJG.Runtime.StateSystem;
+using NJG.Utilities.PredicateStateMachines;
 using NJG.Utilities.ImprovedTimers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -64,7 +64,6 @@ namespace NJG.Runtime.Entity
                 return;
 
             _attackTimer.Start();
-            _playerDetector.PlayerHealth.TakeDamage(10);
         }
     }
 }

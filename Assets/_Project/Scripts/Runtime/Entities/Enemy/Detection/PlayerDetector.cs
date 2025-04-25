@@ -21,12 +21,10 @@ namespace NJG.Runtime.Entity
         private IDetectionStrategy _detectionStrategy;
         
         public Transform Player { get; private set; }
-        public Health PlayerHealth { get; private set; }
 
         private void Awake()
         {
             Player = GameObject.FindGameObjectWithTag("Player").transform;
-            PlayerHealth = Player.GetComponent<Health>();
         }
 
         private void Start()

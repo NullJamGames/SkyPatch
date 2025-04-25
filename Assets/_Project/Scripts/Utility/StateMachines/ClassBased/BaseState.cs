@@ -1,4 +1,4 @@
-﻿namespace NJG.Utilities
+﻿namespace NJG.Utilities.ClassStateMachines
 {
     public abstract class BaseState<T> where T : BaseState<T>
     {

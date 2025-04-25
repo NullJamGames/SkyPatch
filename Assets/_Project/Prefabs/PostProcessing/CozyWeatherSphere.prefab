@@ -5392,7 +5392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2533455888638461135}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000000037252899, y: -0, z: -0.0000000074505797, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.249, y: 2.5, z: -12.757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5417,7 +5417,7 @@ MonoBehaviour:
   weight: 1
   targetWeight: 1
   priority: 0
-  cumulus: 0.2
+  cumulus: 2
   cirrus: 0
   altocumulus: 0
   cirrostratus: 0
@@ -5623,11 +5623,11 @@ MonoBehaviour:
     useOcclusion: 1
     occlusionRadius: 0.5
     allowOffscreen: 1
-  filterSaturation: 0
+  filterSaturation: -0.088
   filterValue: 0
-  filterColor: {r: 1, g: 1, b: 1, a: 0}
-  sunFilter: {r: 1, g: 1, b: 1, a: 0}
-  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
+  filterColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0}
+  sunFilter: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0}
+  cloudFilter: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
   lockToCamera: 0
   disableSunAtNight: 1
   handleSceneLighting: 1
@@ -5692,8 +5692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62117056724c4669b7b079786591efde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dayTimeEvent: {fileID: 11400000, guid: 8b891734e4be1ff47abbd084b903d95b, type: 2}
-  _nightTimeEvent: {fileID: 11400000, guid: 546f3efb0178e884e8298326df5e4307, type: 2}
 --- !u!1 &3599828488133320495
 GameObject:
   m_ObjectHideFlags: 0
@@ -15410,7 +15408,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.954672, y: 3.954672, z: 3.954672}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2108730675362978566}
@@ -15747,7 +15745,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1.375392, g: 1.3476623, b: 1.1535546, a: 0}
+  m_Color: {r: 0.76554835, g: 0.75011396, b: 0.64207286, a: 0}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -15839,7 +15837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LensFlareData: {fileID: 11400000, guid: b7bd2fcbf47c015488d42ef693c6db7d, type: 2}
   version: 0
-  intensity: 1.3338252
+  intensity: 0.74241215
   maxAttenuationDistance: 100
   maxAttenuationScale: 100
   distanceAttenuationCurve:
@@ -16030,7 +16028,7 @@ MonoBehaviour:
   biomes: []
   weight: 1
   totalSystemWeight: 0
-  cumulus: 0.2
+  cumulus: 2
   cirrus: 0
   altocumulus: 0
   cirrostratus: 0
@@ -16042,14 +16040,14 @@ MonoBehaviour:
   borderEffect: 1
   borderVariation: 0.95
   fogDensity: 1
-  filterSaturation: 0
+  filterSaturation: -0.088
   filterValue: 0
-  filterColor: {r: 1, g: 1, b: 1, a: 0}
-  sunFilter: {r: 1, g: 1, b: 1, a: 0}
-  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
+  filterColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0}
+  sunFilter: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0}
+  cloudFilter: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
   ecosystem:
     forecastProfile: {fileID: 11400000, guid: eacc8459f121a3d4c83bf331999911ef, type: 2}
-    weatherSelectionMode: 3
+    weatherSelectionMode: 0
     currentForecast: []
     weatherTransitionTime: 15
     weatherSphere: {fileID: 5883829255674357199}
@@ -16059,11 +16057,11 @@ MonoBehaviour:
     weatherChangeCheck: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
     weightedWeatherProfiles:
     - weight: 1
-      profile: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
+      profile: {fileID: 11400000, guid: 56652bb77d1606b4396767fbb07e50ab, type: 2}
       transitioning: 1
   currentWeatherProfiles:
   - weight: 1
-    profile: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
+    profile: {fileID: 11400000, guid: 56652bb77d1606b4396767fbb07e50ab, type: 2}
     transitioning: 1
   defaultFilter: {fileID: 11400000, guid: b3b90f04f4696264c9aab62e9c3c68a5, type: 2}
   defaultClouds: {fileID: 11400000, guid: 40c748033998bf243ae542ca195124b7, type: 2}
@@ -16474,8 +16472,8 @@ MonoBehaviour:
   controlMethod: 1
   localTemperatureFilter: 0
   localPrecipitationFilter: 0
-  currentTemperature: 6.142
-  currentPrecipitation: 50.705555
+  currentTemperature: 1.142
+  currentPrecipitation: 80.70555
   snowAmount: 0
   snowMeltSpeed: 0.35
   groundwaterAmount: 0

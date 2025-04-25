@@ -5,7 +5,7 @@ using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
 using NJG.Runtime.Managers;
-using NJG.Runtime.StateSystem;
+using NJG.Utilities.PredicateStateMachines;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
