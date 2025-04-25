@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2845a953717cb1c927add6b8f5f3fb5901e3c133c6ff121ff847e4abc73abc43
-size 626
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9c06dcd2a5588e409ac8b2e33a749dc, type: 3}
+  m_Name: Simplified Year
+  m_EditorClassIdentifier: 
+  startDay: 0
+  months:
+  - displayName: Winter
+    daysInMonth: 28
+  - displayName: Spring
+    daysInMonth: 28
+  - displayName: Summer
+    daysInMonth: 28
+  - displayName: Fall
+    daysInMonth: 28

@@ -1,3 +1,52 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bd16ba329f1b832d191c2548424d7d1b37238fbfc77fb17760c6ca444ef6db67
-size 1752
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5481584312ed7714b92bd00db82b81b6, type: 3}
+  m_Name: PlotData1
+  m_EditorClassIdentifier: 
+  States:
+  - _modelPrefab: {fileID: 100000, guid: fe512fe22ccb6d0419f94a02c4521547, type: 3}
+    _necesseryGrowt: 5
+    _growtModifiers:
+    - rid: 8378611165156082037
+    - rid: 8378611171360506309
+    _isInteractable: 0
+    _interactionText: interactable
+    _interactions: []
+  - _modelPrefab: {fileID: 100000, guid: c37207ea294d07e4191a09297b56a62a, type: 3}
+    _necesseryGrowt: 1
+    _growtModifiers:
+    - rid: 8378611165156082036
+    _isInteractable: 1
+    _interactionText: interactable
+    _interactions:
+    - rid: 8378611171360506258
+    - rid: 8378611171360506158
+  references:
+    version: 2
+    RefIds:
+    - rid: 8378611165156082036
+      type: {class: NoGrowthModifier, ns: NJG.Runtime.PlantSystem, asm: Assembly-CSharp}
+      data: 
+    - rid: 8378611165156082037
+      type: {class: DayTimeGrowtModifier, ns: NJG.Runtime.PlantSystem, asm: Assembly-CSharp}
+      data:
+        _growableDayTime: 0
+    - rid: 8378611171360506158
+      type: {class: ChangeStateInteraction, ns: NJG.Runtime.PlantSystem, asm: Assembly-CSharp}
+      data:
+        _nextStateIndex: -1
+    - rid: 8378611171360506258
+      type: {class: HarvestInteraction, ns: NJG.Runtime.PlantSystem, asm: Assembly-CSharp}
+      data: 
+    - rid: 8378611171360506309
+      type: {class: CompostGrowtModifier, ns: NJG.Runtime.PlantSystem, asm: Assembly-CSharp}
+      data: 
