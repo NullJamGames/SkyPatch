@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KBCore.Refs;
 using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
+using NJG.Runtime.Interfaces;
 using NJG.Runtime.Managers;
 using NJG.Runtime.StateSystem;
 using NJG.Utilities.ImprovedTimers;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour
+    public class PlayerController : ValidatedMonoBehaviour, IResetable
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
@@ -24,6 +25,8 @@ namespace NJG.Runtime.Entity
         private CinemachineCamera _virtualCamera;
         [FoldoutGroup("References"), SerializeField, Anywhere]
         private InputReader _input;
+        [FoldoutGroup("References"), SerializeField, Self]
+        private PlayerInventory _inventory;
         
         [FoldoutGroup("Movement Settings"), SerializeField]
         private float _moveSpeed = 6f;
@@ -58,8 +61,6 @@ namespace NJG.Runtime.Entity
         private Camera _mainCamera;
         private StateMachine _stateMachine;
 
-        private CarryComponent _carryComponent;
-
         private float _currentSpeed;
         private float _velocity;
         private float _jumpVelocity;
@@ -76,9 +77,12 @@ namespace NJG.Runtime.Entity
         
         // Animator Params
         private static readonly int _speedHash = Animator.StringToHash("Speed");
+        
+        public Vector3 StartPosition { get; private set; }
 
         private void Awake()
         {
+            StartPosition = transform.position;
             _mainCamera = Camera.main;
             _virtualCamera.Follow = transform;
             _virtualCamera.LookAt = transform;
@@ -149,9 +153,7 @@ namespace NJG.Runtime.Entity
             _input.JumpEvent += OnJump;
             _input.DashEvent += OnDash;
             _input.InteractEvent += OnInteract;
-            _input.CarryEvent += OnCarry;
-            
-            _carryComponent = GetComponent<CarryComponent>();
+            _input.PickupEvent += OnPickup;
         }
 
         private void Start()
@@ -178,6 +180,7 @@ namespace NJG.Runtime.Entity
             _input.JumpEvent -= OnJump;
             _input.DashEvent -= OnDash;
             _input.InteractEvent -= OnInteract;
+            _input.PickupEvent -= OnPickup;
             
             if (_input != null)
                 _input.DisablePlayerActions();
@@ -227,7 +230,7 @@ namespace NJG.Runtime.Entity
                 }
             }
 
-            closestInteractable?.Interact();
+            closestInteractable?.Interact(_inventory);
         }
 
         private void OnJump(bool performed)
@@ -254,12 +257,9 @@ namespace NJG.Runtime.Entity
             }
         }
 
-        private void OnCarry()
+        private void OnPickup()
         {
-            if (_carryComponent.Carryable == null)
-                _carryComponent.TryToPickUp();
-            else
-                _carryComponent.TryToDrop();
+            _inventory.Pickup();
         }
 
         public void HandleJump()
@@ -323,6 +323,15 @@ namespace NJG.Runtime.Entity
         private void UpdateAnimator()
         {
             _animator.SetFloat(_speedHash, _currentSpeed);
+        }
+
+        
+
+        public void ResetState()
+        {
+            _rigidBody.transform.position = StartPosition;
+            _rigidBody.linearVelocity = Vector3.zero;
+            _rigidBody.angularVelocity = Vector3.zero;
         }
     }
 }

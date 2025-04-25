@@ -5,6 +5,7 @@
 using UnityEngine;
 using DistantLands.Cozy.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DistantLands.Cozy
 {
@@ -101,7 +102,7 @@ namespace DistantLands.Cozy
             ManageGlobalEcosystem();
             UpdateWeatherByWeight();
 
-            WeatherProfile strongestWeatherThisFrame = currentWeatherProfiles.Find(x => x.weight > 0.5f).profile;
+            WeatherProfile strongestWeatherThisFrame = currentWeatherProfiles.Aggregate((max, current) => current.weight > max.weight ? current : max).profile;
 
             if (strongestWeatherThisFrame != strongestWeather)
             {

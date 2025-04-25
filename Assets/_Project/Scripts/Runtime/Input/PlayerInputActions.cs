@@ -139,7 +139,7 @@ namespace NJG.Runtime.Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Carry"",
+                    ""name"": ""Pickup"",
                     ""type"": ""Button"",
                     ""id"": ""90f13e82-edb7-4ca1-a648-bd109aa6bba1"",
                     ""expectedControlType"": """",
@@ -428,7 +428,7 @@ namespace NJG.Runtime.Input
                 {
                     ""name"": """",
                     ""id"": ""b3c1c7f0-bd20-4ee7-a0f1-899b24bca6d7"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -586,7 +586,7 @@ namespace NJG.Runtime.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Carry"",
+                    ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1190,7 +1190,7 @@ namespace NJG.Runtime.Input
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-            m_Player_Carry = m_Player.FindAction("Carry", throwIfNotFound: true);
+            m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
@@ -1294,7 +1294,7 @@ namespace NJG.Runtime.Input
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Rotate;
         private readonly InputAction m_Player_Interact;
-        private readonly InputAction m_Player_Carry;
+        private readonly InputAction m_Player_Pickup;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Previous;
         private readonly InputAction m_Player_Next;
@@ -1332,9 +1332,9 @@ namespace NJG.Runtime.Input
             /// </summary>
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Carry".
+            /// Provides access to the underlying input action "Player/Pickup".
             /// </summary>
-            public InputAction @Carry => m_Wrapper.m_Player_Carry;
+            public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
             /// <summary>
             /// Provides access to the underlying input action "Player/Jump".
             /// </summary>
@@ -1396,9 +1396,9 @@ namespace NJG.Runtime.Input
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Carry.started += instance.OnCarry;
-                @Carry.performed += instance.OnCarry;
-                @Carry.canceled += instance.OnCarry;
+                @Pickup.started += instance.OnPickup;
+                @Pickup.performed += instance.OnPickup;
+                @Pickup.canceled += instance.OnPickup;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1440,9 +1440,9 @@ namespace NJG.Runtime.Input
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
-                @Carry.started -= instance.OnCarry;
-                @Carry.performed -= instance.OnCarry;
-                @Carry.canceled -= instance.OnCarry;
+                @Pickup.started -= instance.OnPickup;
+                @Pickup.performed -= instance.OnPickup;
+                @Pickup.canceled -= instance.OnPickup;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -1794,12 +1794,12 @@ namespace NJG.Runtime.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnInteract(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Carry" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Pickup" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnCarry(InputAction.CallbackContext context);
+            void OnPickup(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

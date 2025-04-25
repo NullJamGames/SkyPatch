@@ -1,4 +1,5 @@
-﻿using NJG.Runtime.Events;
+﻿using NJG.Runtime.Entity;
+using NJG.Runtime.Events;
 using NJG.Runtime.Managers;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
@@ -6,34 +7,29 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class SolarPanel : MonoBehaviour, IInteractable, ICarryable
+    public class SolarPanel : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("References"), SerializeField]
-        private GameObject _brokenVariant;
-        [FoldoutGroup("References"), SerializeField]
-        private GameObject _fixedVariant;
-        [FoldoutGroup("References"), SerializeField]
-        private IntEventChannel _energyEventChannel;
+        private Transform _batteryHolder;
         
         [FoldoutGroup("Settings"), SerializeField]
-        private int _fixCost = 10;
-        [FoldoutGroup("Settings"), SerializeField]
-        private int _energyPerInterval = 1;
+        private float _energyPerInterval = 10f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _energyInterval = 1f;
 
-        private bool _isFixed;
         private bool _isDaytime;
         private CountdownTimer _intervalTimer;
+        private TestBattery _battery;
         
-        public Transform Transform => transform;
-
         private void Awake()
         {
             _intervalTimer = new CountdownTimer(_energyInterval);
             _intervalTimer.OnTimerStop += () =>
             {
-                _energyEventChannel.Invoke(_energyPerInterval);
+                if (_battery == null)
+                    return;
+                
+                _battery.AddCharge(_energyPerInterval);
                 _intervalTimer.Start();
             };
         }
@@ -43,43 +39,52 @@ namespace NJG.Runtime.Interactables
             _intervalTimer?.Tick(Time.deltaTime);
         }
 
-        public void Interact()
+        public void Interact(PlayerInventory playerInventory)
         {
-            if (_isFixed)
+            if (_battery != null)
+            {
+                if (playerInventory.TryGivePickupable(_battery))
+                {
+                    _battery = null;
+                    _intervalTimer.Stop();
+                }
+
+                return;
+            }
+            
+            if (playerInventory.Pickupable is null)
                 return;
 
-            if (GameManager.Instance.HasEnoughEnergy(_fixCost))
+            if (playerInventory.Pickupable is TestBattery battery)
             {
-                _energyEventChannel.Invoke(-_fixCost);
-                Fix();
+                if (playerInventory.TryGetPickupable(_batteryHolder))
+                {
+                    _battery = battery;
+                    
+                    if (_isDaytime)
+                        _intervalTimer.Start();
+                }
             }
-        }
-
-        private void Fix()
-        {
-            _isFixed = true;
-            _brokenVariant.SetActive(false);
-            _fixedVariant.SetActive(true);
-            
-            if (_isDaytime)
-                _intervalTimer.Start();
         }
 
         public void OnMorningTime()
         {
             _isDaytime = true;
 
-            if (!_isFixed)
+            if (_battery == null)
                 return;
             
-            _intervalTimer.Resume();
+            if (_intervalTimer.IsPaused)
+                _intervalTimer.Resume();
+            else
+                _intervalTimer.Start();
         }
 
         public void OnEveningTime()
         {
             _isDaytime = false;
             
-            if (!_isFixed)
+            if (_battery == null)
                 return;
             
             _intervalTimer.Pause();

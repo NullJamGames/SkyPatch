@@ -116,7 +116,7 @@ namespace DistantLands.Cozy
                 if (weatherSphere.timeModule)
                     ambienceTimer -= Time.deltaTime * weatherSphere.timeModule.modifiedTimeSpeed;
                 else
-                    ambienceTimer -= Time.deltaTime * 0.005f;
+                    ambienceTimer -= Time.deltaTime / 1440;
 
                 if (ambienceTimer <= 0)
                 {

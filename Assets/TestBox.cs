@@ -1,4 +1,5 @@
 using System;
+using NJG.Runtime.Entity;
 using NJG.Runtime.Interactables;
 using NJG.Utilities.ImprovedTimers;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace NJG
             _timer?.Tick(Time.deltaTime);
         }
 
-        public void Interact()
+        public void Interact(PlayerInventory playerInventory)
         {
             if (IsHeart)
             {

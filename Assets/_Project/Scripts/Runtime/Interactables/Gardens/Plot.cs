@@ -1,4 +1,5 @@
 ﻿using System;
+using NJG.Runtime.Entity;
 using NJG.Runtime.PlantSystem;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
@@ -36,7 +37,7 @@ namespace NJG.Runtime.Interactables
             _growTimer?.Tick(Time.deltaTime);
         }
         
-        public void Interact()
+        public void Interact(PlayerInventory playerInventory)
         {
             if(!_state.IsInteractable)
                 return;

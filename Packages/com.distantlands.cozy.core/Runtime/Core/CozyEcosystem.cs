@@ -180,7 +180,7 @@ namespace DistantLands.Cozy
                     if (weatherSphere.timeModule)
                         weatherTimer -= Time.deltaTime * weatherSphere.timeModule.modifiedTimeSpeed;
                     else
-                        weatherTimer -= Time.deltaTime;
+                        weatherTimer -= Time.deltaTime / 1440f;
 
                     while (weatherTimer <= 0)
                         SetNextWeather();
@@ -324,7 +324,10 @@ namespace DistantLands.Cozy
             };
             if (weatherSelectionMode == EcosystemStyle.forecast || weatherSelectionMode == EcosystemStyle.random)
             {
-                i.startTime = weatherSphere.timeModule.currentTime + weatherTimer + weatherSphere.timeModule.currentDay;
+                if (weatherSphere.timeModule != null)
+                    i.startTime = weatherSphere.timeModule.currentTime + weatherTimer + weatherSphere.timeModule.currentDay;
+                else
+                    i.startTime = weatherTimer;
 
                 foreach (WeatherPattern j in currentForecast)
                     i.startTime += j.duration;
