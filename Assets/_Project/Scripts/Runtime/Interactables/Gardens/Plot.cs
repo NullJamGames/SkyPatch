@@ -11,8 +11,8 @@ namespace NJG.Runtime.Interactables
     {
         private PlotData _plotData;
         
-        [FoldoutGroup("SO Dependencies"), SerializeField]
-        private APlotState _emptyPlotStateSO;
+        //[FoldoutGroup("SO Dependencies"), SerializeField]
+        //private APlotState _emptyPlotStateSO;
         
         
         public bool IsDaytime { get; private set; }
@@ -71,7 +71,7 @@ namespace NJG.Runtime.Interactables
             _growTimer.OnTimerStop += CalculatePlantGrowt;
             _growTimer.Start();
             
-            _emptyState = _emptyPlotStateSO.State;
+            //_emptyState = _emptyPlotStateSO.State;
             ChangeState(-1);
         }
 
