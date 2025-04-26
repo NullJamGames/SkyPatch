@@ -69,6 +69,20 @@
       "dependencies": {},
       "hash": "8d3a0ee421588faaf373e0fe4b8f4577a522f029"
     },
+    "com.opsive.shared": {
+      "version": "file:com.opsive.shared",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.opsive.ultimatecharactercontroller": {
+      "version": "file:com.opsive.ultimatecharactercontroller",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.opsive.shared": "2.0.0"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,

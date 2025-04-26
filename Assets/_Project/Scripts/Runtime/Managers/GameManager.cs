@@ -17,11 +17,11 @@ namespace NJG.Runtime.Managers
             Player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        private void Start()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        // private void Start()
+        // {
+        //     Cursor.lockState = CursorLockMode.Locked;
+        //     Cursor.visible = false;
+        // }
 
         public void AddEnergy(int energy)
         {
