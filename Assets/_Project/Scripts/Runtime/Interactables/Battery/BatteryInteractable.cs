@@ -1,15 +1,24 @@
-﻿using NJG.Runtime.Entity;
+﻿using System;
+using NJG.Runtime.Entity;
+using NJG.Runtime.UI.Tooltips;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public abstract class BatteryInteractable : MonoBehaviour, IInteractable, IGivableInteractable, IBatteryReceiver
+    public abstract class BatteryInteractable : MonoBehaviour, IInteractable, IGivableInteractable, IBatteryReceiver, ITooltipProvider
     {
         [FoldoutGroup("References"), SerializeField]
         private Transform _batteryHolder;
         
+        [FoldoutGroup("General"), SerializeField]
+        private string _name = "NAME";
+        
         protected Battery _battery;
+        
+        public event Action<string> OnTooltipTextChanged;
+        
+        public bool HasBattery => _battery != null;
         
         public virtual void Interact(PlayerInventory playerInventory)
         {
@@ -27,6 +36,7 @@ namespace NJG.Runtime.Interactables
             _battery.Transform.position = _batteryHolder.position;
             _battery.Transform.rotation = _batteryHolder.rotation;
             OnBatteryInserted();
+            OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
             
             return true;
         }
@@ -39,11 +49,18 @@ namespace NJG.Runtime.Interactables
             playerInventory.AttachPickupable(_battery);
             _battery = null;
             OnBatteryRemoved();
+            OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
             
             return true;
         }
-
+        
         protected abstract void OnBatteryInserted();
         protected abstract void OnBatteryRemoved();
+
+        public virtual string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetBatteryInteractableTooltip(playerInventory, this);
+            return $"{_name}\n{tooltipText}";
+        }
     }
 }

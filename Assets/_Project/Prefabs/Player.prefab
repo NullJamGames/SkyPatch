@@ -738,7 +738,7 @@ MonoBehaviour:
   _rotationSpeed: 600
   _smoothTime: 0.1
   _stopSmoothTime: 0.04
-  _airRotationSpeed: 100
+  _airRotationSpeed: 600
   _airSmoothTime: 0.3
   _airStopSmoothTime: 0.3
   _jumpForce: 7
