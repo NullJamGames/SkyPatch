@@ -4,6 +4,7 @@ using MEC;
 using NJG.Runtime.Managers;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.UI
 {
@@ -12,6 +13,14 @@ namespace NJG.Runtime.UI
         [SerializeField]
         private TextMeshProUGUI _scoreText;
 
+        private GameManager _gameManager;
+
+        [Inject]
+        private void Construct(GameManager gameManager)
+        {
+            _gameManager = gameManager;
+        }
+        
         private void Start()
         {
             UpdateScore();
@@ -26,7 +35,7 @@ namespace NJG.Runtime.UI
         {
             yield return Timing.WaitForOneFrame;
             
-            int score = GameManager.Instance.Energy;
+            int score = _gameManager.Energy;
             _scoreText.text = $"Energy: {score}";
         }
     }

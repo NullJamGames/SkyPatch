@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    [RequireComponent(typeof(AudioSource))]
     public class SpawnEffects : MonoBehaviour
     {
         [SerializeField]
@@ -22,7 +21,7 @@ namespace NJG.Runtime.Entity
                 Instantiate(_spawnVFX, transform.position, Quaternion.identity);
             }
             
-            GetComponent<AudioSource>().Play();
+            //GetComponent<AudioSource>().Play();
         }
     }
 }

@@ -1,20 +1,24 @@
 ﻿using System;
 using NJG.Utilities.Singletons;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Managers
 {
-    public class GameManager : SingletonPersistent<GameManager>
+    public class GameManager : IInitializable, ILateDisposable
     {
         public int Energy { get; private set; }
 
         public GameObject Player { get; private set; }
         
-        public override void Awake()
+        public void Initialize()
         {
-            base.Awake();
-            
             Player = GameObject.FindGameObjectWithTag("Player");
+        }
+        
+        public void LateDispose()
+        {
+            
         }
 
         // private void Start()

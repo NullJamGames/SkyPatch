@@ -87,6 +87,8 @@
 
 # FMOD (prevent line ending issues in Mac bundles)
 #*.bundle text eol=lf
+# Assets/Plugins/FMOD/**/*.bundle text eol=lf
+# Assets/Plugins/FMOD/**/Info.plist text eol=lf
 Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist -text
 Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist -text
 Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist -text

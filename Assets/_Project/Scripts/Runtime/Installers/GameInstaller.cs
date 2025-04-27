@@ -1,4 +1,8 @@
-﻿using NJG.Runtime.Signals;
+﻿using NJG.Runtime.Audio;
+using NJG.Runtime.Managers;
+using NJG.Runtime.Signals;
+using NJG.Utilities;
+using UnityEngine;
 using Zenject;
 
 namespace NJG.Runtime.Installers
@@ -9,8 +13,8 @@ namespace NJG.Runtime.Installers
         // private string _consolePath = "Console/QuantumConsole";
         // [SerializeField, Tooltip("Path to the console prefab in the resources folder.")]
         // private string _playerInputReaderPath = "Input/PlayerInputReader";
-        // [SerializeField, Tooltip("Path to the games audio data in the resources folder.")]
-        // private string _audioDataPath = "Audio/AudioData";
+        [SerializeField, Tooltip("Path to the games audio data in the resources folder.")]
+        private string _audioDataPath = "Audio/AudioData";
         // [SerializeField, Tooltip("Path to the GameManagers prefab in the resources folder.")]
         // private string _gameManagersPath = "Managers/GameManagers";
         
@@ -36,16 +40,16 @@ namespace NJG.Runtime.Installers
             //     Container.Bind<QuantumConsole>().FromComponentInNewPrefab(consolePrefab).AsSingle().NonLazy();
             
             // Audio
-            // if (Tools.TryLoadResource(_audioDataPath, out AudioDataSO audioData))
-            // {
-            //     Container.BindInstance(audioData).AsSingle();
-            //     Container.Bind<GameObject>().FromInstance(gameObject).WhenInjectedInto<AudioManager>();
-            //     Container.BindInterfacesAndSelfTo<AudioManager>().AsSingle().NonLazy();
-            // }
+            if (Tools.TryLoadResource(_audioDataPath, out AudioDataSO audioData))
+            {
+                Container.BindInstance(audioData).AsSingle();
+                Container.Bind<GameObject>().FromInstance(gameObject).WhenInjectedInto<AudioManager>();
+                Container.BindInterfacesAndSelfTo<AudioManager>().AsSingle().NonLazy();
+            }
             
             
             // Other - will probably later use a settings SO...
-            //Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
         }
 
         private void DeclareSignals()
