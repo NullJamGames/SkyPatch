@@ -57,13 +57,24 @@ namespace NJG.Runtime.Entity
         [FoldoutGroup("Interact Settings"), SerializeField]
         private LayerMask _interactableLayers;
         
+        [FoldoutGroup("Climb Settings"), SerializeField]
+        private float _climbSpeed = 100f;
+        [FoldoutGroup("Climb Settings"), SerializeField]
+        private float _climbSmoothTime = 0.2f;
+        [FoldoutGroup("Climb Settings"), SerializeField]
+        private LayerMask _ladderLayer;
+        [FoldoutGroup("Climb Settings"), SerializeField]
+        private float _ladderDistance = 1;
+        
         private Camera _mainCamera;
         private StateMachine _stateMachine;
 
         private float _currentSpeed;
+        private float _currentClimbSpeed;
         private float _velocity;
         private float _jumpVelocity;
         private float _dashVelocity = 1f;
+        private float _climbVelocity;
         private Vector3 _movement;
         private List<Timer> _timers;
         private CountdownTimer _jumpTimer;
@@ -72,6 +83,9 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _dashCooldownTimer;
         private CountdownTimer _interactTimer;
 
+        private bool _isClimbing;
+        private Ladder _ladder;
+
         private const float ZERO_F = 0f;
         
         // Animator Params
@@ -79,7 +93,6 @@ namespace NJG.Runtime.Entity
         
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
-
         private void Awake()
         {
             StartPosition = transform.position;
@@ -97,31 +110,34 @@ namespace NJG.Runtime.Entity
 
         private void SetupStateMachine()
         {
-            // State Machine
             _stateMachine = new StateMachine();
-            
+
             // Declare States
-            LocomotionState _locomotionState = new (this, _animator);
-            JumpState _jumpState = new (this, _animator);
-            DashState _dashState = new (this, _animator);
-            InteractState _interactState = new (this, _animator);
-            
+            LocomotionState _locomotionState = new LocomotionState(this, _animator);
+            JumpState _jumpState = new JumpState(this, _animator);
+            DashState _dashState = new DashState(this, _animator);
+            InteractState _interactState = new InteractState(this, _animator);
+            ClimbState _climbState = new ClimbState(this, _animator);
+
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_locomotionState, _interactState, new FuncPredicate(() => _interactTimer.IsRunning));
+            At(_interactState, _locomotionState, new FuncPredicate(() => !_interactTimer.IsRunning));
+            At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
+            Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
-            
-            // Set initial state
+
             _stateMachine.SetState(_locomotionState);
         }
 
         private bool ReturnToLocomotionState()
         {
-            return _groundChecker.IsGrounded 
-                   && !_interactTimer.IsRunning 
-                   && !_jumpTimer.IsRunning 
-                   && !_dashTimer.IsRunning;
+            return _groundChecker.IsGrounded
+                   && !_interactTimer.IsRunning
+                   && !_jumpTimer.IsRunning
+                   && !_dashTimer.IsRunning
+                   && !_isClimbing;
         }
 
         private void SetupTimers()
@@ -235,6 +251,78 @@ namespace NJG.Runtime.Entity
             closestInteractable?.Interact(_inventory);
         }
 
+        private void CheckForClimbing()
+        {
+            if (Physics.Raycast(transform.position, _rigidBody.linearVelocity.normalized, out RaycastHit hitInfo, _ladderDistance, _ladderLayer))
+                if (hitInfo.collider.TryGetComponent<Ladder>(out Ladder ladder))
+                    EnterClimbState(ladder);
+            
+        }
+
+        private void EnterClimbState(Ladder ladder)
+        {
+            if(_isClimbing)
+                return;
+            
+            _ladder = ladder;
+            _isClimbing = true;
+            
+            _currentClimbSpeed = 0;
+            _climbVelocity = 0;
+            
+            _rigidBody.useGravity = false;
+            _rigidBody.linearVelocity = Vector3.zero;
+            
+            SetClimbStartTransform();
+        }
+        
+        private void SetClimbStartTransform()
+        {
+            Transform playerTransform = transform;
+            
+            Vector3 climbStartPosition = _ladder.GetClimbPosition(playerTransform.position);
+            climbStartPosition.y = playerTransform.position.y;
+            
+            playerTransform.position = climbStartPosition;
+            playerTransform.rotation = _ladder.GetClimbRotation();
+        }
+
+        public void HandleClimb()
+        {
+            HandleClimbMovement();
+            HandleClimbExit();
+        }
+
+        private void HandleClimbMovement()
+        {
+            _rigidBody.linearVelocity = new Vector3(0, _currentClimbSpeed, 0);
+            
+            float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
+            _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
+        }
+
+        private void HandleClimbExit()
+        {
+            if (_currentClimbSpeed < 0)
+            {
+                if (_ladder.GetBottomHeight() > transform.position.y)
+                    ExitClimb();
+            }
+            else if(_currentClimbSpeed > 0)
+                if (_ladder.GetTopHeight() < transform.position.y)
+                {
+                    transform.position = _ladder.GetTopExitPos();
+                    ExitClimb();
+                }
+        }
+
+        private void ExitClimb()
+        {
+            _isClimbing = false;
+            _rigidBody.linearVelocity = Vector3.zero;
+            _rigidBody.useGravity = true;
+        }
+
         private void OnJump(bool performed)
         {
             if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && _groundChecker.IsGrounded)
@@ -294,6 +382,7 @@ namespace NJG.Runtime.Entity
                 HandleRotation(adjustedDirection);
                 HandleHorizontalMovement(adjustedDirection);
                 SmoothSpeed(adjustedDirection.magnitude);
+                CheckForClimbing();
             }
             else
             {
