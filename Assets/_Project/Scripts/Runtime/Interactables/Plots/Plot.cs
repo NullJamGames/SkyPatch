@@ -17,6 +17,11 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Settings"), SerializeField]
         private float _harvestSpawnOffset = 1f;
         
+        [FoldoutGroup("VFX"), SerializeField]
+        private float _splashDelay = 0.1f;
+        [FoldoutGroup("VFX"), SerializeField]
+        private Vector3 _splashOffset = Vector3.up;
+        
         private enum PlotState { Empty, Growing, Ready }
 
         private PlotState _state = PlotState.Empty;
@@ -36,8 +41,8 @@ namespace NJG.Runtime.Interactables
         
         private IEnumerator<float> GrowToFullRoutine(WaterContainer waterContainer)
         {
-            float splashDelay = 0.1f;
-            waterContainer.TryEmptyWater(true, splashDelay, transform.position);
+            if (!waterContainer.TryEmptyWater(true, _splashDelay, transform.position + _splashOffset))
+                yield break;
             
             yield return Timing.WaitForSeconds(_growTime);
             
