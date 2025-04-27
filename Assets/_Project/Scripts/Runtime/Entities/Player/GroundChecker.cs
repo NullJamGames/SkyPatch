@@ -8,11 +8,9 @@ namespace NJG.Runtime.Entity
         [FoldoutGroup("Settings"), SerializeField]
         private LayerMask _groundLayers;
         [FoldoutGroup("Settings"), SerializeField]
-        private float _radius = 0.1f;
+        private float _radius = 0.45f;
         [FoldoutGroup("Settings"), SerializeField]
-        private float _checkDistance = 0.08f;
-        [FoldoutGroup("Settings"), SerializeField]
-        private float _yOffset = 0.1f;
+        private float _yOffset = 0.4f;
         
         public bool IsGrounded { get; private set; }
         private Collider[] _hitColliders = new Collider[1];

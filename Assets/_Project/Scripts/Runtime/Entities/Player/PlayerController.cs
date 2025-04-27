@@ -109,7 +109,6 @@ namespace NJG.Runtime.Entity
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_locomotionState, _interactState, new FuncPredicate(() => _interactTimer.IsRunning));
-            At(_interactState, _locomotionState, new FuncPredicate(() => !_interactTimer.IsRunning));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
             
             // Set initial state
@@ -129,7 +128,6 @@ namespace NJG.Runtime.Entity
             // Setup timers
             _jumpTimer = new CountdownTimer(_jumpDuration);
             _jumpCooldownTimer = new CountdownTimer(_jumpCooldown);
-            
 
             _jumpTimer.OnTimerStart += () => _jumpVelocity = _jumpForce;
             _jumpTimer.OnTimerStop += () => _jumpCooldownTimer.Start();

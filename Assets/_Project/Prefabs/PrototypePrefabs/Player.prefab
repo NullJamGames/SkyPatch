@@ -1350,8 +1350,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1664
   _radius: 0.45
-  _checkDistance: 0.05
-  _yOffset: 0.45
+  _yOffset: 0.4
 --- !u!1 &4099275821004909845
 GameObject:
   m_ObjectHideFlags: 0
