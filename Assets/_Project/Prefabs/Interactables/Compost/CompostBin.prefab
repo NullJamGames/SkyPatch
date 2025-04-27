@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0379d745adfcb4485e34581b93c911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testCompostPrefab: {fileID: 9078871094497697907, guid: 5ba5a829d0826c447970dcfdbe7a76e9, type: 3}
+  _compostPrefab: {fileID: 9078871094497697907, guid: 5ba5a829d0826c447970dcfdbe7a76e9, type: 3}
   _compostHolder: {fileID: 1806036416684360314}
 --- !u!1 &6878613218184660063
 GameObject:

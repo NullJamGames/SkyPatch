@@ -4,39 +4,35 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class CompostBin : MonoBehaviour, IInteractable
+    public class CompostBin : MonoBehaviour, IInteractable, IGivableInteractable
     {
         [FoldoutGroup("References"), SerializeField]
-        private Compost _testCompostPrefab;
+        private Compost _compostPrefab;
         [FoldoutGroup("References"), SerializeField]
         private Transform _compostHolder;
         
-        private Compost _testCompost;
+        private Compost _compost;
         
         public void Interact(PlayerInventory playerInventory)
         {
-            // if (_testCompost != null)
-            // {
-            //     if (playerInventory.TryGivePickupable(_testCompost))
-            //     {
-            //         _testCompost = null;
-            //     }
-            //
-            //     return;
-            // }
-            //
-            // if (playerInventory.Pickupable is null)
-            //     return;
-            //
-            // if (playerInventory.Pickupable is HarvestedPlant plant)
-            // {
-            //     if (playerInventory.DetachPickupable(_compostHolder))
-            //     {
-            //         Destroy(plant.gameObject);
-            //
-            //         _testCompost = Instantiate(_testCompostPrefab, _compostHolder.position, _compostHolder.rotation, _compostHolder);
-            //     }
-            // }
+            InteractionHelper.TryInteract(playerInventory, this);
+        }
+
+        public void Compost(PlayerInventory playerInventory, ICompostable compostable)
+        {
+            playerInventory.DetachPickupable();
+            compostable.OnComposted();
+            _compost = Instantiate(_compostPrefab, _compostHolder.position, _compostHolder.rotation, _compostHolder);
+        }
+
+        public bool TryGivePickupable(PlayerInventory playerInventory)
+        {
+            if (_compost == null || !playerInventory.CanPickup())
+                return false;
+            
+            playerInventory.AttachPickupable(_compost);
+            _compost = null;
+            return true;
         }
     }
 }
