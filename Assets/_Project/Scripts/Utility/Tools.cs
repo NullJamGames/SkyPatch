@@ -71,5 +71,15 @@ namespace NJG.Utilities
             Debug.LogError($"{typeof(T).Name} asset file/path '{resourcePath}' not found in the resources folder.");
             return false;
         }
+
+        /// <summary>
+        /// Helper to normalize angles into [-180, 180] range.
+        /// </summary>
+        public static float NormalizeAngle(float angle)
+        {
+            if (angle > 180f)
+                angle -= 360f;
+            return angle;
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using NJG.Runtime.Entity;
-using NJG.Runtime.Pickupables;
-using NJG.Runtime.Signals;
+﻿using NJG.Runtime.Signals;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,30 +6,23 @@ using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
-    public class SolarPanel : MonoBehaviour, IInteractable
+    public class SolarPanel : BatteryInteractable
     {
-        [FoldoutGroup("References"), SerializeField]
-        private Transform _batteryHolder;
-        
         [FoldoutGroup("Settings"), SerializeField]
         private float _energyPerInterval = 10f;
         [FoldoutGroup("Settings"), SerializeField]
-        private float _energyInterval = 1f;
-
-        private bool _isDaytime;
+        private float _timerInterval = 1f;
+        
         private CountdownTimer _intervalTimer;
-        private Battery _battery;
+        private bool _isDaytime;
         private SignalBus _signalBus;
         
         [Inject]
-        private void Construct(SignalBus signalBus)
-        {
-            _signalBus = signalBus;
-        }
-        
+        private void Construct(SignalBus signalBus) => _signalBus = signalBus;
+
         private void Awake()
         {
-            _intervalTimer = new CountdownTimer(_energyInterval);
+            _intervalTimer = new CountdownTimer(_timerInterval);
             _intervalTimer.OnTimerStop += OnTimerTick;
         }
 
@@ -49,45 +40,15 @@ namespace NJG.Runtime.Interactables
             TimerManager.DeregisterTimer(_intervalTimer);
         }
 
-        public void Interact(PlayerInventory playerInventory)
+        protected override void OnBatteryInserted()
         {
-            if (_battery != null)
-            {
-                TryRemoveBattery(playerInventory);
-                return;
-            }
-
-            TryInsertBattery(playerInventory);
+            if (_isDaytime)
+                _intervalTimer.Start();
         }
 
-        private void TryRemoveBattery(PlayerInventory playerInventory)
+        protected override void OnBatteryRemoved()
         {
-            if (!playerInventory.TryGivePickupable(_battery))
-                return;
-            
-            _battery = null;
             _intervalTimer.Stop();
-        }
-
-        private void TryInsertBattery(PlayerInventory playerInventory)
-        {
-            switch (playerInventory.Pickupable)
-            {
-                case null:
-                    return;
-                case Battery battery:
-                {
-                    if (!playerInventory.TryGetPickupable(_batteryHolder))
-                        return;
-                    
-                    _battery = battery;
-                
-                    if (_isDaytime)
-                        _intervalTimer.Start();
-
-                    break;
-                }
-            }
         }
 
         private void OnTimerTick()

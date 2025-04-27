@@ -1,4 +1,4 @@
-﻿namespace NJG.Runtime.Pickupables
+﻿namespace NJG.Runtime.Interactables
 {
     public class Compost : PickupableItem
     {

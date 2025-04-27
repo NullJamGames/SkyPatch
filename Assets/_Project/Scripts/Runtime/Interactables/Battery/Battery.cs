@@ -1,9 +1,10 @@
+using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG.Runtime.Pickupables
+namespace NJG.Runtime.Interactables
 {
-    public class Battery : PickupableItem
+    public class Battery : PickupableItem, IInteractablePickupable
     {
         [FoldoutGroup("References"), SerializeField]
         private Material _emptyMaterial;
@@ -16,6 +17,12 @@ namespace NJG.Runtime.Pickupables
         public float CurrentCharge { get; private set; } = 0f;
 
         private const float _maxCharge = 100f;
+        
+        public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
+        {
+            if (interactable is IBatteryReceiver batteryReceiver)
+                batteryReceiver.TryInsertBattery(this, playerInventory);
+        }
 
         public void AddCharge(float amount)
         {

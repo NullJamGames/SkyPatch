@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public interface IPickupable 
+    public interface IPickupable : IInteractable
     {
         public Transform Transform { get; }
 

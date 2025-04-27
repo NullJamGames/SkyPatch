@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8425484536951250599}
   - component: {fileID: 8650947173885403123}
   - component: {fileID: 2937619877060826543}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: HarvestedPlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}

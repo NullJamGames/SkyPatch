@@ -1,11 +1,11 @@
 ﻿using System;
 using KBCore.Refs;
-using NJG.Runtime.Interactables;
+using NJG.Runtime.Entity;
 using NJG.Runtime.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG.Runtime.Pickupables
+namespace NJG.Runtime.Interactables
 {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
     public abstract class PickupableItem : MonoBehaviour, IPickupable, IResetable
@@ -19,6 +19,7 @@ namespace NJG.Runtime.Pickupables
         public Transform Transform => transform;
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
+        public bool IsPickedUp { get; private set; }
 
         public virtual void Awake()
         {
@@ -29,14 +30,21 @@ namespace NJG.Runtime.Pickupables
             _rigidbody = GetComponent<Rigidbody>();
         }
 
+        public virtual void Interact(PlayerInventory playerInventory)
+        {
+            playerInventory.PickUp(this);
+        }
+
         public virtual void OnPickup()
         {
+            IsPickedUp = true;
             _collider.enabled = false;
             _rigidbody.isKinematic = true;
         }
 
         public virtual void OnDrop()
         {
+            IsPickedUp = false;
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
         }

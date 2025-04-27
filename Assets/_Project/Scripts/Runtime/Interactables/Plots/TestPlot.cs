@@ -1,5 +1,4 @@
 using NJG.Runtime.Entity;
-using NJG.Runtime.Pickupables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

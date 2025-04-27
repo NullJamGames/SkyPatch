@@ -22,24 +22,34 @@ namespace NJG.Runtime.Entity
 
         public IPickupable Pickupable { get; private set; }
 
-        public void Pickup()
+        public void Drop()
         {
             if (Pickupable != null)
                 TryToDrop();
-            else
-                TryToPickUp();
         }
 
-        public bool TryGetPickupable(Transform newOwner)
+        public void DetachPickupable()
         {
             if (Pickupable == null)
-                return false;
+                return;
             
-            Pickupable.Transform.SetParent(newOwner);
-            Pickupable.Transform.position = newOwner.position;
+            Pickupable.Transform.SetParent(null);
             Pickupable = null;
+        }
 
-            return true;
+        public void AttachPickupable(IPickupable pickupable)
+        {
+            if (Pickupable != null)
+                return;
+            
+            Pickupable = pickupable;
+            Pickupable.Transform.SetParent(_pickupParent);
+            Pickupable.Transform.position = transform.position + _carryOffset;
+        }
+
+        public bool CanPickup()
+        {
+            return Pickupable == null;
         }
 
         public bool TryGivePickupable(IPickupable pickupable)
@@ -54,18 +64,13 @@ namespace NJG.Runtime.Entity
             return true;
         }
         
-        private bool TryToPickUp()
+        public void PickUp(IPickupable pickupable)
         {
-            Pickupable = FindClosestPickupable();
-
-            if (Pickupable == null)
-                return false;
-            
+            Pickupable = pickupable;
             Pickupable.OnPickup();
             Pickupable.Transform.SetParent(_pickupParent);
             Pickupable.Transform.position = transform.position + _carryOffset;
-
-            return true;
+            Pickupable.Transform.rotation = transform.rotation;
         }
 
         private bool TryToDrop()
@@ -75,7 +80,6 @@ namespace NJG.Runtime.Entity
             
             Pickupable.Transform.SetParent(null);
             Pickupable.OnDrop();
-            //Pickupable.Transform.position = transform.position + transform.forward;
             
             // TODO: Optimize... Possibly move into OnDrop
             if (Pickupable.Transform.gameObject.TryGetComponent(out Rigidbody rb))

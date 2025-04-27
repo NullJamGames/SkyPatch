@@ -4,7 +4,6 @@ using KBCore.Refs;
 using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
-using NJG.Runtime.Managers;
 using NJG.Utilities.PredicateStateMachines;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
@@ -221,6 +220,9 @@ namespace NJG.Runtime.Entity
                 
                 if (!hit.gameObject.TryGetComponent(out IInteractable interactable))
                     continue;
+
+                if (interactable is IPickupable pickupable && !_inventory.CanPickup())
+                    continue;
                 
                 float distance = Vector3.Distance(transform.position, hit.transform.position);
                 if (distance < closestDistance)
@@ -259,7 +261,8 @@ namespace NJG.Runtime.Entity
 
         private void OnPickup()
         {
-            _inventory.Pickup();
+            //_inventory.Pickup();
+            _inventory.Drop();
         }
 
         public void HandleJump()
