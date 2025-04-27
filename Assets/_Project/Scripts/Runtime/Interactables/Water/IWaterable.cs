@@ -2,6 +2,6 @@
 {
     public interface IWaterable
     {
-        public void OnWatered(WaterContainer waterContainer);
+        public void OnWater(WaterContainer waterContainer);
     }
 }

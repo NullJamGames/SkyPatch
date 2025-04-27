@@ -33,7 +33,7 @@ namespace NJG.Runtime.Interactables
             AssertState(playerInventory);
         }
         
-        public void OnWatered(WaterContainer waterContainer)
+        public void OnWater(WaterContainer waterContainer)
         {
             if (!_growToFullRoutine.IsRunning)
                 _growToFullRoutine = Timing.RunCoroutine(GrowToFullRoutine(waterContainer));
