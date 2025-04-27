@@ -38,6 +38,18 @@ namespace NJG.Runtime.Interactables
         {
             return transform.TransformPoint(_bottomPos + new Vector3(0, _topHeight, 0)).y;
         }
+
+        public bool IsCloserToTopPoint(float playerY)
+        {
+            float topY = _bottomPos.y + _topHeight;
+            float botY = _bottomPos.y;
+            
+            float distanceToTop = Mathf.Abs(playerY - topY); 
+            float distanceToBottom = Mathf.Abs(playerY - botY); 
+
+            
+            return distanceToTop < distanceToBottom;
+        }
         
         #if UNITY_EDITOR
         private void OnDrawGizmosSelected()

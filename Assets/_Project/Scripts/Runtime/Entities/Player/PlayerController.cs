@@ -73,6 +73,8 @@ namespace NJG.Runtime.Entity
         private LayerMask _ladderLayer;
         [FoldoutGroup("Climb Settings"), SerializeField]
         private float _ladderDistance = 1;
+        [FoldoutGroup("Climb Settings"), SerializeField]
+        private float _climbCooldown = 0.8f;
         
         private Camera _mainCamera;
         private StateMachine _stateMachine;
@@ -91,6 +93,7 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _dashTimer;
         private CountdownTimer _dashCooldownTimer;
         private CountdownTimer _interactTimer;
+        private CountdownTimer _climbCooldownTimer;
 
         private bool _isClimbing;
         private Ladder _ladder;
@@ -168,8 +171,10 @@ namespace NJG.Runtime.Entity
             };
             
             _interactTimer = new CountdownTimer(_interactCooldown);
+            
+            _climbCooldownTimer = new CountdownTimer(_climbCooldown);
                 
-            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _interactTimer };
+            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _interactTimer, _climbCooldownTimer };
         }
 
         private void OnEnable()
@@ -285,7 +290,7 @@ namespace NJG.Runtime.Entity
 
         private void EnterClimbState(Ladder ladder)
         {
-            if(_isClimbing)
+            if(_isClimbing || _climbCooldownTimer.IsRunning)
                 return;
             
             _ladder = ladder;
@@ -298,6 +303,9 @@ namespace NJG.Runtime.Entity
             _rigidBody.linearVelocity = Vector3.zero;
             
             SetClimbStartTransform();
+            
+            if(_ladder.IsCloserToTopPoint(transform.position.y))
+                _climbCooldownTimer.Start();
         }
         
         private void SetClimbStartTransform()
@@ -319,10 +327,13 @@ namespace NJG.Runtime.Entity
 
         private void HandleClimbMovement()
         {
-            _rigidBody.linearVelocity = new Vector3(0, _currentClimbSpeed, 0);
-            
             float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
+            
+            if(desiredSpeed > 0 && _climbCooldownTimer.IsRunning)
+                return;
+            
             _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
+            _rigidBody.linearVelocity = new Vector3(0, _currentClimbSpeed, 0);
         }
 
         private void HandleClimbExit()
@@ -336,6 +347,8 @@ namespace NJG.Runtime.Entity
                 if (_ladder.GetTopHeight() < transform.position.y)
                 {
                     transform.position = _ladder.GetTopExitPos();
+                    _climbCooldownTimer.Stop();
+                    _climbCooldownTimer.Start();
                     ExitClimb();
                 }
         }
