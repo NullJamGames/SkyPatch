@@ -15,24 +15,22 @@ namespace NJG.Runtime.Entity
         private float _yOffset = 0.1f;
         
         public bool IsGrounded { get; private set; }
+        private Collider[] _hitColliders = new Collider[1];
 
         private void Update() => CheckIfGrounded();
 
         private void CheckIfGrounded()
         {
             Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
-            IsGrounded = Physics.SphereCast(position, _radius, Vector3.down, out _, _checkDistance, _groundLayers);
+            IsGrounded = Physics.OverlapSphereNonAlloc(position, _radius, _hitColliders, _groundLayers) > 0;
         }
 
         #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
-            
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(position, _radius);
-            Gizmos.color = Color.green;
-            Gizmos.DrawRay(position, Vector3.down * _checkDistance);
         }
         #endif
     }
