@@ -685,10 +685,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.6
+  m_Radius: 0.3
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!54 &8939391885475424971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
   _dashDuration: 1
   _dashCooldown: 2
   _interactCooldown: 0.5
-  _interactDistance: 1
+  _interactDistance: 2
   _interactableLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -1349,8 +1349,8 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1664
-  _radius: 0.45
-  _yOffset: 0.4
+  _radius: 0.3
+  _yOffset: 0.25
 --- !u!1 &4099275821004909845
 GameObject:
   m_ObjectHideFlags: 0

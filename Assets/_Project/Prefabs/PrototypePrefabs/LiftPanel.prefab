@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff504ac0ba2c92943a4e3bba029fa4b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _insertSlot: {fileID: 5614929000281116686}
-  _movablePlatform: {fileID: 0}
+  _batteryHolder: {fileID: 5614929000281116686}
+  _movingPlatform: {fileID: 0}
   _drainPerInterval: 5
   _drainInterval: 1
 --- !u!1 &6666222036459796085
