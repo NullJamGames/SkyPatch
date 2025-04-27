@@ -4,29 +4,29 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using MEC;
+using NJG.Runtime.Interactables;
 
-namespace NJG
+namespace NJG.Runtime.UI
 {
-    public class TestWinScreen : MonoBehaviour
+    public class TemporaryWinScreen : MonoBehaviour
     {
         [SerializeField]
         private GameObject _winScreen;
         [SerializeField]
         private TextMeshProUGUI _winText;
 
-        private List<TestRevivableTree> _revivableTrees;
+        private List<RevivableTree> _revivableTrees;
         private CoroutineHandle _checkForWinRoutine;
         
         private void Start()
         {
             // TODO: This is just for testing...
-            _revivableTrees = new List<TestRevivableTree>();
+            _revivableTrees = new List<RevivableTree>();
             GameObject[] objectives = GameObject.FindGameObjectsWithTag("Objective");
             foreach (GameObject go in objectives)
             {
-                if (go.TryGetComponent(out TestRevivableTree tree))
+                if (go.TryGetComponent(out RevivableTree tree))
                 {
                     _revivableTrees.Add(tree);
                 }
@@ -42,7 +42,7 @@ namespace NJG
             while (true)
             {
                 float treesAlive = 0;
-                foreach (TestRevivableTree tree in _revivableTrees.Where(tree => tree.IsRevived))
+                foreach (RevivableTree tree in _revivableTrees.Where(tree => tree.IsRevived))
                     treesAlive++;
                 
                 if (treesAlive >= _revivableTrees.Count)
@@ -57,14 +57,7 @@ namespace NJG
             }
         }
 
-        public void OnClick_Restart()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-        
-        public void OnClick_Exit()
-        {
-            Application.Quit();
-        }
+        public void OnClick_Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        public void OnClick_Exit() => Application.Quit();
     }
 }

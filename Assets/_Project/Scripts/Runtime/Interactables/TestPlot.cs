@@ -1,16 +1,16 @@
 using NJG.Runtime.Entity;
-using NJG.Runtime.Interactables;
+using NJG.Runtime.Pickupables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG
+namespace NJG.Runtime.Interactables
 {
     public class TestPlot : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("References"), SerializeField]
         private GameObject _harvestReadyGO;
         [FoldoutGroup("References"), SerializeField]
-        private TestHarvestedPlant _harvestedPlant;
+        private HarvestedPlant _harvestedPlant;
 
         private bool _wasHarvested;
         

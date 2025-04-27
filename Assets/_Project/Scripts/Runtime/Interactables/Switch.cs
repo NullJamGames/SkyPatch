@@ -1,16 +1,14 @@
 using NJG.Runtime.Entity;
-using NJG.Runtime.Interactables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NJG
+namespace NJG.Runtime.Interactables
 {
-    public class TestSwitch : MonoBehaviour, IInteractable
+    public class Switch : MonoBehaviour, IInteractable
     {
         [BoxGroup("Arm"), SerializeField]
         private Transform _arm;
-        
         
         [SerializeField]
         public UnityEvent OnSwitchActivated;

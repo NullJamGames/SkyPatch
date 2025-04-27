@@ -1,4 +1,5 @@
 ﻿using NJG.Runtime.Entity;
+using NJG.Runtime.Pickupables;
 using NJG.Runtime.Signals;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
@@ -19,7 +20,7 @@ namespace NJG.Runtime.Interactables
 
         private bool _isDaytime;
         private CountdownTimer _intervalTimer;
-        private TestBattery _battery;
+        private Battery _battery;
         private SignalBus _signalBus;
         
         [Inject]
@@ -74,7 +75,7 @@ namespace NJG.Runtime.Interactables
             {
                 case null:
                     return;
-                case TestBattery battery:
+                case Battery battery:
                 {
                     if (!playerInventory.TryGetPickupable(_batteryHolder))
                         return;

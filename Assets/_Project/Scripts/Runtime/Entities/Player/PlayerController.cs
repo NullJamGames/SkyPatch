@@ -79,10 +79,12 @@ namespace NJG.Runtime.Entity
         private static readonly int _speedHash = Animator.StringToHash("Speed");
         
         public Vector3 StartPosition { get; private set; }
+        public Quaternion StartRotation { get; private set; }
 
         private void Awake()
         {
             StartPosition = transform.position;
+            StartRotation = transform.rotation;
             _mainCamera = Camera.main;
             _virtualCamera.Follow = transform;
             _virtualCamera.LookAt = transform;

@@ -1,42 +1,50 @@
+﻿using System;
+using KBCore.Refs;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG
+namespace NJG.Runtime.Pickupables
 {
-    public class TestHarvestedPlant : MonoBehaviour, IPickupable, IResetable
+    [RequireComponent(typeof(Collider), typeof(Rigidbody))]
+    public abstract class PickupableItem : MonoBehaviour, IPickupable, IResetable
     {
-        private Collider _collider;
-        private Rigidbody _rigidbody;
-        private MeshRenderer _renderer;
+        [FoldoutGroup("References"), SerializeField, Anywhere]
+        protected MeshRenderer _renderer;
+        
+        protected Collider _collider;
+        protected Rigidbody _rigidbody;
         
         public Transform Transform => transform;
         public Vector3 StartPosition { get; private set; }
-        
-        private void Awake()
+        public Quaternion StartRotation { get; private set; }
+
+        public virtual void Awake()
         {
             StartPosition = transform.position;
+            StartRotation = transform.rotation;
             
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
-            _renderer = GetComponent<MeshRenderer>();
         }
 
-        public void OnPickup()
+        public virtual void OnPickup()
         {
             _collider.enabled = false;
             _rigidbody.isKinematic = true;
         }
 
-        public void OnDrop()
+        public virtual void OnDrop()
         {
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
         }
 
-        public void ResetState()
+        public virtual void ResetState()
         {
-            transform.position = StartPosition;
+            transform.position = StartPosition + Vector3.up;
+            transform.rotation = StartRotation;
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
             _rigidbody.linearVelocity = Vector3.zero;

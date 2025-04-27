@@ -1,18 +1,18 @@
 using NJG.Runtime.Entity;
-using NJG.Runtime.Interactables;
+using NJG.Runtime.Pickupables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG
+namespace NJG.Runtime.Interactables
 {
-    public class TestCompostBin : MonoBehaviour, IInteractable
+    public class CompostBin : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("References"), SerializeField]
-        private TestCompost _testCompostPrefab;
+        private Compost _testCompostPrefab;
         [FoldoutGroup("References"), SerializeField]
         private Transform _compostHolder;
         
-        private TestCompost _testCompost;
+        private Compost _testCompost;
         
         public void Interact(PlayerInventory playerInventory)
         {
@@ -29,7 +29,7 @@ namespace NJG
             if (playerInventory.Pickupable is null)
                 return;
 
-            if (playerInventory.Pickupable is TestHarvestedPlant plant)
+            if (playerInventory.Pickupable is HarvestedPlant plant)
             {
                 if (playerInventory.TryGetPickupable(_compostHolder))
                 {

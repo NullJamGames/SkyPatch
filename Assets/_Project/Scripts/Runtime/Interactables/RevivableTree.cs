@@ -1,11 +1,11 @@
 using NJG.Runtime.Entity;
-using NJG.Runtime.Interactables;
+using NJG.Runtime.Pickupables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG
+namespace NJG.Runtime.Interactables
 {
-    public class TestRevivableTree : MonoBehaviour, IInteractable
+    public class RevivableTree : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("References"), SerializeField]
         private GameObject _aliveTreeVersion;
@@ -26,7 +26,7 @@ namespace NJG
             if (playerInventory.Pickupable is null)
                 return;
             
-            if (playerInventory.Pickupable is TestCompost compost)
+            if (playerInventory.Pickupable is Compost compost)
             {
                 if (playerInventory.TryGetPickupable(transform))
                 {
@@ -40,7 +40,7 @@ namespace NJG
             if (!_hasCompost)
                 return;
             
-            if (playerInventory.Pickupable is TestBucket bucket)
+            if (playerInventory.Pickupable is Bucket bucket)
             {
                 if (bucket.TryEmptyWater())
                 {

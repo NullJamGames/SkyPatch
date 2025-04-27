@@ -1,49 +1,35 @@
+using System;
 using NJG.Runtime.Entity;
-using NJG.Runtime.Interactables;
+using NJG.Runtime.Pickupables;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace NJG
+namespace NJG.Runtime.Interactables
 {
-    public class TestLiftPanel : MonoBehaviour, IInteractable
+    public class MovingPlatformPanel : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("References"), SerializeField]
         private Transform _insertSlot;
         [FoldoutGroup("References"), SerializeField]
-        private PlatformMover _movablePlatform;
+        private MovingPlatform _movableMovingPlatform;
         
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainPerInterval = 1f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainInterval = 1f;
         
-        private TestBattery _battery;
+        private Battery _battery;
         private CountdownTimer _drainTimer;
 
         private void Awake()
         {
             _drainTimer = new CountdownTimer(_drainInterval);
-            _drainTimer.OnTimerStop += () =>
-            {
-                if (_battery == null)
-                    return;
+            _drainTimer.OnTimerStop += OnDrain;
+        }
 
-                _battery.RemoveCharge(_drainPerInterval);
-                if (_battery.CurrentCharge <= 0f)
-                {
-                    _movablePlatform.Deactivate();
-                    return;
-                }
-                
-                _drainTimer.Start();
-            };
-        }
-        
-        private void Update()
-        {
-            _drainTimer?.Tick(Time.deltaTime);
-        }
+        private void OnEnable() => TimerManager.RegisterTimer(_drainTimer);
+        private void OnDisable() => TimerManager.DeregisterTimer(_drainTimer);
 
         public void Interact(PlayerInventory playerInventory)
         {
@@ -51,7 +37,7 @@ namespace NJG
             {
                 if (playerInventory.TryGivePickupable(_battery))
                 {
-                    _movablePlatform.Deactivate();
+                    _movableMovingPlatform.Deactivate();
                     _battery = null;
                     _drainTimer.Stop();
                 }
@@ -62,7 +48,7 @@ namespace NJG
             if (playerInventory.Pickupable is null)
                 return;
 
-            if (playerInventory.Pickupable is TestBattery battery)
+            if (playerInventory.Pickupable is Battery battery)
             {
                 if (playerInventory.TryGetPickupable(_insertSlot))
                 {
@@ -70,11 +56,26 @@ namespace NJG
 
                     if (_battery.CurrentCharge > 0f)
                     {
-                        _movablePlatform.Activate();
+                        _movableMovingPlatform.Activate();
                         _drainTimer.Start();
                     }
                 }
             }
+        }
+
+        private void OnDrain()
+        {
+            if (_battery == null)
+                return;
+
+            _battery.RemoveCharge(_drainPerInterval);
+            if (_battery.CurrentCharge <= 0f)
+            {
+                _movableMovingPlatform.Deactivate();
+                return;
+            }
+                
+            _drainTimer.Start();
         }
     }
 }

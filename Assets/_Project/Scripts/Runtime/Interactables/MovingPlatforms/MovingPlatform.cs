@@ -1,16 +1,16 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class PlatformMover : MonoBehaviour
+    public class MovingPlatform : MonoBehaviour
     {
-        [SerializeField]
+        [FoldoutGroup("Settings"), SerializeField]
         private Vector3 _moveTo = Vector3.zero;
-        [SerializeField]
+        [FoldoutGroup("Settings"), SerializeField]
         private float _moveTime = 1f;
-        [SerializeField]
+        [FoldoutGroup("Settings"), SerializeField]
         private Ease _ease = Ease.InOutQuad;
         
         private Vector3 _startPosition;
@@ -54,13 +54,13 @@ namespace NJG.Runtime.Interactables
                      .SetLoops(-1, LoopType.Yoyo);
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, transform.position + _moveTo);
             Gizmos.DrawSphere(transform.position + _moveTo, 0.1f);
         }
-#endif
+        #endif
     }
 }

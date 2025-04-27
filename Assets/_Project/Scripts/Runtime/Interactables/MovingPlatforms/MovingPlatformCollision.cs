@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class PlatformCollisionHandler : MonoBehaviour
+    public class MovingPlatformCollision : MonoBehaviour
     {
         // The platform, if any, we are on top of
         private Transform _platform;

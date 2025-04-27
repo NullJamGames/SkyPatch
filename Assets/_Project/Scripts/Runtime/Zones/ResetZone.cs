@@ -2,7 +2,7 @@
 using NJG.Runtime.Interfaces;
 using UnityEngine;
 
-namespace NJG.Runtime.Interactables
+namespace NJG.Runtime.Zones
 {
     public class ResetZone : MonoBehaviour
     {
