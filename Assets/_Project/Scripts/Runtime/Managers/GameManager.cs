@@ -14,18 +14,15 @@ namespace NJG.Runtime.Managers
         public void Initialize()
         {
             Player = GameObject.FindGameObjectWithTag("Player");
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         
         public void LateDispose()
         {
             
         }
-
-        // private void Start()
-        // {
-        //     Cursor.lockState = CursorLockMode.Locked;
-        //     Cursor.visible = false;
-        // }
 
         public void AddEnergy(int energy)
         {

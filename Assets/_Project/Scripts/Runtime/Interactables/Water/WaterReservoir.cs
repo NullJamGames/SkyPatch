@@ -3,14 +3,16 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class WaterReservoir : MonoBehaviour, IInteractable
+    public class WaterReservoir : MonoBehaviour, IInteractable, IWaterSource
     {
         public void Interact(PlayerInventory playerInventory)
         {
-            if (playerInventory.Pickupable is Bucket bucket)
-            {
-                bucket.TryFillWater();
-            }
+            InteractionHelper.TryInteract(playerInventory, this);
+        }
+
+        public void FillWater(WaterContainer waterContainer)
+        {
+            waterContainer.TryFillWater();
         }
     }
 }

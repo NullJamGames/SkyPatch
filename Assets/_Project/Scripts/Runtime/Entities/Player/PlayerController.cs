@@ -226,28 +226,44 @@ namespace NJG.Runtime.Entity
             if (hits < 1)
                 return;
 
+            IPickupable closestPickupable = null;
             IInteractable closestInteractable = null;
-            float closestDistance = float.MaxValue;
-            foreach (Collider hit in hitColliders)
+            float closestPickupableDistance = float.MaxValue;
+            float closestInteractableDistance = float.MaxValue;
+
+            for (int i = 0; i < hits; i++)
             {
+                Collider hit = hitColliders[i];
                 if (hit == null)
                     break;
                 
-                if (!hit.gameObject.TryGetComponent(out IInteractable interactable))
-                    continue;
-
-                if (interactable is IPickupable pickupable && !_inventory.CanPickup())
-                    continue;
-                
                 float distance = Vector3.Distance(transform.position, hit.transform.position);
-                if (distance < closestDistance)
+
+                if (hit.TryGetComponent(out IPickupable pickupable))
                 {
-                    closestDistance = distance;
-                    closestInteractable = interactable;
+                    if (distance < closestPickupableDistance)
+                    {
+                        closestPickupableDistance = distance;
+                        closestPickupable = pickupable;
+                    }
+
+                    continue;
+                }
+
+                if (hit.TryGetComponent(out IInteractable interactable))
+                {
+                    if (distance < closestInteractableDistance)
+                    {
+                        closestInteractableDistance = distance;
+                        closestInteractable = interactable;
+                    }
                 }
             }
-
-            closestInteractable?.Interact(_inventory);
+            
+            if (closestPickupable != null && _inventory.CanPickup())
+                closestPickupable.Interact(_inventory);
+            else
+                closestInteractable?.Interact(_inventory);
         }
 
         private void CheckForClimbing()

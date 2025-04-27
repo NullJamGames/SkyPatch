@@ -6,18 +6,18 @@ namespace NJG.Runtime.Interactables
     public class Garden : MonoBehaviour
     {
         [FoldoutGroup("References"), SerializeField]
-        private Plot _plotPrefab;
+        private OldPlot _oldPlotPrefab;
         
         [FoldoutGroup("Settings"), SerializeField]
         private Vector2 _plotSize;
         [FoldoutGroup("Settings"), SerializeField]
         private int _energyPerHarvest = 10;
         
-        private Plot[] _plots;
+        private OldPlot[] _plots;
         
         private void OnEnable()
         {
-            _plots = GetComponentsInChildren<Plot>();
+            _plots = GetComponentsInChildren<OldPlot>();
             
             RegisterPlots();
         }
@@ -29,7 +29,7 @@ namespace NJG.Runtime.Interactables
 
         public void OnDaytime()
         {
-            foreach (Plot plot in _plots)
+            foreach (OldPlot plot in _plots)
             {
                 plot.SetDayTime(true);
             }
@@ -37,7 +37,7 @@ namespace NJG.Runtime.Interactables
         
         public void OnNighttime()
         {
-            foreach (Plot plot in _plots)
+            foreach (OldPlot plot in _plots)
             {
                 plot.SetDayTime(false);
             }
@@ -52,8 +52,8 @@ namespace NJG.Runtime.Interactables
                 return;
             }
             
-            Plot[] plots = GetComponentsInChildren<Plot>();
-            foreach (Plot plot in plots)
+            OldPlot[] plots = GetComponentsInChildren<OldPlot>();
+            foreach (OldPlot plot in plots)
             {
                 DestroyImmediate(plot.gameObject);
             }
@@ -62,8 +62,8 @@ namespace NJG.Runtime.Interactables
             {
                 for (int y = 0; y < _plotSize.y; y++)
                 {
-                    Plot plot = Instantiate(_plotPrefab, transform);
-                    plot.transform.localPosition = new Vector3(x, 0, y);
+                    OldPlot _oldPlot = Instantiate(_oldPlotPrefab, transform);
+                    _oldPlot.transform.localPosition = new Vector3(x, 0, y);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace NJG.Runtime.Interactables
             if (_plots == null)
                 return;
 
-            foreach (Plot plot in _plots)
+            foreach (OldPlot plot in _plots)
             {
                 plot.Initialize();
                 //plot.OnHarvested += OnPlotHarvested;
@@ -85,7 +85,7 @@ namespace NJG.Runtime.Interactables
             if (_plots == null)
                 return;
 
-            foreach (Plot plot in _plots)
+            foreach (OldPlot plot in _plots)
             {
                 //plot.OnHarvested -= OnPlotHarvested;
             }

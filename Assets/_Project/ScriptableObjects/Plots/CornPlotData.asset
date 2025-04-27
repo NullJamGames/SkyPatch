@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93d861184f246e797b226e50c1b615c, type: 3}
+  m_Name: CornPlotData
+  m_EditorClassIdentifier: 
+  <PlantName>k__BackingField: Corn
+  <SeedPrefab>k__BackingField: {fileID: 2747263879299043441, guid: 53a7c5982ad151442ab26caa7c779cfa, type: 3}
+  <FullyGrownPrefab>k__BackingField: {fileID: 6580157249789969239, guid: cee67783a9c01d746a4491336fd6e3cd, type: 3}
+  <HarvestablePlantPrefab>k__BackingField: {fileID: 6710253864497640795, guid: bbe4e9188c8fa594b89f7eee2ce57877, type: 3}
