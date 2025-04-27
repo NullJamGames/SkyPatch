@@ -639,7 +639,6 @@ GameObject:
   - component: {fileID: 4254583945258812830}
   - component: {fileID: 8939391885475424971}
   - component: {fileID: 8080335538505818739}
-  - component: {fileID: 6547393038471297317}
   - component: {fileID: 1066045075198965961}
   - component: {fileID: 4015948934282484498}
   m_Layer: 0
@@ -664,6 +663,7 @@ Transform:
   m_Children:
   - {fileID: 1603276014286948020}
   - {fileID: 2777918905792373297}
+  - {fileID: 8150973060258751674}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &4254583945258812830
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 8939391885475424971}
-  _groundChecker: {fileID: 6547393038471297317}
+  _groundChecker: {fileID: 5476601583335113346}
   _animator: {fileID: 842513239556620842}
   _virtualCamera: {fileID: 0}
   _input: {fileID: 11400000, guid: 222b1a21795386d4eb65ee252ac2cf44, type: 2}
@@ -749,23 +749,6 @@ MonoBehaviour:
   _interactableLayers:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &6547393038471297317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2785301683333202973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f57a4e230004a449b530b0395d0260c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundDistance: 0.08
-  _offset: 0.1
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1664
 --- !u!114 &1066045075198965961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,6 +1302,56 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4079797917413455009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8150973060258751674}
+  - component: {fileID: 5476601583335113346}
+  m_Layer: 0
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8150973060258751674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079797917413455009}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8182801351877161935}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5476601583335113346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079797917413455009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f57a4e230004a449b530b0395d0260c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundLayers:
+    serializedVersion: 2
+    m_Bits: 1664
+  _radius: 0.45
+  _checkDistance: 0.05
+  _yOffset: 0.45
 --- !u!1 &4099275821004909845
 GameObject:
   m_ObjectHideFlags: 0

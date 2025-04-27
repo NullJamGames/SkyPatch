@@ -17,7 +17,7 @@ namespace NJG.Runtime.Entity
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
-        [FoldoutGroup("References"), SerializeField, Self]
+        [FoldoutGroup("References"), SerializeField, Child]
         private GroundChecker _groundChecker;
         [FoldoutGroup("References"), SerializeField, Anywhere]
         private Animator _animator;
@@ -100,10 +100,10 @@ namespace NJG.Runtime.Entity
             _stateMachine = new StateMachine();
             
             // Declare States
-            LocomotionState _locomotionState = new LocomotionState(this, _animator);
-            JumpState _jumpState = new JumpState(this, _animator);
-            DashState _dashState = new DashState(this, _animator);
-            InteractState _interactState = new InteractState(this, _animator);
+            LocomotionState _locomotionState = new (this, _animator);
+            JumpState _jumpState = new (this, _animator);
+            DashState _dashState = new (this, _animator);
+            InteractState _interactState = new (this, _animator);
             
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
@@ -324,8 +324,6 @@ namespace NJG.Runtime.Entity
         {
             _animator.SetFloat(_speedHash, _currentSpeed);
         }
-
-        
 
         public void ResetState()
         {

@@ -1,36 +1,39 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
     public class GroundChecker : MonoBehaviour
     {
-        [SerializeField]
-        private float _groundDistance = 0.08f;
-        [SerializeField]
-        private float _offset = 0.1f;
-        [SerializeField]
+        [FoldoutGroup("Settings"), SerializeField]
         private LayerMask _groundLayers;
+        [FoldoutGroup("Settings"), SerializeField]
+        private float _radius = 0.1f;
+        [FoldoutGroup("Settings"), SerializeField]
+        private float _checkDistance = 0.08f;
+        [FoldoutGroup("Settings"), SerializeField]
+        private float _yOffset = 0.1f;
         
         public bool IsGrounded { get; private set; }
 
-        private void Update()
+        private void Update() => CheckIfGrounded();
+
+        private void CheckIfGrounded()
         {
-            Vector3 position = new Vector3(transform.position.x, transform.position.y + _offset, transform.position.z);
-            IsGrounded = Physics.SphereCast(position, _groundDistance, 
-                Vector3.down, out _, _groundDistance, _groundLayers);
+            Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
+            IsGrounded = Physics.SphereCast(position, _radius, Vector3.down, out _, _checkDistance, _groundLayers);
         }
 
-        // private void OnDrawGizmosSelected()
-        // {
-        //     Vector3 position = new Vector3(transform.position.x, transform.position.y + _offset, transform.position.z);
-        //     
-        //     Gizmos.color = Color.red;
-        //     Gizmos.DrawWireSphere(position, _groundDistance);
-        //     Gizmos.color = Color.green;
-        //     Gizmos.DrawRay(position, Vector3.down * _groundDistance);
-        //     Gizmos.color = Color.yellow;
-        //     Gizmos.DrawRay(position, Vector3.up * _groundDistance);
-        // }
+        #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(position, _radius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(position, Vector3.down * _checkDistance);
+        }
+        #endif
     }
 }
