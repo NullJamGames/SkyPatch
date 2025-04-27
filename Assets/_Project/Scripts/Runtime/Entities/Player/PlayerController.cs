@@ -93,6 +93,7 @@ namespace NJG.Runtime.Entity
         
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
+        
         private void Awake()
         {
             StartPosition = transform.position;
@@ -123,8 +124,6 @@ namespace NJG.Runtime.Entity
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_locomotionState, _interactState, new FuncPredicate(() => _interactTimer.IsRunning));
-            At(_interactState, _locomotionState, new FuncPredicate(() => !_interactTimer.IsRunning));
-            At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
             Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
@@ -254,9 +253,8 @@ namespace NJG.Runtime.Entity
         private void CheckForClimbing()
         {
             if (Physics.Raycast(transform.position, _rigidBody.linearVelocity.normalized, out RaycastHit hitInfo, _ladderDistance, _ladderLayer))
-                if (hitInfo.collider.TryGetComponent<Ladder>(out Ladder ladder))
+                if (hitInfo.collider.TryGetComponent(out Ladder ladder))
                     EnterClimbState(ladder);
-            
         }
 
         private void EnterClimbState(Ladder ladder)
