@@ -673,7 +673,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2785301683333202973}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 848e39ebbfe7f14428966f26e22ed03c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -749,6 +749,12 @@ MonoBehaviour:
   _interactableLayers:
     serializedVersion: 2
     m_Bits: 512
+  _climbSpeed: 100
+  _climbSmoothTime: 0.2
+  _ladderLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  _ladderDistance: 1
 --- !u!114 &1066045075198965961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,13 +782,13 @@ MonoBehaviour:
   _pickupParent: {fileID: 2777918905792373297}
   _pickupLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   _pickupDistance: 3
   _carryOffset: {x: 0, y: 2, z: 0}
   _dropCheckRadius: 0.5
   _dropPreventLayers:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 512
 --- !u!1 &2788427576326966574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,9 +1354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 1664
-  _radius: 0.3
-  _yOffset: 0.25
+    m_Bits: 640
+  _radius: 0.2
+  _yOffset: 0.17
 --- !u!1 &4099275821004909845
 GameObject:
   m_ObjectHideFlags: 0

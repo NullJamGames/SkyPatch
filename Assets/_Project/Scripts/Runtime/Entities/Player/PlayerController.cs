@@ -124,6 +124,7 @@ namespace NJG.Runtime.Entity
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_locomotionState, _interactState, new FuncPredicate(() => _interactTimer.IsRunning));
+            At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
             Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
