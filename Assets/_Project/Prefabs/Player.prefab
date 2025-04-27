@@ -736,14 +736,18 @@ MonoBehaviour:
   _inventory: {fileID: 4015948934282484498}
   _moveSpeed: 300
   _rotationSpeed: 600
-  _smoothTime: 0.2
-  _jumpForce: 5
-  _jumpDuration: 0.5
+  _smoothTime: 0.1
+  _stopSmoothTime: 0.04
+  _airRotationSpeed: 100
+  _airSmoothTime: 0.3
+  _airStopSmoothTime: 0.3
+  _jumpForce: 7
+  _jumpDuration: 0.3
   _jumpCooldown: 0
   _gravityMultiplier: 3
-  _dashForce: 10
-  _dashDuration: 1
-  _dashCooldown: 2
+  _dashForce: 5
+  _dashDuration: 0.5
+  _dashCooldown: 1
   _interactCooldown: 0.5
   _interactDistance: 2
   _interactableLayers:

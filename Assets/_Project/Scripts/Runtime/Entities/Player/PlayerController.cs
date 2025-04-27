@@ -33,6 +33,14 @@ namespace NJG.Runtime.Entity
         private float _rotationSpeed = 15f;
         [FoldoutGroup("Movement Settings"), SerializeField]
         private float _smoothTime = 0.2f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _stopSmoothTime = 0.04f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _airRotationSpeed = 100f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _airSmoothTime = 1f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _airStopSmoothTime = 0.3f;
 
         [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpForce = 10f;
@@ -71,11 +79,12 @@ namespace NJG.Runtime.Entity
 
         private float _currentSpeed;
         private float _currentClimbSpeed;
-        private float _velocity;
+        private Vector2 _velocity;
         private float _jumpVelocity;
         private float _dashVelocity = 1f;
         private float _climbVelocity;
         private Vector3 _movement;
+        private Vector2 _currentHorizontalSpeed;
         private List<Timer> _timers;
         private CountdownTimer _jumpTimer;
         private CountdownTimer _jumpCooldownTimer;
@@ -368,6 +377,13 @@ namespace NJG.Runtime.Entity
             _inventory.Drop();
         }
 
+        public void JumpBoostHorizontalSpeed()
+        {
+            _currentHorizontalSpeed.x += _movement.x;
+            _currentHorizontalSpeed.y += _movement.z;
+            _currentHorizontalSpeed *= 0.5f;
+        }
+
         public void HandleJump()
         {
             if (!_jumpTimer.IsRunning && _groundChecker.IsGrounded)
@@ -395,16 +411,14 @@ namespace NJG.Runtime.Entity
             if (adjustedDirection.magnitude > ZERO_F)
             {
                 HandleRotation(adjustedDirection);
-                HandleHorizontalMovement(adjustedDirection);
-                SmoothSpeed(adjustedDirection.magnitude);
+                SmoothSpeed(adjustedDirection * _moveSpeed);
+                HandleHorizontalMovement();
                 CheckForClimbing();
             }
             else
             {
-                SmoothSpeed(ZERO_F);
-                
-                // Reset horizontal velocity for a snappy stop
-                _rigidBody.linearVelocity = new Vector3(ZERO_F, _rigidBody.linearVelocity.y, ZERO_F);
+                SmoothSpeedZeroMovementInput();
+                HandleHorizontalMovement();
             }
         }
 
@@ -412,24 +426,33 @@ namespace NJG.Runtime.Entity
         {
             // Adjust rotation to match movement direction
             Quaternion targetRotation = Quaternion.LookRotation(adjustedDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+            float rotationSpeed = _groundChecker.IsGrounded? _rotationSpeed : _airRotationSpeed;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        private void HandleHorizontalMovement(Vector3 adjustedDirection)
+        private void HandleHorizontalMovement()
         {
-            // Move the player
-            Vector3 velocity = adjustedDirection * (_moveSpeed * _dashVelocity * Time.deltaTime);
-            _rigidBody.linearVelocity = new Vector3(velocity.x, _rigidBody.linearVelocity.y, velocity.z);
+            Vector2 velocity = _currentHorizontalSpeed *  _dashVelocity * Time.deltaTime;
+            _rigidBody.linearVelocity = new Vector3(velocity.x, _rigidBody.linearVelocity.y, velocity.y);
         }
 
-        private void SmoothSpeed(float value)
+        private void SmoothSpeed(Vector3 desiredSpeed)
         {
-            _currentSpeed = Mathf.SmoothDamp(_currentSpeed, value, ref _velocity, _smoothTime);
+            Vector2 desiredHorizontalSpeed = new Vector2(desiredSpeed.x, desiredSpeed.z);
+            float smoothTime = _groundChecker.IsGrounded? _smoothTime: _airSmoothTime;
+            _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
+        }
+
+        private void SmoothSpeedZeroMovementInput()
+        {
+            Vector2 desiredHorizontalSpeed = Vector2.zero;
+            float smoothTime = _groundChecker.IsGrounded? _stopSmoothTime: _airStopSmoothTime;
+            _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
         private void UpdateAnimator()
         {
-            _animator.SetFloat(_speedHash, _currentSpeed);
+            _animator.SetFloat(_speedHash, _currentHorizontalSpeed.magnitude);
         }
 
         public void ResetState()
