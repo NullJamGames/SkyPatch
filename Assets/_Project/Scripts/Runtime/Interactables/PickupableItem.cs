@@ -10,7 +10,7 @@ using UnityEngine;
 namespace NJG.Runtime.Interactables
 {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-    public abstract class PickupableItem : ValidatedMonoBehaviour, IPickupable, IResetable
+    public abstract class PickupableItem : ValidatedMonoBehaviour, IPickupable, IResetable, IPlatformRider
     {
         [FoldoutGroup("References"), SerializeField, Anywhere]
         protected MeshRenderer _renderer;
@@ -55,7 +55,26 @@ namespace NJG.Runtime.Interactables
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
         }
+        
+        public void AttachToPlatform(Transform platform)
+        {
+            transform.SetParent(platform);
+        }
 
+        public void DetachFromPlatform()
+        {
+            if (IsPickedUp)
+                return;
+            
+            transform.SetParent(null);
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetPickupableTooltip(playerInventory, this);
+            return $"{_name}\n{tooltipText}";
+        }
+        
         public virtual void ResetState()
         {
             transform.position = StartPosition + Vector3.up;
@@ -64,12 +83,6 @@ namespace NJG.Runtime.Interactables
             _rigidbody.isKinematic = false;
             _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
-        }
-
-        public string GetTooltipText(PlayerInventory playerInventory)
-        {
-            string tooltipText = InteractionHelper.GetPickupableTooltip(playerInventory, this);
-            return $"{_name}\n{tooltipText}";
         }
     }
 }

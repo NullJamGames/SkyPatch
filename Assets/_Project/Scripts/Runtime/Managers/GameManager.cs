@@ -15,8 +15,8 @@ namespace NJG.Runtime.Managers
         {
             Player = GameObject.FindGameObjectWithTag("Player");
             
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         
         public void LateDispose()

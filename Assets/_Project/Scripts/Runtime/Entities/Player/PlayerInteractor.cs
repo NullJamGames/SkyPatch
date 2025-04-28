@@ -117,7 +117,7 @@ namespace NJG.Runtime.Entities
             
             if (closestPickupable != null)
             {
-                if (_playerInventory.CanPickup() && IsSameInteractable(closestPickupable))
+                if (!_playerInventory.CanPickup() || IsSameInteractable(closestPickupable))
                     return;
                 
                 UnregisterInteractable();

@@ -101,8 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _batteryHolder: {fileID: 5614929000281116686}
+  _name: ELEVATOR PANEL
   _movingPlatform: {fileID: 5996154077402610263}
-  _drainPerInterval: 5
+  _drainPerInterval: 3
   _drainInterval: 1
 --- !u!1 &6666222036459796085
 GameObject:
@@ -201,6 +202,7 @@ GameObject:
   - component: {fileID: 7420002807964533599}
   - component: {fileID: 8223778002981310540}
   - component: {fileID: 5996154077402610263}
+  - component: {fileID: 3412890087269444722}
   m_Layer: 7
   m_Name: MovingPlatform
   m_TagString: MovingPlatform
@@ -260,6 +262,18 @@ MonoBehaviour:
   _moveTo: {x: 0, y: -7.8, z: 0}
   _moveTime: 2
   _ease: 7
+--- !u!114 &3412890087269444722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780820168957470706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843ae713aab846ebba4bbdef3d62451c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8251175646143225068
 GameObject:
   m_ObjectHideFlags: 0

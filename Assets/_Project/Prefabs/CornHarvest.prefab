@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 5246610817093901914}
+  _name: CORN
 --- !u!1 &8209920158973140588
 GameObject:
   m_ObjectHideFlags: 0

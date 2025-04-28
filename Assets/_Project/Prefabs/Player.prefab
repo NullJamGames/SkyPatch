@@ -639,7 +639,6 @@ GameObject:
   - component: {fileID: 4254583945258812830}
   - component: {fileID: 8939391885475424971}
   - component: {fileID: 8080335538505818739}
-  - component: {fileID: 1066045075198965961}
   - component: {fileID: 4015948934282484498}
   - component: {fileID: 1020541220729457983}
   m_Layer: 0
@@ -757,18 +756,6 @@ MonoBehaviour:
     m_Bits: 2048
   _ladderDistance: 1
   _climbCooldown: 0.8
---- !u!114 &1066045075198965961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2785301683333202973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 843ae713aab846ebba4bbdef3d62451c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4015948934282484498
 MonoBehaviour:
   m_ObjectHideFlags: 0

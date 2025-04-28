@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour, IResetable
+    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
@@ -409,6 +409,16 @@ namespace NJG.Runtime.Entity
         private void UpdateAnimator()
         {
             _animator.SetFloat(_speedHash, _currentHorizontalSpeed.magnitude);
+        }
+        
+        public void AttachToPlatform(Transform platform)
+        {
+            transform.SetParent(platform);
+        }
+        
+        public void DetachFromPlatform()
+        {
+            transform.SetParent(null);
         }
 
         public void ResetState()

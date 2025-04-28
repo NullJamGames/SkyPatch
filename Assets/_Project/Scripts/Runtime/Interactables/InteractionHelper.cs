@@ -25,13 +25,15 @@ namespace NJG.Runtime.Interactables
         )
         {
             bool playerHasBattery = playerInventory.Pickupable is Battery;
+            bool playerCanPickup = playerInventory.CanPickup();
             bool interactableHasBattery = batteryInteractable.HasBattery;
 
-            return playerHasBattery switch
+            return interactableHasBattery switch
             {
-                true when !interactableHasBattery => "Press E to insert battery",
+                true when playerCanPickup => "Press E to take battery",
                 true => "Can't take battery, hands are full...",
-                _ => interactableHasBattery ? "Press E to take battery" : "Looks like I can insert a battery here..."
+                false when playerHasBattery => "Press E to insert battery",
+                false => "Looks like I can insert a battery here..."
             };
         }
         
