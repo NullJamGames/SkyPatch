@@ -1,7 +1,9 @@
-﻿namespace NJG.Runtime.Interactables
+﻿using NJG.Runtime.Entity;
+
+namespace NJG.Runtime.Interactables
 {
     public interface IWaterable
     {
-        public void OnWater(WaterContainer waterContainer);
+        public void OnWater(PlayerInventory playerInventory, WaterContainer waterContainer);
     }
 }

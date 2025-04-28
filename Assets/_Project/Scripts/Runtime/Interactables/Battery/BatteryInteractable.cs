@@ -1,12 +1,11 @@
 ﻿using System;
 using NJG.Runtime.Entity;
-using NJG.Runtime.UI.Tooltips;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public abstract class BatteryInteractable : MonoBehaviour, IInteractable, IGivableInteractable, IBatteryReceiver, ITooltipProvider
+    public abstract class BatteryInteractable : MonoBehaviour, IInteractable, IGivableInteractable, IBatteryReceiver
     {
         [FoldoutGroup("References"), SerializeField]
         private Transform _batteryHolder;
@@ -19,6 +18,7 @@ namespace NJG.Runtime.Interactables
         public event Action<string> OnTooltipTextChanged;
         
         public bool HasBattery => _battery != null;
+        public Transform Transform => transform;
         
         public virtual void Interact(PlayerInventory playerInventory)
         {

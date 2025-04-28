@@ -1,3 +1,4 @@
+using System;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,6 +18,10 @@ namespace NJG.Runtime.Interactables
         private Vector3 _offPosition = new(-54f, 0f, 0f);
         private Vector3 _onPosition = new(54f, 0f, 0f);
         
+        public Transform Transform => transform;
+        
+        public event Action<string> OnTooltipTextChanged;
+        
         public void Interact(PlayerInventory playerInventory)
         {
             if (_isActive)
@@ -25,6 +30,11 @@ namespace NJG.Runtime.Interactables
             _isActive = true;
             _arm.localPosition = _onPosition;
             OnSwitchActivated?.Invoke();
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            return "[Switch]\nTOOLTIP NOT IMPLEMENTED";
         }
     }
 }

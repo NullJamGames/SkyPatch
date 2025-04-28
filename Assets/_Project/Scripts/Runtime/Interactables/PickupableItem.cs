@@ -10,12 +10,10 @@ using UnityEngine;
 namespace NJG.Runtime.Interactables
 {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-    public abstract class PickupableItem : ValidatedMonoBehaviour, IPickupable, IResetable, ITooltipProvider
+    public abstract class PickupableItem : ValidatedMonoBehaviour, IPickupable, IResetable
     {
         [FoldoutGroup("References"), SerializeField, Anywhere]
         protected MeshRenderer _renderer;
-        [FoldoutGroup("References"), SerializeField, Child]
-        protected NJGTooltipTrigger _tooltipTrigger;
         
         [FoldoutGroup("General"), SerializeField]
         protected string _name = "NAME"; 
@@ -29,7 +27,7 @@ namespace NJG.Runtime.Interactables
         public bool IsPickedUp { get; private set; }
         
         public event Action<string> OnTooltipTextChanged;
-
+        
         public virtual void Awake()
         {
             StartPosition = transform.position;
@@ -49,8 +47,6 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = true;
             _collider.enabled = false;
             _rigidbody.isKinematic = true;
-            //_tooltipTrigger.HideTooltip();
-            _tooltipTrigger.gameObject.SetActive(false);
         }
 
         public virtual void OnDrop()
@@ -58,7 +54,6 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = false;
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
-            _tooltipTrigger.gameObject.SetActive(true);
         }
 
         public virtual void ResetState()

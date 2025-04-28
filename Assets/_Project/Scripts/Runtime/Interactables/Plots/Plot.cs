@@ -22,18 +22,21 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("VFX"), SerializeField]
         private Vector3 _splashOffset = Vector3.up;
         
-        private enum PlotState { Empty, Growing, Ready }
-
-        private PlotState _state = PlotState.Empty;
         private GameObject _currentVisual;
         private CoroutineHandle _growToFullRoutine;
-
+        
+        public enum PlotState { Empty, Growing, Ready }
+        public PlotState State { get; private set; } = PlotState.Empty;
+        public Transform Transform => transform;
+        
+        public event Action<string> OnTooltipTextChanged;
+        
         public void Interact(PlayerInventory playerInventory)
         {
             AssertState(playerInventory);
         }
         
-        public void OnWater(WaterContainer waterContainer)
+        public void OnWater(PlayerInventory playerInventory, WaterContainer waterContainer)
         {
             if (!_growToFullRoutine.IsRunning)
                 _growToFullRoutine = Timing.RunCoroutine(GrowToFullRoutine(waterContainer));
@@ -46,14 +49,14 @@ namespace NJG.Runtime.Interactables
             
             yield return Timing.WaitForSeconds(_growTime);
             
-            _state = PlotState.Ready;
+            State = PlotState.Ready;
             Destroy(_currentVisual);
             _currentVisual = Instantiate(_plotData.FullyGrownPrefab, transform.position, Quaternion.identity, transform);
         }
 
         private void AssertState(PlayerInventory playerInventory)
         {
-            switch(_state)
+            switch(State)
             {
                 case PlotState.Empty:
                     EmptyPlotInteraction();
@@ -69,7 +72,7 @@ namespace NJG.Runtime.Interactables
 
         private void EmptyPlotInteraction()
         {
-            _state = PlotState.Growing;
+            State = PlotState.Growing;
             _currentVisual = Instantiate(_plotData.SeedPrefab, transform.position, Quaternion.identity, transform);
         }
 
@@ -80,12 +83,18 @@ namespace NJG.Runtime.Interactables
         
         private void ReadyPlotInteraction()
         {
-            _state = PlotState.Empty;
+            State = PlotState.Empty;
             Destroy(_currentVisual);
 
             float yOffset = transform.position.y + _harvestSpawnOffset;
             Vector3 spawnPosition = new (transform.position.x, yOffset, transform.position.z);
             Instantiate(_plotData.HarvestablePlantPrefab, spawnPosition, Quaternion.identity);
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetPlotInteractableTooltip(playerInventory, this);
+            return $"{_plotData.PlantName}\n{tooltipText}";
         }
     }
 }

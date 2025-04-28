@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KBCore.Refs;
+using NJG.Runtime.Entities;
 using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
@@ -58,13 +59,6 @@ namespace NJG.Runtime.Entity
         [FoldoutGroup("Dash Settings"), SerializeField]
         private float _dashCooldown = 2f;
         
-        [FoldoutGroup("Interact Settings"), SerializeField]
-        private float _interactCooldown = 0.5f;
-        [FoldoutGroup("Interact Settings"), SerializeField]
-        private float _interactDistance = 1f;
-        [FoldoutGroup("Interact Settings"), SerializeField]
-        private LayerMask _interactableLayers;
-        
         [FoldoutGroup("Climb Settings"), SerializeField]
         private float _climbSpeed = 100f;
         [FoldoutGroup("Climb Settings"), SerializeField]
@@ -92,7 +86,6 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _jumpCooldownTimer;
         private CountdownTimer _dashTimer;
         private CountdownTimer _dashCooldownTimer;
-        private CountdownTimer _interactTimer;
         private CountdownTimer _climbCooldownTimer;
 
         private bool _isClimbing;
@@ -106,8 +99,12 @@ namespace NJG.Runtime.Entity
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
         
+        public PlayerInteractor Interactor { get; private set; }
+        
         private void Awake()
         {
+            Interactor = GetComponent<PlayerInteractor>();
+            
             StartPosition = transform.position;
             StartRotation = transform.rotation;
             _mainCamera = Camera.main;
@@ -129,13 +126,11 @@ namespace NJG.Runtime.Entity
             LocomotionState _locomotionState = new LocomotionState(this, _animator);
             JumpState _jumpState = new JumpState(this, _animator);
             DashState _dashState = new DashState(this, _animator);
-            InteractState _interactState = new InteractState(this, _animator);
             ClimbState _climbState = new ClimbState(this, _animator);
 
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
-            At(_locomotionState, _interactState, new FuncPredicate(() => _interactTimer.IsRunning));
             At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
             Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
@@ -146,7 +141,6 @@ namespace NJG.Runtime.Entity
         private bool ReturnToLocomotionState()
         {
             return _groundChecker.IsGrounded
-                   && !_interactTimer.IsRunning
                    && !_jumpTimer.IsRunning
                    && !_dashTimer.IsRunning
                    && !_isClimbing;
@@ -170,11 +164,9 @@ namespace NJG.Runtime.Entity
                 _dashCooldownTimer.Start();
             };
             
-            _interactTimer = new CountdownTimer(_interactCooldown);
-            
             _climbCooldownTimer = new CountdownTimer(_climbCooldown);
                 
-            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _interactTimer, _climbCooldownTimer };
+            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _climbCooldownTimer };
         }
 
         private void OnEnable()
@@ -229,56 +221,7 @@ namespace NJG.Runtime.Entity
         
         private void OnInteract()
         {
-            if (!_interactTimer.IsRunning)
-                _interactTimer.Start();
-        }
-
-        public void Interact()
-        {
-            Collider[] hitColliders = new Collider[10];
-            int hits = Physics.OverlapSphereNonAlloc(transform.position, _interactDistance, hitColliders, _interactableLayers);
-            
-            if (hits < 1)
-                return;
-
-            IPickupable closestPickupable = null;
-            IInteractable closestInteractable = null;
-            float closestPickupableDistance = float.MaxValue;
-            float closestInteractableDistance = float.MaxValue;
-
-            for (int i = 0; i < hits; i++)
-            {
-                Collider hit = hitColliders[i];
-                if (hit == null)
-                    break;
-                
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-
-                if (hit.TryGetComponent(out IPickupable pickupable))
-                {
-                    if (distance < closestPickupableDistance)
-                    {
-                        closestPickupableDistance = distance;
-                        closestPickupable = pickupable;
-                    }
-
-                    continue;
-                }
-
-                if (hit.TryGetComponent(out IInteractable interactable))
-                {
-                    if (distance < closestInteractableDistance)
-                    {
-                        closestInteractableDistance = distance;
-                        closestInteractable = interactable;
-                    }
-                }
-            }
-            
-            if (closestPickupable != null && _inventory.CanPickup())
-                closestPickupable.Interact(_inventory);
-            else
-                closestInteractable?.Interact(_inventory);
+            Interactor.Interact();
         }
 
         private void CheckForClimbing()

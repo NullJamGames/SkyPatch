@@ -42,7 +42,7 @@ namespace NJG.Runtime.UI
             while (true)
             {
                 float treesAlive = 0;
-                foreach (RevivableTree tree in _revivableTrees.Where(tree => tree.IsRevived))
+                foreach (RevivableTree tree in _revivableTrees.Where(tree => tree.State == RevivableTree.ObjectiveState.Completed))
                     treesAlive++;
                 
                 if (treesAlive >= _revivableTrees.Count)

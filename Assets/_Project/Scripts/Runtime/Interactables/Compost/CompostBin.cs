@@ -1,3 +1,4 @@
+using System;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,7 +12,15 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("References"), SerializeField]
         private Transform _compostHolder;
         
+        [FoldoutGroup("General"), SerializeField]
+        private string _name = "NAME";
+        
         private Compost _compost;
+        
+        public Transform Transform => transform;
+        public bool HasCompost => _compost != null;
+        
+        public event Action<string> OnTooltipTextChanged;
         
         public void Interact(PlayerInventory playerInventory)
         {
@@ -33,6 +42,12 @@ namespace NJG.Runtime.Interactables
             playerInventory.AttachPickupable(_compost);
             _compost = null;
             return true;
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetCompostInteractableTooltip(playerInventory, this);
+            return $"{_name}\n{tooltipText}";
         }
     }
 }

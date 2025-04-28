@@ -9,7 +9,7 @@ namespace NJG.Runtime.Entity
         public override void OnEnter()
         {
             _animator.CrossFade(_attackHash, _crossFadeDuration);
-            _player.Interact();
+            //_player.Interactor.Interact(_player.Inventory);
         }
         
         public override void FixedUpdate()

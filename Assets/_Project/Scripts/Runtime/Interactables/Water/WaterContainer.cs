@@ -38,7 +38,7 @@ namespace NJG.Runtime.Interactables
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
         {
             if (interactable is IWaterable waterable)
-                waterable.OnWater(this);
+                waterable.OnWater(playerInventory, this);
             else if (interactable is IWaterSource waterSource)
                 waterSource.FillWater(this);
         }

@@ -21,16 +21,16 @@ namespace NJG.Runtime.UI.Tooltips
                 Debug.LogError("Tooltip provider not found in parent GameObject.");
         }
 
-        private void OnEnable()
-        {
-            _tooltipProvider.OnTooltipTextChanged += UpdateTooltipText;
-        }
-
-        private void OnDisable()
-        {
-            if (_tooltipProvider != null)
-                _tooltipProvider.OnTooltipTextChanged -= UpdateTooltipText;
-        }
+        // private void OnEnable()
+        // {
+        //     _tooltipProvider.OnTooltipTextChanged += UpdateTooltipText;
+        // }
+        //
+        // private void OnDisable()
+        // {
+        //     if (_tooltipProvider != null)
+        //         _tooltipProvider.OnTooltipTextChanged -= UpdateTooltipText;
+        // }
 
         private void OnTriggerEnter(Collider colliderInfo)
         {

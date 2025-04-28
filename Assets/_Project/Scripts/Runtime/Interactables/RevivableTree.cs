@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using MEC;
 using NJG.Runtime.Entity;
+using NJG.Runtime.Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -23,9 +26,15 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("VFX"), SerializeField]
         private Vector3 _splashOffset = Vector3.up;
         
-        private bool _hasCompost;
         private CoroutineHandle _reviveRoutine;
-        public bool IsRevived { get; private set; }
+        
+        //public bool HasCompost;
+        //public bool IsRevived { get; private set; }
+        public enum ObjectiveState { NeedsCompost, NeedsWater, Reviving, Completed }
+        public ObjectiveState State { get; private set; } = ObjectiveState.NeedsCompost;
+        public Transform Transform => transform;
+        
+        public event Action<string> OnTooltipTextChanged;
         
         public void Interact(PlayerInventory playerInventory)
         {
@@ -34,35 +43,44 @@ namespace NJG.Runtime.Interactables
 
         public void ApplyCompost(Compost compost, PlayerInventory playerInventory)
         {
-            if (IsRevived || _hasCompost)
+            if (State != ObjectiveState.NeedsCompost)
                 return;
             
-            _hasCompost = true;
+            State = ObjectiveState.NeedsWater;
             _compostPlacedVisual.SetActive(true);
             playerInventory.DetachPickupable();
             Destroy(compost.gameObject);
+            OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
         }
         
-        public void OnWater(WaterContainer waterContainer)
+        public void OnWater(PlayerInventory playerInventory, WaterContainer waterContainer)
         {
             if (!waterContainer.TryEmptyWater(true, _splashDelay, transform.position + _splashOffset))
                 return;
             
-            if (IsRevived || !_hasCompost)
+            if (State != ObjectiveState.NeedsWater)
                 return;
             
+            State = ObjectiveState.Reviving;
             if (!_reviveRoutine.IsRunning)
-                _reviveRoutine = Timing.RunCoroutine(ReviveTreeRoutine());
+                _reviveRoutine = Timing.RunCoroutine(ReviveTreeRoutine(playerInventory));
         }
 
-        private IEnumerator<float> ReviveTreeRoutine()
+        private IEnumerator<float> ReviveTreeRoutine(PlayerInventory playerInventory)
         {
             yield return Timing.WaitForSeconds(_reviveDelay);
             
             _compostPlacedVisual.SetActive(false);
             _deadTreeVersion.SetActive(false);
             _aliveTreeVersion.SetActive(true);
-            IsRevived = true;
+            State = ObjectiveState.Completed;
+            OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetRevivableTreeInteractableTooltip(playerInventory, this);
+            return $"TREE\n{tooltipText}";
         }
     }
 }
