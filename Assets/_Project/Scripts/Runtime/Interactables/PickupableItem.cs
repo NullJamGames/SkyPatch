@@ -1,17 +1,24 @@
 ﻿using System;
 using KBCore.Refs;
+using ModelShark;
 using NJG.Runtime.Entity;
 using NJG.Runtime.Interfaces;
+using NJG.Runtime.UI.Tooltips;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-    public abstract class PickupableItem : MonoBehaviour, IPickupable, IResetable
+    public abstract class PickupableItem : ValidatedMonoBehaviour, IPickupable, IResetable, ITooltipProvider
     {
         [FoldoutGroup("References"), SerializeField, Anywhere]
         protected MeshRenderer _renderer;
+        [FoldoutGroup("References"), SerializeField, Child]
+        protected NJGTooltipTrigger _tooltipTrigger;
+        
+        [FoldoutGroup("General"), SerializeField]
+        protected string _name = "NAME"; 
         
         protected Collider _collider;
         protected Rigidbody _rigidbody;
@@ -20,6 +27,8 @@ namespace NJG.Runtime.Interactables
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
         public bool IsPickedUp { get; private set; }
+        
+        public event Action<string> OnTooltipTextChanged;
 
         public virtual void Awake()
         {
@@ -40,6 +49,8 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = true;
             _collider.enabled = false;
             _rigidbody.isKinematic = true;
+            //_tooltipTrigger.HideTooltip();
+            _tooltipTrigger.gameObject.SetActive(false);
         }
 
         public virtual void OnDrop()
@@ -47,6 +58,7 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = false;
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
+            _tooltipTrigger.gameObject.SetActive(true);
         }
 
         public virtual void ResetState()
@@ -57,6 +69,12 @@ namespace NJG.Runtime.Interactables
             _rigidbody.isKinematic = false;
             _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetPickupableTooltip(playerInventory, this);
+            return $"{_name}\n{tooltipText}";
         }
     }
 }

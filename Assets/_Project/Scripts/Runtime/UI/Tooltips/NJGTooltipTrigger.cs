@@ -51,7 +51,7 @@ namespace NJG.Runtime.UI.Tooltips
             _tooltipTrigger.ForceHideTooltip();
         }
 
-        private void UpdateTooltipText(string text)
+        public void UpdateTooltipText(string text)
         {
             // Reset tooltip just in case.
             _tooltipTrigger.ForceHideTooltip();
@@ -60,5 +60,7 @@ namespace NJG.Runtime.UI.Tooltips
             // Popup the tooltip (Note: duration doesn't matter, since StaysOpen is True)
             _tooltipTrigger.Popup(1f, gameObject);
         }
+
+        public void HideTooltip() => _tooltipTrigger.ForceHideTooltip();
     }
 }

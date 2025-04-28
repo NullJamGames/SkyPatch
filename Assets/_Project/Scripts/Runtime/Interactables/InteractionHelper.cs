@@ -34,5 +34,16 @@ namespace NJG.Runtime.Interactables
                 _ => interactableHasBattery ? "Press E to take battery" : "Looks like I can insert a battery here..."
             };
         }
+        
+        public static string GetPickupableTooltip(PlayerInventory playerInventory, PickupableItem pickupable)
+        {
+            bool playerHasPickupable = playerInventory.Pickupable != null;
+            
+            return playerHasPickupable switch
+            {
+                true => "Hands are full...",
+                _ => "Press E to pick up"
+            };
+        }
     }
 }
