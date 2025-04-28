@@ -24813,15 +24813,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.655442
+      value: -4.52036
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.801348
+      value: 1.4813478
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.148453
+      value: 4.379466
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24855,6 +24855,18 @@ PrefabInstance:
       propertyPath: cozyCamera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 6454525502419432554, guid: f74db6a793949214d9b898429d40a04d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7233689
+      objectReference: {fileID: 0}
+    - target: {fileID: 6454525502419432554, guid: f74db6a793949214d9b898429d40a04d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7233689
+      objectReference: {fileID: 0}
+    - target: {fileID: 6454525502419432554, guid: f74db6a793949214d9b898429d40a04d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7233689
+      objectReference: {fileID: 0}
     - target: {fileID: 8070779517072539549, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: satHolder
       value: 

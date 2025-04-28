@@ -15,12 +15,16 @@ namespace NJG.Runtime.UI
         private GameObject _winScreen;
         [SerializeField]
         private TextMeshProUGUI _winText;
+        [SerializeField]
+        private TextMeshProUGUI _gameVersionText;
 
         private List<RevivableTree> _revivableTrees;
         private CoroutineHandle _checkForWinRoutine;
         
         private void Start()
         {
+            _gameVersionText.text = $"Version: {Application.version}";
+            
             // TODO: This is just for testing...
             _revivableTrees = new List<RevivableTree>();
             GameObject[] objectives = GameObject.FindGameObjectsWithTag("Objective");
