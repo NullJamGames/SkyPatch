@@ -306,6 +306,9 @@ MonoBehaviour:
   _waterVisual: {fileID: 6577880804942882071}
   _spillPoint: {fileID: 7046908301251031391}
   _spillAngle: 45
+  _waterFillAreaLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   _splashVFXPrefab: {fileID: 1249283405931649209, guid: 8daac68aad0efc74293b83aa27a9d446, type: 3}
   _splashVFXDuration: 1.5
   _splashVFXDelay: 0.15
