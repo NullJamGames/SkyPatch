@@ -303,6 +303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 9050596145278257647}
   _name: BUCKET
+  _maxWaterAmount: 100
+  _waterAmount: 0
   _waterVisual: {fileID: 6577880804942882071}
   _spillPoint: {fileID: 7046908301251031391}
   _spillAngle: 45
