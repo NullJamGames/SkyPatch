@@ -339,7 +339,9 @@ namespace NJG.Runtime.Entity
         private void JumpStart()
         {
             _jumpVelocity = _jumpForce;
-            if(!_isOnMovingPlatform)
+            transform.SetParent(null);
+            
+            if(_getPlatformerSpeed == null)
                 return;
 
             float ySpeedOfPlatform = _getPlatformerSpeed().y;
@@ -435,6 +437,7 @@ namespace NJG.Runtime.Entity
         {
             _isOnMovingPlatform = false;
             transform.SetParent(null);
+            _getPlatformerSpeed = null;
         }
 
         public void SetGetPlatformerSpeedDelegate(Func<Vector3> getPlatformerSpeedDelegate)
