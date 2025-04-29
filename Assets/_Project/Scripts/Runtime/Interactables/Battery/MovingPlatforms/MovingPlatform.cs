@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,10 +17,19 @@ namespace NJG.Runtime.Interactables
         private Vector3 _startPosition;
         private Vector3 _endPosition;
 
+        private Vector3 _currentPosition;
+        private Vector3 _previousPosition;
+
         private void Start()
         {
             _startPosition = transform.position;
             _endPosition = transform.position + _moveTo;
+        }
+
+        private void Update()
+        {
+            _previousPosition = _currentPosition;
+            _currentPosition = transform.position;
         }
 
         public void Activate()
@@ -52,6 +62,11 @@ namespace NJG.Runtime.Interactables
             transform.DOMove(_endPosition, _moveTime)
                      .SetEase(_ease)
                      .SetLoops(-1, LoopType.Yoyo);
+        }
+
+        public Vector3 GetVelocity()
+        {
+            return (_currentPosition - _previousPosition) / Time.deltaTime;
         }
 
         #if UNITY_EDITOR

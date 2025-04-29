@@ -91,6 +91,9 @@ namespace NJG.Runtime.Entity
         private bool _isClimbing;
         private Ladder _ladder;
 
+        private bool _isOnMovingPlatform;
+        private Func<Vector3> _getPlatformerSpeed;
+        
         private const float ZERO_F = 0f;
         
         // Animator Params
@@ -152,7 +155,7 @@ namespace NJG.Runtime.Entity
             _jumpTimer = new CountdownTimer(_jumpDuration);
             _jumpCooldownTimer = new CountdownTimer(_jumpCooldown);
 
-            _jumpTimer.OnTimerStart += () => _jumpVelocity = _jumpForce;
+            _jumpTimer.OnTimerStart += JumpStart ;
             _jumpTimer.OnTimerStop += () => _jumpCooldownTimer.Start();
 
             _dashTimer = new CountdownTimer(_dashDuration);
@@ -305,7 +308,7 @@ namespace NJG.Runtime.Entity
 
         private void OnJump(bool performed)
         {
-            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && _groundChecker.IsGrounded)
+            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && (_groundChecker.IsGrounded || _isOnMovingPlatform))
             {
                 _jumpTimer.Start();
             }
@@ -331,6 +334,17 @@ namespace NJG.Runtime.Entity
         {
             //_inventory.Pickup();
             _inventory.Drop();
+        }
+
+        private void JumpStart()
+        {
+            _jumpVelocity = _jumpForce;
+            if(!_isOnMovingPlatform)
+                return;
+
+            float ySpeedOfPlatform = _getPlatformerSpeed().y;
+            if(ySpeedOfPlatform > 0)
+                _jumpVelocity += ySpeedOfPlatform;
         }
 
         public void JumpBoostHorizontalSpeed()
@@ -413,12 +427,19 @@ namespace NJG.Runtime.Entity
         
         public void AttachToPlatform(Transform platform)
         {
+            _isOnMovingPlatform = true;
             transform.SetParent(platform);
         }
         
         public void DetachFromPlatform()
         {
+            _isOnMovingPlatform = false;
             transform.SetParent(null);
+        }
+
+        public void SetGetPlatformerSpeedDelegate(Func<Vector3> getPlatformerSpeedDelegate)
+        {
+            _getPlatformerSpeed = getPlatformerSpeedDelegate;
         }
 
         public void ResetState()
