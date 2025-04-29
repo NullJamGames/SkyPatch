@@ -17,6 +17,9 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Settings"), SerializeField]
         private float _spillAngle = 45f;
         
+        [FoldoutGroup("WaterFill"), SerializeField]
+        private LayerMask _waterFillAreaLayer;
+        
         [FoldoutGroup("VFX"), SerializeField]
         private GameObject _splashVFXPrefab;
         [FoldoutGroup("VFX"), SerializeField]
@@ -33,6 +36,7 @@ namespace NJG.Runtime.Interactables
         private void Start()
         {
             InvokeRepeating(nameof(CheckForSpill), 0f, 0.5f);
+            InvokeRepeating(nameof(CheckForWaterFillArea), 0f, 0.2f);
         }
         
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
@@ -98,6 +102,15 @@ namespace NJG.Runtime.Interactables
             // TODO: Add a pool manager for VFX
             GameObject splashVFX = Instantiate(_splashVFXPrefab, position, Quaternion.identity);
             Destroy(splashVFX, _splashVFXDuration);
+        }
+        
+        private void CheckForWaterFillArea()
+        {
+            if (!IsPickedUp || HasWater)
+                return;
+            
+            if (Physics.CheckSphere(transform.position, 0.1f, _waterFillAreaLayer))
+                TryFillWater();
         }
     }
 }
