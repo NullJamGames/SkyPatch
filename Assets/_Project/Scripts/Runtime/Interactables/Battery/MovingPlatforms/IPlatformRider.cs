@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
@@ -6,5 +7,7 @@ namespace NJG.Runtime.Interactables
     {
         public void AttachToPlatform(Transform platform);
         public void DetachFromPlatform();
+        
+        public void SetGetPlatformerSpeedDelegate(Func<Vector3> getPlatformerSpeedDelegate){}
     }
 }

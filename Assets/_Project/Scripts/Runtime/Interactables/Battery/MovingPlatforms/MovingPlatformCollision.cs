@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
@@ -11,6 +12,13 @@ namespace NJG.Runtime.Interactables
         private List<IPlatformRider> _riders = new ();
 
         private void Awake() => _collider = GetComponent<Collider>();
+        
+        private MovingPlatform _movingPlatform;
+
+        private void OnEnable()
+        {
+            _movingPlatform = GetComponent<MovingPlatform>();
+        }
 
         private void OnCollisionEnter(Collision other)
         {
@@ -27,6 +35,7 @@ namespace NJG.Runtime.Interactables
                 {
                     _riders.Add(rider);
                     rider.AttachToPlatform(transform);
+                    rider.SetGetPlatformerSpeedDelegate(_movingPlatform.GetVelocity);
                 }
             }
         }
