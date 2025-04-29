@@ -16,7 +16,7 @@ namespace NJG.Runtime.Interactables
         [field: SerializeField, ReadOnly]
         public float CurrentCharge { get; private set; } = 0f;
 
-        private const float _maxCharge = 100f;
+        protected const float _maxCharge = 100f;
         
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
         {
@@ -31,7 +31,7 @@ namespace NJG.Runtime.Interactables
             UpdateMaterial();
         }
         
-        public void RemoveCharge(float amount)
+        public virtual void RemoveCharge(float amount)
         {
             CurrentCharge -= amount;
             CurrentCharge = Mathf.Clamp(CurrentCharge, 0f, _maxCharge);
