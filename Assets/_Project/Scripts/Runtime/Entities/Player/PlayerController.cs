@@ -221,10 +221,7 @@ namespace NJG.Runtime.Entity
             }
         }
         
-        private void OnInteract()
-        {
-            Interactor.Interact();
-        }
+        private void OnInteract() => Interactor.Interact();
 
         private void CheckForClimbing()
         {
@@ -303,6 +300,9 @@ namespace NJG.Runtime.Entity
 
         private void OnJump(bool performed)
         {
+            // TODO: Testing if removing jump is a good idea
+            return;
+            
             if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && (IsGrounded))
             {
                 _jumpTimer.Start();
@@ -325,11 +325,7 @@ namespace NJG.Runtime.Entity
             }
         }
 
-        private void OnPickup()
-        {
-            //_inventory.Pickup();
-            _inventory.Drop();
-        }
+        private void OnPickup() => _inventory.Drop();
 
         private void JumpStart()
         {
@@ -417,11 +413,8 @@ namespace NJG.Runtime.Entity
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
-        private void UpdateAnimator()
-        {
-            _animator.SetFloat(_speedHash, _currentHorizontalSpeed.magnitude);
-        }
-        
+        private void UpdateAnimator() => _animator.SetFloat(_speedHash, _currentHorizontalSpeed.magnitude);
+
         public void AttachToPlatform(Transform platform)
         {
             _isOnMovingPlatform = true;
