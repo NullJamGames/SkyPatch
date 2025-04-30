@@ -4,6 +4,7 @@ using NJG.Runtime.Signals;
 using NJG.Utilities;
 using UnityEngine;
 using Zenject;
+using NJG.Runtime.LevelChangeSystem;
 
 namespace NJG.Runtime.Installers
 {
@@ -17,6 +18,9 @@ namespace NJG.Runtime.Installers
         private string _audioDataPath = "Audio/AudioData";
         // [SerializeField, Tooltip("Path to the GameManagers prefab in the resources folder.")]
         // private string _gameManagersPath = "Managers/GameManagers";
+        
+        [SerializeField, Tooltip("Level Change system")]
+        private LevelChangeManager _levelChangeSystem;
         
         public override void InstallBindings()
         {
@@ -50,6 +54,8 @@ namespace NJG.Runtime.Installers
             
             // Other - will probably later use a settings SO...
             Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
+            
+            Container.Bind<LevelChangeManager>().FromComponentInNewPrefab(_levelChangeSystem).AsSingle().NonLazy();        
         }
 
         private void DeclareSignals()

@@ -86,11 +86,13 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _jumpCooldownTimer;
         private CountdownTimer _dashTimer;
         private CountdownTimer _dashCooldownTimer;
-        private CountdownTimer _climbCooldownTimer;
 
         private bool _isClimbing;
         private Ladder _ladder;
 
+        private bool _isOnMovingPlatform;
+        private Func<Vector3> _getPlatformerSpeed;
+        
         private const float ZERO_F = 0f;
         
         // Animator Params
@@ -100,6 +102,8 @@ namespace NJG.Runtime.Entity
         public Quaternion StartRotation { get; private set; }
         
         public PlayerInteractor Interactor { get; private set; }
+        
+        public bool IsGrounded => _groundChecker.IsGrounded || _isOnMovingPlatform;
         
         private void Awake()
         {
@@ -140,7 +144,7 @@ namespace NJG.Runtime.Entity
 
         private bool ReturnToLocomotionState()
         {
-            return _groundChecker.IsGrounded
+            return IsGrounded
                    && !_jumpTimer.IsRunning
                    && !_dashTimer.IsRunning
                    && !_isClimbing;
@@ -152,7 +156,7 @@ namespace NJG.Runtime.Entity
             _jumpTimer = new CountdownTimer(_jumpDuration);
             _jumpCooldownTimer = new CountdownTimer(_jumpCooldown);
 
-            _jumpTimer.OnTimerStart += () => _jumpVelocity = _jumpForce;
+            _jumpTimer.OnTimerStart += JumpStart ;
             _jumpTimer.OnTimerStop += () => _jumpCooldownTimer.Start();
 
             _dashTimer = new CountdownTimer(_dashDuration);
@@ -164,9 +168,7 @@ namespace NJG.Runtime.Entity
                 _dashCooldownTimer.Start();
             };
             
-            _climbCooldownTimer = new CountdownTimer(_climbCooldown);
-                
-            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _climbCooldownTimer };
+            _timers = new List<Timer>(4) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer};
         }
 
         private void OnEnable()
@@ -233,7 +235,7 @@ namespace NJG.Runtime.Entity
 
         private void EnterClimbState(Ladder ladder)
         {
-            if(_isClimbing || _climbCooldownTimer.IsRunning)
+            if(_isClimbing)
                 return;
             
             _ladder = ladder;
@@ -246,9 +248,6 @@ namespace NJG.Runtime.Entity
             _rigidBody.linearVelocity = Vector3.zero;
             
             SetClimbStartTransform();
-            
-            if(_ladder.IsCloserToTopPoint(transform.position.y))
-                _climbCooldownTimer.Start();
         }
         
         private void SetClimbStartTransform()
@@ -272,8 +271,9 @@ namespace NJG.Runtime.Entity
         {
             float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
             
-            if(desiredSpeed > 0 && _climbCooldownTimer.IsRunning)
-                return;
+            Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
+            if (Vector3.Dot(transform.forward, camForward) < 0)
+                desiredSpeed *= -1;
             
             _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
             _rigidBody.linearVelocity = new Vector3(0, _currentClimbSpeed, 0);
@@ -290,8 +290,6 @@ namespace NJG.Runtime.Entity
                 if (_ladder.GetTopHeight() < transform.position.y)
                 {
                     transform.position = _ladder.GetTopExitPos();
-                    _climbCooldownTimer.Stop();
-                    _climbCooldownTimer.Start();
                     ExitClimb();
                 }
         }
@@ -305,7 +303,7 @@ namespace NJG.Runtime.Entity
 
         private void OnJump(bool performed)
         {
-            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && _groundChecker.IsGrounded)
+            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && (IsGrounded))
             {
                 _jumpTimer.Start();
             }
@@ -333,6 +331,19 @@ namespace NJG.Runtime.Entity
             _inventory.Drop();
         }
 
+        private void JumpStart()
+        {
+            _jumpVelocity = _jumpForce;
+            transform.SetParent(null);
+            
+            if(_getPlatformerSpeed == null)
+                return;
+
+            float ySpeedOfPlatform = _getPlatformerSpeed().y;
+            if(ySpeedOfPlatform > 0)
+                _jumpVelocity += ySpeedOfPlatform;
+        }
+
         public void JumpBoostHorizontalSpeed()
         {
             _currentHorizontalSpeed.x += _movement.x;
@@ -342,7 +353,7 @@ namespace NJG.Runtime.Entity
 
         public void HandleJump()
         {
-            if (!_jumpTimer.IsRunning && _groundChecker.IsGrounded)
+            if (!_jumpTimer.IsRunning && IsGrounded)
             {
                 _jumpVelocity = ZERO_F;
                 _jumpTimer.Stop();
@@ -382,7 +393,7 @@ namespace NJG.Runtime.Entity
         {
             // Adjust rotation to match movement direction
             Quaternion targetRotation = Quaternion.LookRotation(adjustedDirection);
-            float rotationSpeed = _groundChecker.IsGrounded? _rotationSpeed : _airRotationSpeed;
+            float rotationSpeed = IsGrounded? _rotationSpeed : _airRotationSpeed;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
@@ -395,14 +406,14 @@ namespace NJG.Runtime.Entity
         private void SmoothSpeed(Vector3 desiredSpeed)
         {
             Vector2 desiredHorizontalSpeed = new Vector2(desiredSpeed.x, desiredSpeed.z);
-            float smoothTime = _groundChecker.IsGrounded? _smoothTime: _airSmoothTime;
+            float smoothTime = IsGrounded? _smoothTime: _airSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
         private void SmoothSpeedZeroMovementInput()
         {
             Vector2 desiredHorizontalSpeed = Vector2.zero;
-            float smoothTime = _groundChecker.IsGrounded? _stopSmoothTime: _airStopSmoothTime;
+            float smoothTime = IsGrounded? _stopSmoothTime: _airStopSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
@@ -413,12 +424,20 @@ namespace NJG.Runtime.Entity
         
         public void AttachToPlatform(Transform platform)
         {
+            _isOnMovingPlatform = true;
             transform.SetParent(platform);
         }
         
         public void DetachFromPlatform()
         {
+            _isOnMovingPlatform = false;
             transform.SetParent(null);
+            _getPlatformerSpeed = null;
+        }
+
+        public void SetGetPlatformerSpeedDelegate(Func<Vector3> getPlatformerSpeedDelegate)
+        {
+            _getPlatformerSpeed = getPlatformerSpeedDelegate;
         }
 
         public void ResetState()
