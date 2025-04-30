@@ -103,6 +103,8 @@ namespace NJG.Runtime.Entity
         
         public PlayerInteractor Interactor { get; private set; }
         
+        public bool IsGrounded => _groundChecker.IsGrounded || _isOnMovingPlatform;
+        
         private void Awake()
         {
             Interactor = GetComponent<PlayerInteractor>();
@@ -142,7 +144,7 @@ namespace NJG.Runtime.Entity
 
         private bool ReturnToLocomotionState()
         {
-            return _groundChecker.IsGrounded
+            return IsGrounded
                    && !_jumpTimer.IsRunning
                    && !_dashTimer.IsRunning
                    && !_isClimbing;
@@ -301,7 +303,7 @@ namespace NJG.Runtime.Entity
 
         private void OnJump(bool performed)
         {
-            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && (_groundChecker.IsGrounded || _isOnMovingPlatform))
+            if (performed && !_jumpTimer.IsRunning && !_jumpCooldownTimer.IsRunning && (IsGrounded))
             {
                 _jumpTimer.Start();
             }
@@ -351,7 +353,7 @@ namespace NJG.Runtime.Entity
 
         public void HandleJump()
         {
-            if (!_jumpTimer.IsRunning && _groundChecker.IsGrounded)
+            if (!_jumpTimer.IsRunning && IsGrounded)
             {
                 _jumpVelocity = ZERO_F;
                 _jumpTimer.Stop();
@@ -391,7 +393,7 @@ namespace NJG.Runtime.Entity
         {
             // Adjust rotation to match movement direction
             Quaternion targetRotation = Quaternion.LookRotation(adjustedDirection);
-            float rotationSpeed = _groundChecker.IsGrounded? _rotationSpeed : _airRotationSpeed;
+            float rotationSpeed = IsGrounded? _rotationSpeed : _airRotationSpeed;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
@@ -404,14 +406,14 @@ namespace NJG.Runtime.Entity
         private void SmoothSpeed(Vector3 desiredSpeed)
         {
             Vector2 desiredHorizontalSpeed = new Vector2(desiredSpeed.x, desiredSpeed.z);
-            float smoothTime = _groundChecker.IsGrounded? _smoothTime: _airSmoothTime;
+            float smoothTime = IsGrounded? _smoothTime: _airSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
         private void SmoothSpeedZeroMovementInput()
         {
             Vector2 desiredHorizontalSpeed = Vector2.zero;
-            float smoothTime = _groundChecker.IsGrounded? _stopSmoothTime: _airStopSmoothTime;
+            float smoothTime = IsGrounded? _stopSmoothTime: _airStopSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
