@@ -86,7 +86,6 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _jumpCooldownTimer;
         private CountdownTimer _dashTimer;
         private CountdownTimer _dashCooldownTimer;
-        private CountdownTimer _climbCooldownTimer;
 
         private bool _isClimbing;
         private Ladder _ladder;
@@ -167,9 +166,7 @@ namespace NJG.Runtime.Entity
                 _dashCooldownTimer.Start();
             };
             
-            _climbCooldownTimer = new CountdownTimer(_climbCooldown);
-                
-            _timers = new List<Timer>(5) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer, _climbCooldownTimer };
+            _timers = new List<Timer>(4) { _jumpTimer, _jumpCooldownTimer, _dashTimer, _dashCooldownTimer};
         }
 
         private void OnEnable()
@@ -236,7 +233,7 @@ namespace NJG.Runtime.Entity
 
         private void EnterClimbState(Ladder ladder)
         {
-            if(_isClimbing || _climbCooldownTimer.IsRunning)
+            if(_isClimbing)
                 return;
             
             _ladder = ladder;
@@ -249,9 +246,6 @@ namespace NJG.Runtime.Entity
             _rigidBody.linearVelocity = Vector3.zero;
             
             SetClimbStartTransform();
-            
-            if(_ladder.IsCloserToTopPoint(transform.position.y))
-                _climbCooldownTimer.Start();
         }
         
         private void SetClimbStartTransform()
@@ -275,8 +269,9 @@ namespace NJG.Runtime.Entity
         {
             float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
             
-            if(desiredSpeed > 0 && _climbCooldownTimer.IsRunning)
-                return;
+            Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
+            if (Vector3.Dot(transform.forward, camForward) < 0)
+                desiredSpeed *= -1;
             
             _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
             _rigidBody.linearVelocity = new Vector3(0, _currentClimbSpeed, 0);
@@ -293,8 +288,6 @@ namespace NJG.Runtime.Entity
                 if (_ladder.GetTopHeight() < transform.position.y)
                 {
                     transform.position = _ladder.GetTopExitPos();
-                    _climbCooldownTimer.Stop();
-                    _climbCooldownTimer.Start();
                     ExitClimb();
                 }
         }
