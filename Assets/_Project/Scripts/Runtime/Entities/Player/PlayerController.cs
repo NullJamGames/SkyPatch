@@ -93,6 +93,8 @@ namespace NJG.Runtime.Entity
         private bool _isOnMovingPlatform;
         private Func<Vector3> _getPlatformerSpeed;
         
+        private Vector3 _requestedForce = Vector3.zero;
+        
         private const float ZERO_F = 0f;
         
         // Animator Params
@@ -179,10 +181,7 @@ namespace NJG.Runtime.Entity
             _input.PickupEvent += OnPickup;
         }
 
-        private void Start()
-        {
-            _input.EnablePlayerActions();
-        }
+        private void Start() => _input.EnablePlayerActions();
 
         private void Update()
         {
@@ -195,6 +194,13 @@ namespace NJG.Runtime.Entity
 
         private void FixedUpdate()
         {
+            // TODO: Hacky way for now... need better solution
+            if (_requestedForce != Vector3.zero)
+            {
+                _rigidBody.AddForce(_requestedForce, ForceMode.Impulse);
+                _requestedForce = Vector3.zero;
+            }
+
             _stateMachine.FixedUpdate();
         }
 
@@ -431,6 +437,11 @@ namespace NJG.Runtime.Entity
         public void SetGetPlatformerSpeedDelegate(Func<Vector3> getPlatformerSpeedDelegate)
         {
             _getPlatformerSpeed = getPlatformerSpeedDelegate;
+        }
+        
+        public void AddForce(Vector3 force) // , ForceMode mode)
+        {
+            _requestedForce = force;
         }
 
         public void ResetState()
