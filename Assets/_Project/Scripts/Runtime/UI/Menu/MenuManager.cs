@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 using NJG.Runtime.LevelChangeSystem;
+using NJG.Runtime.Managers;
 
 namespace NJG.Runtime.UI
 {
@@ -19,32 +20,29 @@ namespace NJG.Runtime.UI
         [FoldoutGroup("References"), SerializeField]
         private Button _exitButton;
         
-        
-        
-        private List<GameObject> _panels = new List<GameObject>();
-        
+        private readonly List<GameObject> _panels = new ();
+        private GameManager _gameManager;
         private LevelChangeManager _levelChangeManager;
 
         [Inject]
-        void Construct(LevelChangeManager levelChangeManager)
+        private void Construct(GameManager gameManager, LevelChangeManager levelChangeManager)
         {
+            _gameManager = gameManager;
             _levelChangeManager = levelChangeManager;
         }
 
         private void Start()
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            _gameManager.ToggleCursor(true);
         }
 
         private void OnEnable()
         {
-            
-            foreach (var VARIABLE in _panelOpeners)
+            foreach (SPanelOpener panelOpener in _panelOpeners)
             {
-                _panels.Add(VARIABLE.Panel);
-                var panel = VARIABLE.Panel;
-                VARIABLE.Button.onClick.AddListener(()=>OpenPanel(panel));
+                _panels.Add(panelOpener.Panel);
+                GameObject panel = panelOpener.Panel;
+                panelOpener.Button.onClick.AddListener(()=>OpenPanel(panel));
             }
             
             _panels.Add(_menuPanel);
@@ -67,8 +65,8 @@ namespace NJG.Runtime.UI
 
         private void OpenPanel(GameObject panel)
         {
-            foreach (var VARIABLE in _panels)
-                VARIABLE.SetActive(false);
+            foreach (GameObject go in _panels)
+                go.SetActive(false);
             
             panel.SetActive(true);
         }

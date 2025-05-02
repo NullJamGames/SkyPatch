@@ -100,8 +100,6 @@ namespace NJG.Runtime.LevelChangeSystem
                 return;
             
             _loadingBar.fillAmount = Mathf.Clamp01(progress / 0.9f);
-            //float barPercentage = loadPercentage / 9 * 10 * 100;
-            //_loadingBar.fillAmount = barPercentage;
         }
 
         private static int GetMilliseconds(float seconds) => Mathf.RoundToInt(seconds * 1000f);

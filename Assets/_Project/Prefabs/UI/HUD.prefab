@@ -691,7 +691,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7384380453779620371}
         m_TargetAssemblyTypeName: NJG.Runtime.UI.ScoreUI, Assembly-CSharp
-        m_MethodName: UpdateScore
+        m_MethodName: UpdateEnergy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
