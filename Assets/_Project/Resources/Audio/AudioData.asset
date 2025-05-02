@@ -14,39 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Music>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1613407930
+      Data2: 1310175442
+      Data3: -955888229
+      Data4: 712879661
+    Path: event:/Music/Music
   <PlayerFootstep>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -757255438
+      Data2: 1341603612
+      Data3: 1168071613
+      Data4: 355377507
+    Path: event:/SFX/Player/Movment/Footsteps_Metal
   <PlayerJump>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -837667295
+      Data2: 1256473928
+      Data3: 680992185
+      Data4: -1285549627
+    Path: event:/SFX/Player/Movment/Jump
   <PlayerLand>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 817314871
+      Data2: 1278386460
+      Data3: -1396199025
+      Data4: -683362782
+    Path: event:/SFX/Player/Movment/Land
   <PlayerDash>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1860297979
+      Data2: 1174013677
+      Data3: -69437271
+      Data4: 158211266
+    Path: event:/SFX/Player/Movment/Dash
   <PlayerFall>k__BackingField:
     Guid:
       Data1: 0
@@ -77,8 +77,8 @@ MonoBehaviour:
     Path: 
   <UIButtonClick>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 175515288
+      Data2: 1339309644
+      Data3: -236753494
+      Data4: -1887769327
+    Path: event:/SFX/UI/UI_Click
