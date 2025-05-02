@@ -25,7 +25,7 @@ namespace NJG.Runtime.Interactables
         private GameObject _currentVisual;
         private CoroutineHandle _growToFullRoutine;
         
-        public enum PlotState { Empty, Growing, Ready }
+        public enum PlotState { Empty, Growing, HarvestReady, NoHarvest }
         public PlotState State { get; private set; } = PlotState.Empty;
         public Transform Transform => transform;
         
@@ -49,7 +49,7 @@ namespace NJG.Runtime.Interactables
             
             yield return Timing.WaitForSeconds(_growTime);
             
-            State = PlotState.Ready;
+            State = _plotData.IsHarvestable ? PlotState.HarvestReady : PlotState.NoHarvest;
             Destroy(_currentVisual);
             _currentVisual = Instantiate(_plotData.FullyGrownPrefab, transform.position, Quaternion.identity, transform);
         }
@@ -64,8 +64,10 @@ namespace NJG.Runtime.Interactables
                 case PlotState.Growing:
                     GrowingPlotInteraction(playerInventory);
                     break;
-                case PlotState.Ready:
+                case PlotState.HarvestReady:
                     ReadyPlotInteraction();
+                    break;
+                case PlotState.NoHarvest:
                     break;
             }
         }
@@ -85,7 +87,11 @@ namespace NJG.Runtime.Interactables
         {
             State = PlotState.Empty;
             Destroy(_currentVisual);
-
+            SpawnHarvest();
+        }
+        
+        private void SpawnHarvest()
+        {
             float yOffset = transform.position.y + _harvestSpawnOffset;
             Vector3 spawnPosition = new (transform.position.x, yOffset, transform.position.z);
             Instantiate(_plotData.HarvestablePlantPrefab, spawnPosition, Quaternion.identity);
@@ -94,7 +100,9 @@ namespace NJG.Runtime.Interactables
         public string GetTooltipText(PlayerInventory playerInventory)
         {
             string tooltipText = InteractionHelper.GetPlotInteractableTooltip(playerInventory, this);
-            return $"{_plotData.PlantName}\n{tooltipText}";
+            string plantName = State == PlotState.Empty ? "EMPTY PLOT" : _plotData.PlantName;
+            
+            return $"{plantName}\n{tooltipText}";
         }
     }
 }

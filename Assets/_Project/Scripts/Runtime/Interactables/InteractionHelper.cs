@@ -74,8 +74,9 @@ namespace NJG.Runtime.Interactables
                 Plot.PlotState.Empty => "Press E to plant seed",
                 Plot.PlotState.Growing when hasWater => "Press E to water plant",
                 Plot.PlotState.Growing => "Needs water...",
-                Plot.PlotState.Ready when playerInventory.CanPickup() => "Press E to harvest",
-                Plot.PlotState.Ready => "Can't harvest, hands are full...",
+                Plot.PlotState.HarvestReady when playerInventory.CanPickup() => "Press E to harvest",
+                Plot.PlotState.HarvestReady => "Can't harvest, hands are full...",
+                Plot.PlotState.NoHarvest => "I wonder what this does...",
                 _ => "ERROR: Something went wrong, notify dev..."
             };
         }

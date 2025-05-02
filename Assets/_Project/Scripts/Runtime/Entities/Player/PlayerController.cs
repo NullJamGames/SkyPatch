@@ -189,7 +189,8 @@ namespace NJG.Runtime.Entity
             _stateMachine.Update();
 
             HandleTimers();
-            UpdateAnimator();
+            
+            UpdateAnimatorLocomotion();
         }
 
         private void FixedUpdate()
@@ -419,7 +420,11 @@ namespace NJG.Runtime.Entity
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
         }
 
-        private void UpdateAnimator() => _animator.SetFloat(_speedHash, _currentHorizontalSpeed.magnitude);
+        private void UpdateAnimatorLocomotion()
+        {
+            float animSpeedValue = IsGrounded ? _currentHorizontalSpeed.magnitude : 0f;
+            _animator.SetFloat(_speedHash, animSpeedValue);
+        }
 
         public void AttachToPlatform(Transform platform)
         {
