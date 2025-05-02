@@ -26,7 +26,7 @@ namespace NJG.Runtime.LevelChangeSystem
 
         private void LoadScene(string sceneName)
         {
-            _levelChanger.ChangeScene(sceneName);
+            _ = _levelChanger.ChangeSceneAsync(sceneName);
         }
     }
 }

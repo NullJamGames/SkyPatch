@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
@@ -9,12 +10,12 @@ namespace NJG.Runtime.LevelChangeSystem
 {
 	public class LevelChanger : MonoBehaviour
 	{
-        [FoldoutGroup("UI Elements")]
-        [SerializeField] private GameObject _canvas;
-        [FoldoutGroup("UI Elements")]
-        [SerializeField] Transform _loadingScreen;
-        [FoldoutGroup("UI Elements")]
-        [SerializeField] private Image _loadingBar;
+        [FoldoutGroup("UI Elements"), SerializeField]
+        private GameObject _canvas;
+        [FoldoutGroup("UI Elements"), SerializeField]
+        private Transform _loadingScreen;
+        [FoldoutGroup("UI Elements"), SerializeField]
+        private Image _loadingBar;
 
         [FoldoutGroup("Animation"), SerializeField]
         private float _startX = -1920;
@@ -31,64 +32,78 @@ namespace NJG.Runtime.LevelChangeSystem
 
         private bool _isChangingScene;
 
-       public async void ChangeScene(string sceneName)
+       public async Task ChangeSceneAsync(string sceneName)
         {
             if (_isChangingScene)
                 return;
+            
             _isChangingScene = true;
-            
-            StartLoadingScreenAnim();
-            await Task.Delay(GetWaitTime(_enterTime));
-            LoadNewScene(sceneName);
-            await Task.Delay(GetWaitTime(_hideDelay));
-            HideLoadingScreen();
 
-            _isChangingScene = false;
-        }
+            try
+            {
+                StartLoadingScreenAnim();
+                await Task.Delay(GetMilliseconds(_enterTime));
 
-        private async void LoadNewScene(string sceneName)
-        {
-            AsyncOperation scene = SceneManager.LoadSceneAsync(sceneName);
-            scene.allowSceneActivation = false;
-            
-            do {
-                await Task.Delay(10);
-                SetLoadingBarValue(scene.progress);
-            } while (scene.progress < 0.9f);
-            
-            scene.allowSceneActivation = true;
-        }
+                AsyncOperation sceneLoadOp = SceneManager.LoadSceneAsync(sceneName);
+                if (sceneLoadOp == null)
+                {
+                    Debug.LogError($"[LevelChanger] Failed to load scene: {sceneName}");
+                    return;
+                }
 
+                sceneLoadOp.allowSceneActivation = false;
 
-        private void HideLoadingScreen()
-        {
-            _loadingScreen.DOKill();
-            _loadingScreen.DOLocalMove(new Vector3(_endX, 0, 0), _exitTime).SetEase(Ease.InQuint)
-                .OnComplete(() => _canvas.SetActive(false));
+                while (sceneLoadOp.progress < 0.9f)
+                {
+                    SetLoadingBarValue(sceneLoadOp.progress);
+                    await Task.Delay(10);
+                }
+
+                SetLoadingBarValue(1f);
+                sceneLoadOp.allowSceneActivation = true;
+
+                await Task.Delay(GetMilliseconds(_hideDelay));
+                HideLoadingScreen();
+            }
+            finally
+            {
+                _isChangingScene = false;
+            }
         }
 
         private void StartLoadingScreenAnim()
         {
-            SetLoadingBarValue(0);
-            _canvas.SetActive(true);
-            
-            Vector3 pos = _loadingScreen.localPosition;
-            pos.x = _startX;
-            _loadingScreen.localPosition = pos;
+            if (_canvas != null) _canvas.SetActive(true);
+            if (_loadingBar != null) _loadingBar.fillAmount = 0f;
+            if (_loadingScreen == null) return;
             
             _loadingScreen.DOKill();
-            _loadingScreen.DOLocalMove(new Vector3(0, 0, 0), _enterTime).SetEase(Ease.OutQuint);
+            _loadingScreen.localPosition = new Vector3(_startX, 0f, 0f);
+            _loadingScreen.DOLocalMove(Vector3.zero, _enterTime).SetEase(Ease.OutQuint);
         }
 
-        private void SetLoadingBarValue(float loadPercentage)
+        private void HideLoadingScreen()
         {
-            float barPercentage = loadPercentage / 9 * 10 * 100;
-            _loadingBar.fillAmount = barPercentage;
+            if (_loadingScreen == null || _canvas == null)
+                return;
+            
+            _loadingScreen.DOKill();
+            _loadingScreen
+                .DOLocalMove(new Vector3(_endX, 0, 0), _exitTime)
+                .SetEase(Ease.InQuint)
+                .OnComplete(() => _canvas.SetActive(false));
         }
 
-        private int GetWaitTime(float waitTime)
+        private void SetLoadingBarValue(float progress)
         {
-            return (int)(waitTime * 1000);
+            if (_loadingBar == null)
+                return;
+            
+            _loadingBar.fillAmount = Mathf.Clamp01(progress / 0.9f);
+            //float barPercentage = loadPercentage / 9 * 10 * 100;
+            //_loadingBar.fillAmount = barPercentage;
         }
+
+        private static int GetMilliseconds(float seconds) => Mathf.RoundToInt(seconds * 1000f);
     }
 }
