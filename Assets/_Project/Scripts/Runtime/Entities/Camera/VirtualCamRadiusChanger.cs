@@ -55,8 +55,6 @@ namespace NJG.Runtime.Entities
         {
             float zoomInput = _zoomInput.action.ReadValue<Vector2>().y;
             
-            print(zoomInput);
-            
             _desiredZoom = Mathf.Clamp(_desiredZoom - zoomInput * _inputMultiplier, _minZoom, 1);
             
             _currZoom = Mathf.SmoothDamp(_currZoom, _desiredZoom, ref _zoomDamp, _smootZoomTime);
