@@ -250,6 +250,9 @@ namespace NJG.Runtime.Entity
             
             _currentClimbSpeed = 0;
             _climbVelocity = 0;
+
+            _currentHorizontalSpeed = Vector2.zero;
+            _velocity = Vector2.zero;
             
             _rigidBody.useGravity = false;
             _rigidBody.linearVelocity = Vector3.zero;
@@ -261,11 +264,11 @@ namespace NJG.Runtime.Entity
         {
             Transform playerTransform = transform;
             
-            Vector3 climbStartPosition = _ladder.GetClimbPosition(playerTransform.position);
-            climbStartPosition.y = playerTransform.position.y;
+            Vector3 climbStartPosition = _ladder.GetClimbPosition();
+            climbStartPosition.y =  playerTransform.position.y;
             
             playerTransform.position = climbStartPosition;
-            playerTransform.rotation = _ladder.GetClimbRotation();
+            playerTransform.rotation = _ladder.ClimbRotation;
         }
 
         private bool ShouldExitImmediately()
@@ -273,8 +276,7 @@ namespace NJG.Runtime.Entity
             bool isAtTop = _ladder.IsCloserToTopPoint(transform.position.y);
             float desiredSpeed = 1;
             
-            Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
-            if (Vector3.Dot(_movement, camForward) < 0)
+            if (Vector3.Dot(_rigidBody.linearVelocity, _ladder.ClimbRotation * Vector3.forward) < 0)
                 desiredSpeed *= -1;
 
             if (isAtTop && desiredSpeed > 0)
@@ -296,7 +298,7 @@ namespace NJG.Runtime.Entity
             float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
             
             Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
-            if (Vector3.Dot(transform.forward, camForward) < 0)
+            if (Vector3.Dot(_ladder.ClimbRotation * Vector3.forward, camForward) < 0)
                 desiredSpeed *= -1;
             
             _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
