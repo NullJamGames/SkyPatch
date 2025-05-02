@@ -242,6 +242,9 @@ namespace NJG.Runtime.Entity
                 return;
             
             _ladder = ladder;
+            if (ShouldExitImmediately())
+                return;
+            
             _isClimbing = true;
             
             _currentClimbSpeed = 0;
@@ -262,6 +265,23 @@ namespace NJG.Runtime.Entity
             
             playerTransform.position = climbStartPosition;
             playerTransform.rotation = _ladder.GetClimbRotation();
+        }
+
+        private bool ShouldExitImmediately()
+        {
+            bool isAtTop = _ladder.IsCloserToTopPoint(transform.position.y);
+            float desiredSpeed = 1;
+            
+            Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
+            if (Vector3.Dot(_movement, camForward) < 0)
+                desiredSpeed *= -1;
+
+            if (isAtTop && desiredSpeed > 0)
+                return true;
+
+            if (!isAtTop && desiredSpeed < 0)
+                return true;
+            return false;
         }
 
         public void HandleClimb()
