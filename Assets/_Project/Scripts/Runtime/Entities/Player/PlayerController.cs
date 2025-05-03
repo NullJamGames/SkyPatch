@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider
+    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider, ILaunchable, IPlatformStopper
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
@@ -101,7 +101,7 @@ namespace NJG.Runtime.Entity
         
         // Animator Params
         private static readonly int _speedHash = Animator.StringToHash("Speed");
-        private static readonly int _yVelocityHash = Animator.StringToHash("yVelocity");
+        private static readonly int _climbSpeedHash = Animator.StringToHash("climbSpeed");
         
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
@@ -109,6 +109,8 @@ namespace NJG.Runtime.Entity
         public PlayerInteractor Interactor { get; private set; }
         
         public bool IsGrounded => _groundChecker.IsGrounded || _isOnMovingPlatform;
+        public Rigidbody Rigidbody => _rigidBody;
+        public bool HasLaunched { get; set; }
         
         private void Awake()
         {
@@ -136,11 +138,14 @@ namespace NJG.Runtime.Entity
             JumpState _jumpState = new JumpState(this, _animator);
             DashState _dashState = new DashState(this, _animator);
             ClimbState _climbState = new ClimbState(this, _animator);
+            LaunchedState _launchedState = new LaunchedState(this, _animator);
 
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
+            At(_launchedState, _locomotionState, new FuncPredicate(() => !HasLaunched));
+            Any(_launchedState, new FuncPredicate(() => HasLaunched));
             Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
@@ -250,16 +255,8 @@ namespace NJG.Runtime.Entity
                 return;
             
             _isClimbing = true;
-            
-            _currentClimbSpeed = 0;
-            _climbVelocity = 0;
-
-            _currentHorizontalSpeed = Vector2.zero;
-            _velocity = Vector2.zero;
-            
             _rigidBody.useGravity = false;
-            _rigidBody.linearVelocity = Vector3.zero;
-            
+            ResetSpeed();
             SetClimbStartTransform();
         }
         
@@ -298,13 +295,7 @@ namespace NJG.Runtime.Entity
 
         private void HandleClimbMovement()
         {
-            // if (_movement.z == 0f)
-            // {
-            //     _currentClimbSpeed = 0f;
-            //     return;
-            // }
-
-            float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
+            float desiredSpeed = _movement.z * _climbSpeed;
             
             Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
             if (Vector3.Dot(_ladder.ClimbRotation * Vector3.forward, camForward) < 0)
@@ -332,7 +323,6 @@ namespace NJG.Runtime.Entity
         private void ExitClimb()
         {
             _isClimbing = false;
-            _rigidBody.linearVelocity = Vector3.zero;
             _rigidBody.useGravity = true;
         }
 
@@ -441,11 +431,6 @@ namespace NJG.Runtime.Entity
 
         private void HandleExtraGravity()
         {
-            return;
-            
-            if (_isClimbing)
-                return;
-            
             float verticalVelocity = _rigidBody.linearVelocity.y - _extraGravityForce * Time.deltaTime;
             SetRigidBodyVerticalVelocity(verticalVelocity);
         }
@@ -474,7 +459,7 @@ namespace NJG.Runtime.Entity
         private void UpdateAnimator()
         {
             //Debug.Log(_rigidBody.linearVelocity.y);
-            _animator.SetFloat(_yVelocityHash, _rigidBody.linearVelocity.y);
+            _animator.SetFloat(_climbSpeedHash, _currentClimbSpeed);
             
             float animSpeedValue = IsGrounded ? _currentHorizontalSpeed.magnitude : 0f;
             _animator.SetFloat(_speedHash, animSpeedValue);
@@ -497,10 +482,12 @@ namespace NJG.Runtime.Entity
         {
             _getPlatformerSpeed = getPlatformerSpeedDelegate;
         }
-        
-        public void AddForce(Vector3 force) // , ForceMode mode)
+
+        public void Launch(Vector3 force)
         {
             _requestedForce = force;
+            HasLaunched = true;
+            ResetSpeed();
         }
 
         public void ResetState()
@@ -508,6 +495,17 @@ namespace NJG.Runtime.Entity
             _rigidBody.transform.position = StartPosition;
             _rigidBody.linearVelocity = Vector3.zero;
             _rigidBody.angularVelocity = Vector3.zero;
+        }
+
+        private void ResetSpeed()
+        {
+            _rigidBody.linearVelocity = Vector3.zero;
+            
+            _currentHorizontalSpeed = Vector2.zero;
+            _velocity = Vector2.zero;
+            
+            _currentClimbSpeed = 0;
+            _climbVelocity = 0;
         }
     }
 }
