@@ -1,3 +1,4 @@
+using System;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,14 +16,16 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Pos"), SerializeField] 
         private Vector3 _topExitPos = new Vector3(0, 4, 1);
         
-        public Vector3 GetClimbPosition(Vector3 playerPosition)
+        public Quaternion ClimbRotation { get; private set; }
+
+        private void OnEnable()
         {
-            return transform.TransformPoint(_bottomPos);
+            ClimbRotation = transform.rotation * Quaternion.Euler(0, 180, 0);
         }
 
-        public Quaternion GetClimbRotation()
+        public Vector3 GetClimbPosition()
         {
-            return transform.rotation * Quaternion.Euler(0, 180, 0);
+            return transform.TransformPoint(_bottomPos);
         }
 
         public Vector3 GetTopExitPos()
@@ -41,13 +44,9 @@ namespace NJG.Runtime.Interactables
 
         public bool IsCloserToTopPoint(float playerY)
         {
-            float topY = _bottomPos.y + _topHeight;
-            float botY = _bottomPos.y;
-            
-            float distanceToTop = Mathf.Abs(playerY - topY); 
-            float distanceToBottom = Mathf.Abs(playerY - botY); 
+            float distanceToTop = Mathf.Abs(playerY - GetTopHeight()); 
+            float distanceToBottom = Mathf.Abs(playerY - GetBottomHeight()); 
 
-            
             return distanceToTop < distanceToBottom;
         }
         
