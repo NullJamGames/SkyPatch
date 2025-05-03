@@ -314,20 +314,20 @@ MonoBehaviour:
     gradientVal:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
-      key1: {r: 0.70987976, g: 0.41039923, b: 0.33830208, a: 1}
-      key2: {r: 1.375392, g: 1.3476623, b: 1.1535546, a: 0}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 0.70987976, g: 0.41039923, b: 0.33830208, a: 0}
       key3: {r: 1.375392, g: 1.3476623, b: 1.1535546, a: 0}
-      key4: {r: 1.7812133, g: 0.84896535, b: 0.6133423, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 1.375392, g: 1.3476623, b: 1.1535546, a: 0}
+      key5: {r: 1.7812133, g: 0.84896535, b: 0.6133423, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 14264
-      ctime1: 16962
-      ctime2: 19468
-      ctime3: 43947
-      ctime4: 47802
-      ctime5: 51850
-      ctime6: 0
+      ctime0: 9252
+      ctime1: 14264
+      ctime2: 16962
+      ctime3: 19468
+      ctime4: 43947
+      ctime5: 47802
+      ctime6: 51850
       ctime7: 0
       atime0: 0
       atime1: 65535
@@ -339,7 +339,7 @@ MonoBehaviour:
       atime7: 0
       m_Mode: 0
       m_ColorSpace: -1
-      m_NumColorKeys: 6
+      m_NumColorKeys: 7
       m_NumAlphaKeys: 2
     floatVal: 1
     curveVal:
@@ -374,18 +374,18 @@ MonoBehaviour:
     colorVal: {r: 0.25882354, g: 0.25882354, b: 0.25882354, a: 1}
     gradientVal:
       serializedVersion: 2
-      key0: {r: 0.57254905, g: 0.6901961, b: 0.9254902, a: 1}
+      key0: {r: 0.2509804, g: 0.29281044, b: 0.5019608, a: 1}
       key1: {r: 0, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0.5712887, g: 0.6907669, b: 0.9245283, a: 0}
+      key3: {r: 0.2509804, g: 0.29281044, b: 0.5019608, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 10023
-      ctime1: 17540
-      ctime2: 49537
-      ctime3: 54163
+      ctime0: 11488
+      ctime1: 15651
+      ctime2: 50963
+      ctime3: 54818
       ctime4: 0
       ctime5: 0
       ctime6: 0

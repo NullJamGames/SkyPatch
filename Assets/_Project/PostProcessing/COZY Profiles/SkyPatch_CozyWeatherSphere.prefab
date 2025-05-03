@@ -54,14 +54,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cachedWeatherSphere: {fileID: 972495225840589568}
   cachedSystem: {fileID: 972495225840589568}
-  biomes: []
-  weight: 1
-  totalSystemWeight: 0
-  cumulus: 0.1
+  biomes:
+  - {fileID: 0}
+  weight: 0
+  totalSystemWeight: 1
+  cumulus: 0
   cirrus: 0
   altocumulus: 0
-  cirrostratus: 0.11
-  chemtrails: 0.22
+  cirrostratus: 0
+  chemtrails: 0
   nimbus: 0
   nimbusHeight: 1
   nimbusVariation: 0.945
@@ -108,9 +109,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cachedWeatherSphere: {fileID: 972495225840589568}
   cachedSystem: {fileID: 0}
-  biomes: []
-  weight: 1
-  totalSystemWeight: 0
+  biomes:
+  - {fileID: 0}
+  weight: 0
+  totalSystemWeight: 1
   atmosphereProfile: {fileID: 11400000, guid: 04f0a780be4e4e34286a33b79b8e0748, type: 2}
   transitioningAtmosphere: 0
 --- !u!114 &6208677682106728723
@@ -127,9 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cachedWeatherSphere: {fileID: 972495225840589568}
   cachedSystem: {fileID: 0}
-  biomes: []
-  weight: 1
-  totalSystemWeight: 0
+  biomes:
+  - {fileID: 0}
+  weight: 0
+  totalSystemWeight: 1
   ambienceProfiles:
   - {fileID: 11400000, guid: 41b8b54c926a0cb41927053de608d3c7, type: 2}
   - {fileID: 11400000, guid: 163ec11415232fd45b172996c6d1d187, type: 2}
@@ -494,16 +497,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cachedWeatherSphere: {fileID: 972495225840589568}
   cachedSystem: {fileID: 0}
-  biomes: []
-  weight: 1
-  totalSystemWeight: 0
+  biomes:
+  - {fileID: 0}
+  weight: 0
+  totalSystemWeight: 1
   climateProfile: {fileID: 11400000, guid: e1a4bf0206b48d4428e0e961e057af39, type: 2}
   controlMethod: 1
   localTemperatureFilter: 0
   localPrecipitationFilter: 0
-  currentTemperature: 6.142
-  currentPrecipitation: 50.705555
-  snowAmount: 0.12045951
+  currentTemperature: 57.02128
+  currentPrecipitation: 74.32114
+  snowAmount: 0
   snowMeltSpeed: 0.35
   groundwaterAmount: 0
   dryingSpeed: 0.5
@@ -684,7 +688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788208126590155891}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11339501, y: 0.8431657, z: -0.19607937, w: 0.4876127}
+  m_LocalRotation: {x: 0.34442285, y: -0.4587567, z: 0.19885263, w: 0.79458976}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -708,7 +712,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -778,7 +782,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 3
 --- !u!114 &7092191254861311617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5935,11 +5939,11 @@ MonoBehaviour:
   weight: 1
   targetWeight: 1
   priority: 0
-  cumulus: 0.1
+  cumulus: 0
   cirrus: 0
   altocumulus: 0
-  cirrostratus: 0.11
-  chemtrails: 0.22
+  cirrostratus: 0
+  chemtrails: 0
   nimbus: 0
   nimbusHeightEffect: 1
   nimbusVariation: 0.945
@@ -5950,7 +5954,7 @@ MonoBehaviour:
   usePhysicalSunHeight: 1
   sunDirection: 120
   sunPitch: 0
-  moonDirection: {x: -0.7778077, y: 0.4412405, z: 0.44757363}
+  moonDirection: {x: 0.59206796, y: 0.7297997, z: -0.3418304}
   skyZenithColor: {r: 0.07505809, g: 0.15584114, b: 0.26536617, a: 1}
   skyHorizonColor: {r: 0.48594987, g: 0.6926289, b: 0.81813145, a: 1}
   cloudColor: {r: 0.8433916, g: 0.718526, b: 0.718526, a: 1}
@@ -5978,7 +5982,7 @@ MonoBehaviour:
   sunFalloff: 0.48
   sunFlareColor: {r: 2.131126, g: 2.087247, b: 1.5975828, a: 1}
   moonFalloff: 0.752
-  moonlightColor: {r: 0.5722199, g: 0.69034517, b: 0.92523897, a: 1}
+  moonlightColor: {r: 0.083333254, g: 0, b: 0.5, a: 1}
   moonFlareColor: {r: 0.023529412, g: 0.08627451, b: 0.14901961, a: 1}
   galaxy1Color: {r: 0.10980392, g: 0.23137255, b: 0.67058825, a: 1}
   galaxy2Color: {r: 0.93333334, g: 0.89411765, b: 2, a: 1}
@@ -6479,7 +6483,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 3
 --- !u!114 &3159700969352093857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6654,7 +6658,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 14.896231, y: 14.896231, z: 14.896231}
+  m_LocalScale: {x: 26.301235, y: 26.301235, z: 26.301235}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1212659793593016285}

@@ -25824,6 +25824,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1029817242}
     m_Modifications:
+    - target: {fileID: 903230297175781445, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: biomes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 972495225840589568, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: cozyCamera
       value: 
@@ -25970,15 +25974,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.b
-      value: 0.3948867
+      value: 0.13996848
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.g
-      value: 0.29504195
+      value: 0.081648275
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.r
-      value: 0.24401017
+      value: 0.06998424
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Enabled
@@ -25988,29 +25992,45 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6208677682106728723, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: biomes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587469528095841467, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: biomes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: biomes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20.992165
+      value: 30.407808
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 20.992165
+      value: 30.407808
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 20.992165
+      value: 30.407808
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.997501
+      value: -12.771261
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.307426
+      value: 9.174193
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.602129
+      value: 16.07419
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
