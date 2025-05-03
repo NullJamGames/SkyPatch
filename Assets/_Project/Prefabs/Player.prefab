@@ -735,13 +735,14 @@ MonoBehaviour:
   _virtualCamera: {fileID: 0}
   _input: {fileID: 11400000, guid: 222b1a21795386d4eb65ee252ac2cf44, type: 2}
   _inventory: {fileID: 4015948934282484498}
-  _moveSpeed: 300
+  _moveSpeed: 6
   _rotationSpeed: 600
   _smoothTime: 0.1
   _stopSmoothTime: 0.04
   _airRotationSpeed: 600
   _airSmoothTime: 0.3
   _airStopSmoothTime: 0.3
+  _extraGravityForce: 30
   _jumpForce: 7
   _jumpDuration: 0.3
   _jumpCooldown: 0
@@ -1364,8 +1365,8 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 640
-  _radius: 0.2
-  _yOffset: 0.17
+  _radius: 0.25
+  _yOffset: 0.2
 --- !u!1 &4099275821004909845
 GameObject:
   m_ObjectHideFlags: 0

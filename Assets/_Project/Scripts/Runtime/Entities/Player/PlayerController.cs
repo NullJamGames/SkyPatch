@@ -42,6 +42,8 @@ namespace NJG.Runtime.Entity
         private float _airSmoothTime = 1f;
         [FoldoutGroup("Movement Settings"), SerializeField]
         private float _airStopSmoothTime = 0.3f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _extraGravityForce = 20f;
 
         [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpForce = 10f;
@@ -405,12 +407,14 @@ namespace NJG.Runtime.Entity
                 HandleRotation(adjustedDirection);
                 SmoothSpeed(adjustedDirection * _moveSpeed);
                 HandleHorizontalMovement();
+                HandleExtraGravity();
                 CheckForClimbing();
             }
             else
             {
                 SmoothSpeedZeroMovementInput();
                 HandleHorizontalMovement();
+                HandleExtraGravity();
             }
         }
 
@@ -424,8 +428,14 @@ namespace NJG.Runtime.Entity
 
         private void HandleHorizontalMovement()
         {
-            Vector2 velocity = _currentHorizontalSpeed *  _dashVelocity * Time.deltaTime;
+            Vector2 velocity = _currentHorizontalSpeed *  _dashVelocity;
             _rigidBody.linearVelocity = new Vector3(velocity.x, _rigidBody.linearVelocity.y, velocity.y);
+        }
+
+        private void HandleExtraGravity()
+        {
+            float verticalVelocity = _rigidBody.linearVelocity.y - _extraGravityForce * Time.deltaTime;
+            SetRigidBodyVerticalVelocity(verticalVelocity);
         }
 
         private void SmoothSpeed(Vector3 desiredSpeed)
@@ -440,6 +450,13 @@ namespace NJG.Runtime.Entity
             Vector2 desiredHorizontalSpeed = Vector2.zero;
             float smoothTime = IsGrounded? _stopSmoothTime: _airStopSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
+        }
+
+        private void SetRigidBodyVerticalVelocity(float verticalVelocity)
+        {
+            Vector3 velocity = _rigidBody.linearVelocity;
+            velocity.y = verticalVelocity;
+            _rigidBody.linearVelocity = velocity;
         }
 
         private void UpdateAnimatorLocomotion()
