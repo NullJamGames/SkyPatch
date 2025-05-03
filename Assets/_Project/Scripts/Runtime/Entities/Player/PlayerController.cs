@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider
+    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider, ILaunchable
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
@@ -109,6 +109,8 @@ namespace NJG.Runtime.Entity
         public PlayerInteractor Interactor { get; private set; }
         
         public bool IsGrounded => _groundChecker.IsGrounded || _isOnMovingPlatform;
+        public Rigidbody Rigidbody => _rigidBody;
+        public bool HasLaunched { get; set; }
         
         private void Awake()
         {
@@ -136,11 +138,14 @@ namespace NJG.Runtime.Entity
             JumpState _jumpState = new JumpState(this, _animator);
             DashState _dashState = new DashState(this, _animator);
             ClimbState _climbState = new ClimbState(this, _animator);
+            LaunchedState _launchedState = new LaunchedState(this, _animator);
 
             // Define transitions
             At(_locomotionState, _jumpState, new FuncPredicate(() => _jumpTimer.IsRunning));
             At(_locomotionState, _dashState, new FuncPredicate(() => _dashTimer.IsRunning));
             At(_climbState, _locomotionState, new FuncPredicate(() => !_isClimbing));
+            At(_launchedState, _locomotionState, new FuncPredicate(() => !HasLaunched));
+            Any(_launchedState, new FuncPredicate(() => HasLaunched));
             Any(_climbState, new FuncPredicate(() => _isClimbing));
             Any(_locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
@@ -486,10 +491,12 @@ namespace NJG.Runtime.Entity
         {
             _getPlatformerSpeed = getPlatformerSpeedDelegate;
         }
-        
-        public void AddForce(Vector3 force) // , ForceMode mode)
+
+        public void Launch(Vector3 force)
         {
             _requestedForce = force;
+            HasLaunched = true;
+            _rigidBody.linearVelocity = Vector3.zero;
         }
 
         public void ResetState()
