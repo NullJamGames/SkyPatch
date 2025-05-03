@@ -255,16 +255,8 @@ namespace NJG.Runtime.Entity
                 return;
             
             _isClimbing = true;
-            
-            _currentClimbSpeed = 0;
-            _climbVelocity = 0;
-
-            _currentHorizontalSpeed = Vector2.zero;
-            _velocity = Vector2.zero;
-            
             _rigidBody.useGravity = false;
-            _rigidBody.linearVelocity = Vector3.zero;
-            
+            ResetSpeed();
             SetClimbStartTransform();
         }
         
@@ -331,7 +323,6 @@ namespace NJG.Runtime.Entity
         private void ExitClimb()
         {
             _isClimbing = false;
-            _rigidBody.linearVelocity = Vector3.zero;
             _rigidBody.useGravity = true;
         }
 
@@ -496,7 +487,7 @@ namespace NJG.Runtime.Entity
         {
             _requestedForce = force;
             HasLaunched = true;
-            _rigidBody.linearVelocity = Vector3.zero;
+            ResetSpeed();
         }
 
         public void ResetState()
@@ -504,6 +495,17 @@ namespace NJG.Runtime.Entity
             _rigidBody.transform.position = StartPosition;
             _rigidBody.linearVelocity = Vector3.zero;
             _rigidBody.angularVelocity = Vector3.zero;
+        }
+
+        private void ResetSpeed()
+        {
+            _rigidBody.linearVelocity = Vector3.zero;
+            
+            _currentHorizontalSpeed = Vector2.zero;
+            _velocity = Vector2.zero;
+            
+            _currentClimbSpeed = 0;
+            _climbVelocity = 0;
         }
     }
 }
