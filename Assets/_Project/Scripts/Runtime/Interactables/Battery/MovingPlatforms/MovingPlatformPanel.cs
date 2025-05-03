@@ -44,6 +44,9 @@ namespace NJG.Runtime.Interactables
         {
             if (_battery == null)
                 return;
+            
+            if(!_movingPlatform.IsWorking)
+                return;
 
             _battery.RemoveCharge(_drainPerInterval);
             if (_battery.CurrentCharge <= 0f)

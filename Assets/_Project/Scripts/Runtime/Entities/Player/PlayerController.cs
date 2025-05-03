@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider, ILaunchable
+    public class PlayerController : ValidatedMonoBehaviour, IResetable, IPlatformRider, ILaunchable, IPlatformStopper
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
