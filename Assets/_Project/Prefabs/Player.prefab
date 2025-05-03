@@ -750,7 +750,7 @@ MonoBehaviour:
   _dashForce: 5
   _dashDuration: 0.5
   _dashCooldown: 1
-  _climbSpeed: 100
+  _climbSpeed: 2
   _climbSmoothTime: 0.2
   _ladderLayer:
     serializedVersion: 2
@@ -1309,7 +1309,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6165df46003e67b48ba14a0fa8610f5e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
