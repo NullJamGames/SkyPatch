@@ -42,6 +42,8 @@ namespace NJG.Runtime.Entity
         private float _airSmoothTime = 1f;
         [FoldoutGroup("Movement Settings"), SerializeField]
         private float _airStopSmoothTime = 0.3f;
+        [FoldoutGroup("Movement Settings"), SerializeField]
+        private float _extraGravityForce = 20f;
 
         [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpForce = 10f;
@@ -250,6 +252,9 @@ namespace NJG.Runtime.Entity
             
             _currentClimbSpeed = 0;
             _climbVelocity = 0;
+
+            _currentHorizontalSpeed = Vector2.zero;
+            _velocity = Vector2.zero;
             
             _rigidBody.useGravity = false;
             _rigidBody.linearVelocity = Vector3.zero;
@@ -261,11 +266,11 @@ namespace NJG.Runtime.Entity
         {
             Transform playerTransform = transform;
             
-            Vector3 climbStartPosition = _ladder.GetClimbPosition(playerTransform.position);
-            climbStartPosition.y = playerTransform.position.y;
+            Vector3 climbStartPosition = _ladder.GetClimbPosition();
+            climbStartPosition.y =  playerTransform.position.y;
             
             playerTransform.position = climbStartPosition;
-            playerTransform.rotation = _ladder.GetClimbRotation();
+            playerTransform.rotation = _ladder.ClimbRotation;
         }
 
         private bool ShouldExitImmediately()
@@ -273,8 +278,7 @@ namespace NJG.Runtime.Entity
             bool isAtTop = _ladder.IsCloserToTopPoint(transform.position.y);
             float desiredSpeed = 1;
             
-            Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
-            if (Vector3.Dot(_movement, camForward) < 0)
+            if (Vector3.Dot(_rigidBody.linearVelocity, _ladder.ClimbRotation * Vector3.forward) < 0)
                 desiredSpeed *= -1;
 
             if (isAtTop && desiredSpeed > 0)
@@ -296,7 +300,7 @@ namespace NJG.Runtime.Entity
             float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
             
             Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
-            if (Vector3.Dot(transform.forward, camForward) < 0)
+            if (Vector3.Dot(_ladder.ClimbRotation * Vector3.forward, camForward) < 0)
                 desiredSpeed *= -1;
             
             _currentClimbSpeed = Mathf.SmoothDamp(_currentClimbSpeed, desiredSpeed, ref _climbVelocity, _climbSmoothTime);
@@ -403,12 +407,14 @@ namespace NJG.Runtime.Entity
                 HandleRotation(adjustedDirection);
                 SmoothSpeed(adjustedDirection * _moveSpeed);
                 HandleHorizontalMovement();
+                HandleExtraGravity();
                 CheckForClimbing();
             }
             else
             {
                 SmoothSpeedZeroMovementInput();
                 HandleHorizontalMovement();
+                HandleExtraGravity();
             }
         }
 
@@ -422,8 +428,14 @@ namespace NJG.Runtime.Entity
 
         private void HandleHorizontalMovement()
         {
-            Vector2 velocity = _currentHorizontalSpeed *  _dashVelocity * Time.deltaTime;
+            Vector2 velocity = _currentHorizontalSpeed *  _dashVelocity;
             _rigidBody.linearVelocity = new Vector3(velocity.x, _rigidBody.linearVelocity.y, velocity.y);
+        }
+
+        private void HandleExtraGravity()
+        {
+            float verticalVelocity = _rigidBody.linearVelocity.y - _extraGravityForce * Time.deltaTime;
+            SetRigidBodyVerticalVelocity(verticalVelocity);
         }
 
         private void SmoothSpeed(Vector3 desiredSpeed)
@@ -438,6 +450,13 @@ namespace NJG.Runtime.Entity
             Vector2 desiredHorizontalSpeed = Vector2.zero;
             float smoothTime = IsGrounded? _stopSmoothTime: _airStopSmoothTime;
             _currentHorizontalSpeed = Vector2.SmoothDamp(_currentHorizontalSpeed, desiredHorizontalSpeed, ref _velocity, smoothTime);
+        }
+
+        private void SetRigidBodyVerticalVelocity(float verticalVelocity)
+        {
+            Vector3 velocity = _rigidBody.linearVelocity;
+            velocity.y = verticalVelocity;
+            _rigidBody.linearVelocity = velocity;
         }
 
         private void UpdateAnimatorLocomotion()
