@@ -8,14 +8,12 @@ namespace NJG.Runtime.Entity
 
         public override void OnEnter()
         {
+            _animator.CrossFade(_climbHash, _crossFadeDuration);
         }
 
         public override void FixedUpdate()
         {
             _player.HandleClimb();
         }
-
-        
-
     }
 }

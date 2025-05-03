@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93d861184f246e797b226e50c1b615c, type: 3}
+  m_Name: SideLaunch_BouncePlotData
+  m_EditorClassIdentifier: 
+  <PlantName>k__BackingField: BOUNCE-SHROOM
+  <SeedPrefab>k__BackingField: {fileID: 3318010734158144196, guid: 24972c8f2e239064ca2ceeafcae75020, type: 3}
+  <FullyGrownPrefab>k__BackingField: {fileID: 8660063561227258347, guid: 18e1f3762090b564aaca39b8771a7225, type: 3}
+  <IsHarvestable>k__BackingField: 0
+  <HarvestablePlantPrefab>k__BackingField: {fileID: 0}
