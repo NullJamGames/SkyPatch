@@ -16,7 +16,9 @@ namespace NJG.Runtime.UI
             tr.localScale = Vector3.one * _startScale;
             
             tr.DOKill();
-            tr.DOScale(Vector3.one, _animTime).SetEase(Ease.OutCubic);
+            tr.DOScale(Vector3.one, _animTime)
+                .SetEase(Ease.OutCubic)
+                .SetUpdate(true);
         }
     }
 }

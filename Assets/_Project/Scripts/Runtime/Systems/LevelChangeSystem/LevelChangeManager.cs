@@ -16,12 +16,12 @@ namespace NJG.Runtime.LevelChangeSystem
 
         public void LoadGameScene()
         {
-            LoadScene("Level001");
+            LoadScene("3_Level01");
         }
 
         public void LoadMenuScene()
         {
-            LoadScene("Menu");
+            LoadScene("2_MainMenu");
         }
 
         public void LoadScene(string sceneName)
