@@ -750,7 +750,7 @@ MonoBehaviour:
   _dashForce: 5
   _dashDuration: 0.5
   _dashCooldown: 1
-  _climbSpeed: 100
+  _climbSpeed: 2
   _climbSmoothTime: 0.2
   _ladderLayer:
     serializedVersion: 2

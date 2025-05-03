@@ -101,7 +101,7 @@ namespace NJG.Runtime.Entity
         
         // Animator Params
         private static readonly int _speedHash = Animator.StringToHash("Speed");
-        private static readonly int _yVelocityHash = Animator.StringToHash("yVelocity");
+        private static readonly int _climbSpeedHash = Animator.StringToHash("climbSpeed");
         
         public Vector3 StartPosition { get; private set; }
         public Quaternion StartRotation { get; private set; }
@@ -298,13 +298,7 @@ namespace NJG.Runtime.Entity
 
         private void HandleClimbMovement()
         {
-            // if (_movement.z == 0f)
-            // {
-            //     _currentClimbSpeed = 0f;
-            //     return;
-            // }
-
-            float desiredSpeed = _movement.z * _climbSpeed * Time.deltaTime;
+            float desiredSpeed = _movement.z * _climbSpeed;
             
             Vector3 camForward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Vector3.forward;
             if (Vector3.Dot(_ladder.ClimbRotation * Vector3.forward, camForward) < 0)
@@ -441,11 +435,6 @@ namespace NJG.Runtime.Entity
 
         private void HandleExtraGravity()
         {
-            return;
-            
-            if (_isClimbing)
-                return;
-            
             float verticalVelocity = _rigidBody.linearVelocity.y - _extraGravityForce * Time.deltaTime;
             SetRigidBodyVerticalVelocity(verticalVelocity);
         }
@@ -474,7 +463,7 @@ namespace NJG.Runtime.Entity
         private void UpdateAnimator()
         {
             //Debug.Log(_rigidBody.linearVelocity.y);
-            _animator.SetFloat(_yVelocityHash, _rigidBody.linearVelocity.y);
+            _animator.SetFloat(_climbSpeedHash, _currentClimbSpeed);
             
             float animSpeedValue = IsGrounded ? _currentHorizontalSpeed.magnitude : 0f;
             _animator.SetFloat(_speedHash, animSpeedValue);
