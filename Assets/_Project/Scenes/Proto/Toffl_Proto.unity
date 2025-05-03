@@ -20,9 +20,9 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.036779106, g: 0.08207357, b: 0.08962265, a: 0.5}
-  m_AmbientEquatorColor: {r: 0.074460596, g: 0.096156344, b: 0.13271348, a: 0.475}
-  m_AmbientGroundColor: {r: 0.037230298, g: 0.048078172, b: 0.06635674, a: 0.475}
+  m_AmbientSkyColor: {r: 0.1642484, g: 0.1990763, b: 0.27039054, a: 0.5}
+  m_AmbientEquatorColor: {r: 0.07949554, g: 0.0918745, b: 0.15919642, a: 0.475}
+  m_AmbientGroundColor: {r: 0.03974777, g: 0.04593725, b: 0.07959821, a: 0.475}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
@@ -25832,6 +25832,10 @@ PrefabInstance:
       propertyPath: satHolder
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1220824014509928813, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: 'satellites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ced8d0dc28965445a1f1a74c955dc0c, type: 2}
     - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -25854,11 +25858,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.3047825
+      value: -0.16761881
       objectReference: {fileID: 0}
     - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.95242196
+      value: 0.9858519
       objectReference: {fileID: 0}
     - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.y
@@ -25898,32 +25902,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8150462
+      value: 0.49043986
       objectReference: {fileID: 0}
     - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.2964196
+      value: 0.0973068
       objectReference: {fileID: 0}
     - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.46785057
+      value: 0.84946704
       objectReference: {fileID: 0}
     - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.17014998
+      value: -0.16854039
       objectReference: {fileID: 0}
     - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: currentDay
-      value: 0
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: yearPercentage
-      value: 0.03775719
+      value: 0.32942387
       objectReference: {fileID: 0}
     - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: perennialProfile
       value: 
-      objectReference: {fileID: 11400000, guid: 8ce0d8458b4495b4593c1e03027a0ce5, type: 2}
+      objectReference: {fileID: 11400000, guid: 06165ff4de9e784488492b94f431643d, type: 2}
     - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: currentTime.hours
       value: 19
@@ -25966,15 +25970,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.3948867
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.29504195
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.24401017
       objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Enabled
@@ -25984,17 +25988,29 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20.992165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20.992165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20.992165
+      objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.111896
+      value: -12.997501
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.827885
+      value: 11.307426
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.9445
+      value: 16.602129
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
