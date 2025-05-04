@@ -21,13 +21,17 @@ namespace NJG.Runtime.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             _tween.Kill();
-            _tween = transform.DOScale(Vector3.one * _hoverScale, _animTime).SetEase(Ease.Linear);
+            _tween = transform.DOScale(Vector3.one * _hoverScale, _animTime)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             _tween.Kill();
-            _tween = transform.DOScale(Vector3.one, _animTime).SetEase(Ease.Linear);
+            _tween = transform.DOScale(Vector3.one, _animTime)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true);
         }
     }
 }
