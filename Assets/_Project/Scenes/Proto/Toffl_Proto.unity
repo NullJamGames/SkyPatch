@@ -696,7 +696,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5880488311699389518, guid: 46c89ed0ac1391e448757d5bf6c774fa, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1048722411}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8558315608288043816, guid: 46c89ed0ac1391e448757d5bf6c774fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 621264621}
   m_SourcePrefab: {fileID: 100100000, guid: 46c89ed0ac1391e448757d5bf6c774fa, type: 3}
 --- !u!224 &210965096 stripped
 RectTransform:
@@ -1856,7 +1859,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 432875798}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 621264621}
+        m_TargetAssemblyTypeName: NJG.Runtime.Managers.PauseManager, Assembly-CSharp
+        m_MethodName: Resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &432875798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6991,6 +7006,25 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &621264617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8558315608288043816, guid: 46c89ed0ac1391e448757d5bf6c774fa, type: 3}
+  m_PrefabInstance: {fileID: 210965095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &621264621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621264617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a981f7c0c05f9ef43a211503e71aef61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _input: {fileID: 11400000, guid: 222b1a21795386d4eb65ee252ac2cf44, type: 2}
+  pauseMenu: {fileID: 1048722410}
 --- !u!1001 &631943282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20684,7 +20718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1980120642
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26470,27 +26504,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 9.47054
+      value: 8.637369
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 9.47054
+      value: 8.637369
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 9.47054
+      value: 8.637369
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.9796405
+      value: -8.842258
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.352364
+      value: 7.5619206
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.7422695
+      value: 9.303851
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
