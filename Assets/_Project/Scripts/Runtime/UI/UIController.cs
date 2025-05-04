@@ -9,7 +9,7 @@ using NJG.Runtime.Interactables;
 
 namespace NJG.Runtime.UI
 {
-    public class TemporaryWinScreen : MonoBehaviour
+    public class UIController : MonoBehaviour
     {
         [SerializeField]
         private GameObject _winScreen;
@@ -23,7 +23,7 @@ namespace NJG.Runtime.UI
         
         private void Start()
         {
-            _gameVersionText.text = $"Version: {Application.version}";
+            SetGameVersion();
             
             // TODO: This is just for testing...
             _revivableTrees = new List<RevivableTree>();
@@ -39,6 +39,8 @@ namespace NJG.Runtime.UI
             if (_revivableTrees.Count > 0)
                 _checkForWinRoutine = Timing.RunCoroutine(CheckForWinRoutine());
         }
+
+        private void SetGameVersion() => _gameVersionText.text = $"Version: {Application.version}";
 
         private IEnumerator<float> CheckForWinRoutine()
         {

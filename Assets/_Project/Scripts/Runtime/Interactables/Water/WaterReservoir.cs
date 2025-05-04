@@ -10,7 +10,7 @@ namespace NJG.Runtime.Interactables
     public class WaterReservoir : MonoBehaviour, IInteractable, IWaterSource
     {
         [FoldoutGroup("References"), SerializeField, Anywhere]
-        private GameObject _waterVisual;
+        protected GameObject _waterVisual;
         
         [FoldoutGroup("Settings"), SerializeField]
         private bool _unlimitedWater = true;
@@ -20,7 +20,7 @@ namespace NJG.Runtime.Interactables
         private Collider _collider;
         private int _remainingUses;
         
-        public bool ContainsWater { get; private set; } = true;
+        public bool ContainsWater { get; protected set; } = true;
         
         public Transform Transform => transform;
         

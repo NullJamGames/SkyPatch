@@ -270,5 +270,3 @@ MonoBehaviour:
     customChanceEffector: {fileID: 0}
   FX:
   - {fileID: 11400000, guid: 09f6a65e69a578e489015d87bc9122e5, type: 2}
-  FXVolume: 0.519
-  useVFX: 1

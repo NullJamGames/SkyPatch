@@ -18,7 +18,9 @@ MonoBehaviour:
     baseChance: 1
     chanceEffectors: []
   forecastNext:
-  - {fileID: 11400000, guid: 94bbf17d66f5c6b4ebcd9189ba34367d, type: 2}
+  - {fileID: 11400000, guid: 1612c8461dec6ed418cc0f0de8693ea2, type: 2}
+  - {fileID: 11400000, guid: 6f674bb9d7dffb744aa46868aff7ba78, type: 2}
+  - {fileID: 11400000, guid: 13a1f6ab2ca56ed4e9881129bf992ac7, type: 2}
   forecastModifierMethod: 0
   FX:
   - {fileID: 11400000, guid: 4fad40160918ef04e9ab8a44f8f31ab1, type: 2}
