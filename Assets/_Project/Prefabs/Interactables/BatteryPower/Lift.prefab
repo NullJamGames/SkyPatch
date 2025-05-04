@@ -31,6 +31,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6360929765866811989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2903655210096933070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6731356019508020594}
+  - component: {fileID: 3638906382043019353}
+  - component: {fileID: 7778885588191656577}
+  m_Layer: 7
+  m_Name: StopperCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6731356019508020594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2903655210096933070}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.185, z: 0}
+  m_LocalScale: {x: 2.7, y: 0.1, z: 1.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7420002807964533599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3638906382043019353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2903655210096933070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91403307c44c20b39a13ec719ca263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movingPlatform: {fileID: 5996154077402610263}
+--- !u!65 &7778885588191656577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2903655210096933070}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3425919810618757898
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,8 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _batteryHolder: {fileID: 5614929000281116686}
+  _name: ELEVATOR PANEL
   _movingPlatform: {fileID: 5996154077402610263}
-  _drainPerInterval: 5
+  _drainPerInterval: 3
   _drainInterval: 1
 --- !u!1 &6666222036459796085
 GameObject:
@@ -201,6 +269,7 @@ GameObject:
   - component: {fileID: 7420002807964533599}
   - component: {fileID: 8223778002981310540}
   - component: {fileID: 5996154077402610263}
+  - component: {fileID: 3412890087269444722}
   m_Layer: 7
   m_Name: MovingPlatform
   m_TagString: MovingPlatform
@@ -222,6 +291,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4579590975043753558}
+  - {fileID: 6731356019508020594}
   m_Father: {fileID: 6360929765866811989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8223778002981310540
@@ -260,6 +330,18 @@ MonoBehaviour:
   _moveTo: {x: 0, y: -7.8, z: 0}
   _moveTime: 2
   _ease: 7
+--- !u!114 &3412890087269444722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780820168957470706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843ae713aab846ebba4bbdef3d62451c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8251175646143225068
 GameObject:
   m_ObjectHideFlags: 0

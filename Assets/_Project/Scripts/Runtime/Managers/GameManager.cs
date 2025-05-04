@@ -7,31 +7,22 @@ namespace NJG.Runtime.Managers
 {
     public class GameManager : IInitializable, ILateDisposable
     {
-        public int Energy { get; private set; }
-
         public GameObject Player { get; private set; }
         
         public void Initialize()
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
             
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
+        }
+        
+        public void ToggleCursor(bool isVisible)
+        {
+            Cursor.visible = isVisible;
+            Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
         }
         
         public void LateDispose()
         {
             
-        }
-
-        public void AddEnergy(int energy)
-        {
-            Energy += energy;
-        }
-        
-        public bool HasEnoughEnergy(int energy)
-        {
-            return Energy >= energy;
         }
     }
 }

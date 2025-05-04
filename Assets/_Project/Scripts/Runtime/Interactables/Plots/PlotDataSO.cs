@@ -14,6 +14,8 @@ namespace NJG.Runtime.Interactables
         [field: BoxGroup("Prefabs"), SerializeField]
         public GameObject FullyGrownPrefab { get; private set; }
         [field: BoxGroup("Prefabs"), SerializeField]
+        public bool IsHarvestable { get; private set; } = true;
+        [field: BoxGroup("Prefabs"), SerializeField, ShowIf(nameof(IsHarvestable))]
         public HarvestedPlant HarvestablePlantPrefab { get; private set; }
     }
 }

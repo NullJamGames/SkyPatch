@@ -10,8 +10,10 @@ namespace NJG.Runtime.Entity
         
         protected static readonly int _locomotionHash = Animator.StringToHash("Locomotion");
         protected static readonly int _jumpHash = Animator.StringToHash("Jump");
+        protected static readonly int _fallHash = Animator.StringToHash("Fall");
         protected static readonly int _dashHash = Animator.StringToHash("Dash");
         protected static readonly int _attackHash = Animator.StringToHash("Attack");
+        protected static readonly int _climbHash = Animator.StringToHash("Climb");
 
         protected const float _crossFadeDuration = 0.1f;
 

@@ -25,13 +25,15 @@ namespace NJG.Runtime.Interactables
         )
         {
             bool playerHasBattery = playerInventory.Pickupable is Battery;
+            bool playerCanPickup = playerInventory.CanPickup();
             bool interactableHasBattery = batteryInteractable.HasBattery;
 
-            return playerHasBattery switch
+            return interactableHasBattery switch
             {
-                true when !interactableHasBattery => "Press E to insert battery",
+                true when playerCanPickup => "Press E to take battery",
                 true => "Can't take battery, hands are full...",
-                _ => interactableHasBattery ? "Press E to take battery" : "Looks like I can insert a battery here..."
+                false when playerHasBattery => "Press E to insert battery",
+                false => "Looks like I can insert a battery here..."
             };
         }
         
@@ -72,8 +74,9 @@ namespace NJG.Runtime.Interactables
                 Plot.PlotState.Empty => "Press E to plant seed",
                 Plot.PlotState.Growing when hasWater => "Press E to water plant",
                 Plot.PlotState.Growing => "Needs water...",
-                Plot.PlotState.Ready when playerInventory.CanPickup() => "Press E to harvest",
-                Plot.PlotState.Ready => "Can't harvest, hands are full...",
+                Plot.PlotState.HarvestReady when playerInventory.CanPickup() => "Press E to harvest",
+                Plot.PlotState.HarvestReady => "Can't harvest, hands are full...",
+                Plot.PlotState.NoHarvest => "I wonder what this does...",
                 _ => "ERROR: Something went wrong, notify dev..."
             };
         }
