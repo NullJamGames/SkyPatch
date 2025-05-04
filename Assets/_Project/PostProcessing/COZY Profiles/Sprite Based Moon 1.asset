@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac36c75b9c2af5b42a8f1907e068490d, type: 3}
-  m_Name: Stylized Moon
+  m_Name: Sprite Based Moon 1
   m_EditorClassIdentifier: 
-  satelliteReference: {fileID: 2012264065759116755, guid: 114d5c9d925258141a3450e2d56f525d, type: 3}
+  satelliteReference: {fileID: 2012264065759116755, guid: 7ec660a5ad8b55748b927ffe0e8995a8, type: 3}
   orbitRef: {fileID: 0}
   moonRef: {fileID: 0}
   lightRef: {fileID: 0}
-  size: 2
-  distance: 1
+  size: 1
+  distance: 0.953
   autoScaleByDistance: 1
-  orbitOffset: 0
-  initialRotation: {x: 0, y: 33.7, z: 0}
+  orbitOffset: 90
+  initialRotation: {x: 0, y: 0, z: 0}
   satelliteRotateSpeed: 0.2
   linkToDay: 0
   rotationPeriod: 28
   rotationPeriodOffset: 0
   satelliteRotateAxis: {x: 0, y: 0, z: 0}
   satelliteDirection: 0
-  satelliteRotation: 260.31934
+  satelliteRotation: 208359.62
   satellitePitch: 0
-  declination: 30
-  declinationPeriod: 192
+  declination: 0
+  declinationPeriod: 0
   changedLastFrame: 0
-  open: 0
+  open: 1

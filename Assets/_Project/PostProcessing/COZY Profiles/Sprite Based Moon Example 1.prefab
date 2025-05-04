@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8088479212335134103}
   - component: {fileID: 2161844294614716248}
   m_Layer: 0
-  m_Name: Sprite Based Moon Example
+  m_Name: Sprite Based Moon Example 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
