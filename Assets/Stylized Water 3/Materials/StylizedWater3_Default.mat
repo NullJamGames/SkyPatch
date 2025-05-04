@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ADVANCED_SHADING
   - _CAUSTICS
   - _DISTANCE_NORMALS
   - _INTERSECTION_FOAM
@@ -262,7 +261,7 @@ Material:
     - _RiverModeOn: 0
     - _SHARP_INERSECTIONOn: 1
     - _ScreenSpaceReflectionsEnabled: 0
-    - _ShadingMode: 1
+    - _ShadingMode: 0
     - _ShadowStrength: 1
     - _ShoreLineLength: 0
     - _ShoreLineWaveDistance: 23
