@@ -25824,10 +25824,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1029817242}
     m_Modifications:
-    - target: {fileID: 903230297175781445, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: biomes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 972495225840589568, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: cozyCamera
       value: 
@@ -25836,213 +25832,25 @@ PrefabInstance:
       propertyPath: satHolder
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1220824014509928813, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: 'satellites.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8ced8d0dc28965445a1f1a74c955dc0c, type: 2}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.b
-      value: 1.1535546
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.g
-      value: 1.3476623
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.r
-      value: 1.375392
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Lightmapping
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2926144429436106454, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.42991012
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.90287167
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553546896285060753, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3707129144955552128, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3707129144955552128, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3707129144955552128, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808699652379290733, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808699652379290733, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808699652379290733, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4236704253155670708, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Name
       value: SkyPatch_CozyWeatherSphere
       objectReference: {fileID: 0}
-    - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.45464492
-      objectReference: {fileID: 0}
-    - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.20808162
-      objectReference: {fileID: 0}
-    - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7874682
-      objectReference: {fileID: 0}
-    - target: {fileID: 4400429801251324130, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.360408
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: currentDay
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: yearPercentage
-      value: 0.012778636
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: perennialProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 06165ff4de9e784488492b94f431643d, type: 2}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: currentTime.hours
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: currentTime.minutes
-      value: 43
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: currentTime.seconds
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414791319620696293, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: currentTime.milliseconds
-      value: 559
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: TrailModule.colorOverLifetime.maxColor.b
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: TrailModule.colorOverLifetime.maxColor.g
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865082958240223882, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: TrailModule.colorOverLifetime.maxColor.r
-      value: 0.9991447
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Lightmapping
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_Shadows.m_Strength
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845213435769655314, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_BoundingSphereOverride.y
-      value: 1.076e-42
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208677682106728723, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: biomes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6587469528095841467, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: biomes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: biomes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.1391296
+      value: -10.261084
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.233814
+      value: 8.248243
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.576153
+      value: 15.847036
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
