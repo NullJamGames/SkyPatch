@@ -46,6 +46,7 @@ Material:
     - _Base_IsTexture: 1
     - _Base_Tile: 1.25
     - _Base_Triplaner: 1
+    - _QueueControl: 0
     m_Colors:
     - _BaseColor: {r: 0.41509432, g: 0.30675206, b: 0.30675206, a: 1}
   m_BuildTextureStacks: []
