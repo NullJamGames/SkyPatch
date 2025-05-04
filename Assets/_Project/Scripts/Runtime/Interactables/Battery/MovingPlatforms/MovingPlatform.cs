@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class MovingPlatform : MonoBehaviour
+    public class MovingPlatform : MonoBehaviour, IActivatable
     {
         [FoldoutGroup("Settings"), SerializeField]
         private Vector3 _moveTo = Vector3.zero;
