@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edc9e8ccf7e1f314da24a604c1a11094, type: 3}
-  m_Name: Partly Cloudy
+  m_Name: NJGThunderStorm
   m_EditorClassIdentifier: 
   minTime: 0.041666668
-  maxTime: 0.125
+  maxTime: 0.083333336
   chance:
     baseChance: 1
     chanceEffectors: []
   forecastNext:
-  - {fileID: 11400000, guid: 1612c8461dec6ed418cc0f0de8693ea2, type: 2}
   - {fileID: 11400000, guid: 6f674bb9d7dffb744aa46868aff7ba78, type: 2}
-  - {fileID: 11400000, guid: 13a1f6ab2ca56ed4e9881129bf992ac7, type: 2}
   forecastModifierMethod: 0
   FX:
-  - {fileID: 11400000, guid: 4fad40160918ef04e9ab8a44f8f31ab1, type: 2}
-  - {fileID: 11400000, guid: 485b0d34053264f44afdb830525cd648, type: 2}
+  - {fileID: 11400000, guid: 37958e75fc835c242a6ab218c3f7c868, type: 2}
+  - {fileID: 11400000, guid: 5818af68d3b1bdd47ad057e03bb5f10e, type: 2}
+  - {fileID: 11400000, guid: f1060915b42a4094eb4db8e67b27e8f4, type: 2}
+  - {fileID: 11400000, guid: 3ca682fa89b9e784087c74f4b948d1d7, type: 2}
+  - {fileID: 11400000, guid: ca58f4622d4c4954dac92a21699c672d, type: 2}
+  - {fileID: 11400000, guid: 4505d67b062b37240b5906993b1fab90, type: 2}
