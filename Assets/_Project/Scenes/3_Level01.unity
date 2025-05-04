@@ -739,7 +739,7 @@ MonoBehaviour:
   _camera: {fileID: 199935669}
   _followPointFraming: {x: 0, y: 0}
   _followingSharpness: 1e+9
-  _defaultDistance: 6
+  <DefaultDistance>k__BackingField: 6
   _minDistance: 0
   _maxDistance: 10
   _distanceMovementSpeed: 5
@@ -751,13 +751,13 @@ MonoBehaviour:
   _maxVerticalAngle: 90
   _rotationSpeed: 1.3
   _rotationSharpness: 10000
-  _rotateWithPhysicsMover: 0
+  <RotateWithPhysicsMover>k__BackingField: 0
   _obstructionCheckRadius: 0.2
   _obstructionLayers:
     serializedVersion: 2
-    m_Bits: 7167
+    m_Bits: 0
   _obstructionSharpness: 10000
-  _ignoredColliders: []
+  <IgnoredColliders>k__BackingField: []
 --- !u!1001 &218948346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1183,6 +1183,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4041626896750226, guid: 99f02f99c9384e44f96a578070591d9e, type: 3}
   m_PrefabInstance: {fileID: 298565061}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &299753480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299753481}
+  m_Layer: 0
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &299753481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299753480}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.126, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3655663565236009461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &325143345 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8831711421638968989, guid: 5821e714df0c9f84faebf7c20e129d19, type: 3}
@@ -23408,6 +23439,7 @@ Transform:
   - {fileID: 6128092697387977870}
   - {fileID: 7330037596549752843}
   - {fileID: 3733136288942544853}
+  - {fileID: 299753481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3657065602412786085
@@ -30962,15 +30994,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3230991
+      value: 4.545003
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.939005
+      value: 5.710465
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.49464
+      value: 7.3208194
       objectReference: {fileID: 0}
     - target: {fileID: 2703016002711230664, guid: f74db6a793949214d9b898429d40a04d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -31588,6 +31620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: {fileID: 8664909547711287207}
   _characterCamera: {fileID: 199935670}
+  _input: {fileID: 11400000, guid: 222b1a21795386d4eb65ee252ac2cf44, type: 2}
 --- !u!114 &8664909547711287206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31642,25 +31675,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f07d7d93e6b42c9ab6e6b4e19d157fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motor: {fileID: 8664909547711287206}
-  _maxStableMoveSpeed: 10
+  <Motor>k__BackingField: {fileID: 8664909547711287206}
+  _maxStableMoveSpeed: 6
   _stableMovementSharpness: 15
-  _orientationSharpness: 10
-  _orientationMethod: 0
-  _maxAirMoveSpeed: 15
-  _airAccelerationSpeed: 15
-  _drag: 0.1
-  _allowJumpingWhenSliding: 0
+  _orientationSharpness: 20
+  _orientationMethod: 1
+  _maxAirMoveSpeed: 10
+  _airAccelerationSpeed: 30
+  _drag: 0
+  _allowJumpingWhenSliding: 1
   _jumpUpSpeed: 10
-  _jumpScalableForwardSpeed: 10
-  _jumpPreGroundingGraceTime: 0
-  _jumpPostGroundingGraceTime: 0
-  _ignoreColliders: []
-  _bonusOrientationMethod: 0
-  _bonusOrientationSharpness: 10
+  _jumpScalableForwardSpeed: 0
+  _jumpPreGroundingGraceTime: 0.1
+  _jumpPostGroundingGraceTime: 0.1
+  _ignoredColliders: []
+  _bonusOrientationMethod: 1
+  _bonusOrientationSharpness: 20
   _gravity: {x: 0, y: -30, z: 0}
-  _meshRoot: {fileID: 0}
-  _cameraFollowPoint: {fileID: 0}
+  _meshRoot: {fileID: 6128092697387977870}
+  <CameraFollowPoint>k__BackingField: {fileID: 299753481}
   _crouchedCapsuleHeight: 0.25
 --- !u!114 &8835337716052221447
 MonoBehaviour:

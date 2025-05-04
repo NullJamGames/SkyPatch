@@ -193,7 +193,7 @@ namespace NJG.Runtime.Entity
 
         private void Update()
         {
-            _movement = new Vector3(_input.Direction.x, 0f, _input.Direction.y);
+            _movement = new Vector3(_input.MoveDirection.x, 0f, _input.MoveDirection.y);
             _stateMachine.Update();
 
             HandleTimers();
