@@ -167,7 +167,7 @@ MonoBehaviour:
   cachedWeatherSphere: {fileID: 972495225840589568}
   cachedSystem: {fileID: 0}
   transit: {fileID: 581281031729225459}
-  perennialProfile: {fileID: 11400000, guid: 06165ff4de9e784488492b94f431643d, type: 2}
+  perennialProfile: {fileID: 11400000, guid: 8ce0d8458b4495b4593c1e03027a0ce5, type: 2}
   overrideDate: {fileID: 0}
   yearPercentage: 0.012778636
   transitioningTime: 0
