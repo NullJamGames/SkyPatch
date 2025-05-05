@@ -1,25 +1,29 @@
-using System;
-using FMOD;
-using FMOD.Studio;
+using NJG.Runtime.Audio;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using Zenject;
 
 namespace NJG.Runtime.UI
 {
-    public enum VolumeType{ Master, Music, SFX }
     public class VolumeSettings : MonoBehaviour
     {
         [FoldoutGroup("References"), SerializeField] 
         private SVolumeSlider[] _volumeSliders;
         
+        private AudioManager _audioManager;
+
+        [Inject]
+        void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
+        
         private void Start()
         {
             foreach (SVolumeSlider volumeSlider in _volumeSliders)
             {
-                GetBus(volumeSlider.VolumeType).getVolume(out float volume);
-                volumeSlider.Slider.SetValueWithoutNotify(volume);
+                volumeSlider.Slider.SetValueWithoutNotify(_audioManager.GetCurrentVolume(volumeSlider.VolumeType));
                     
                 volumeSlider.Slider.onValueChanged.AddListener((val) => OnSliderValueChanged(val, volumeSlider.VolumeType));
             }
@@ -27,25 +31,10 @@ namespace NJG.Runtime.UI
 
         private void OnSliderValueChanged(float val, VolumeType volType)
         {
-            GetBus(volType).setVolume(val);
+            _audioManager.SetCurrentVolume(volType, val);
         }
 
-        private Bus GetBus(VolumeType volType)
-        {
-            string path = GetVolumePath(volType);
-            return FMODUnity.RuntimeManager.GetBus(path);
-        }
-
-        private string GetVolumePath(VolumeType volumeType)
-        {
-            return volumeType switch
-            {
-                VolumeType.Master => "bus:/",
-                VolumeType.Music => "bus:/Music",
-                VolumeType.SFX => "bus:/SFX",
-                _ => "#Errorrr"
-            };
-        }
+        
     }
     
     [System.Serializable]
