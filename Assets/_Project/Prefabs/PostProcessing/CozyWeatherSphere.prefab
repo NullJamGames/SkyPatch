@@ -5648,7 +5648,7 @@ MonoBehaviour:
   sunLensFlare: {fileID: 8153257201581048020}
   interactionsModule: {fileID: 0}
   climateModule: {fileID: 3050346918087948060}
-  weatherModule: {fileID: 6245011337670471910}
+  weatherModule: {fileID: 158421084606764307}
   timeModule: {fileID: 1308667748860030659}
   atmosphereModule: {fileID: 0}
   windModule: {fileID: 7315786948539015743}
@@ -5671,7 +5671,6 @@ MonoBehaviour:
   overrideWeather: {fileID: 0}
   moduleHolder: {fileID: 9059227292147595426}
   modules:
-  - {fileID: 6245011337670471910}
   - {fileID: 3526741828142377445}
   - {fileID: 6574139684374193975}
   - {fileID: 1308667748860030659}
@@ -5680,6 +5679,7 @@ MonoBehaviour:
   - {fileID: 3050346918087948060}
   - {fileID: 7315786948539015743}
   - {fileID: 1359741301457235666}
+  - {fileID: 158421084606764307}
 --- !u!114 &175207548624286731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15408,7 +15408,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10.175839, y: 10.175839, z: 10.175839}
+  m_LocalScale: {x: 9.443255, y: 9.443255, z: 9.443255}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2108730675362978566}
@@ -15980,7 +15980,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9130440068225351469}
-  - component: {fileID: 6245011337670471910}
   - component: {fileID: 3526741828142377445}
   - component: {fileID: 6574139684374193975}
   - component: {fileID: 1308667748860030659}
@@ -15989,6 +15988,7 @@ GameObject:
   - component: {fileID: 3050346918087948060}
   - component: {fileID: 7315786948539015743}
   - component: {fileID: 1359741301457235666}
+  - component: {fileID: 158421084606764307}
   m_Layer: 0
   m_Name: Modules
   m_TagString: Untagged
@@ -16011,60 +16011,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2703016002711230664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6245011337670471910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059227292147595426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a63f037b9d8b54987e07c69557b6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cachedWeatherSphere: {fileID: 5883829255674357199}
-  cachedSystem: {fileID: 5883829255674357199}
-  biomes: []
-  weight: 1
-  totalSystemWeight: 0
-  cumulus: 0.1
-  cirrus: 0
-  altocumulus: 0
-  cirrostratus: 0.11
-  chemtrails: 0.22
-  nimbus: 0
-  nimbusHeight: 1
-  nimbusVariation: 0.945
-  borderHeight: 0.553
-  borderEffect: 1
-  borderVariation: 0.95
-  fogDensity: 1
-  filterSaturation: 0
-  filterValue: 0
-  filterColor: {r: 1, g: 1, b: 1, a: 0}
-  sunFilter: {r: 1, g: 1, b: 1, a: 0}
-  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
-  ecosystem:
-    forecastProfile: {fileID: 11400000, guid: eacc8459f121a3d4c83bf331999911ef, type: 2}
-    weatherSelectionMode: 0
-    currentForecast: []
-    weatherTransitionTime: 15
-    weatherSphere: {fileID: 5883829255674357199}
-    system: {fileID: 5883829255674357199}
-    removeProfilesWithNoWeight: 1
-    currentWeather: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
-    weatherChangeCheck: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
-    weightedWeatherProfiles:
-    - weight: 1
-      profile: {fileID: 11400000, guid: 5a5650a48d2869048b392b88aab5df10, type: 2}
-      transitioning: 1
-  currentWeatherProfiles:
-  - weight: 1
-    profile: {fileID: 11400000, guid: 5a5650a48d2869048b392b88aab5df10, type: 2}
-    transitioning: 1
-  defaultFilter: {fileID: 11400000, guid: b3b90f04f4696264c9aab62e9c3c68a5, type: 2}
-  defaultClouds: {fileID: 11400000, guid: 40c748033998bf243ae542ca195124b7, type: 2}
 --- !u!114 &3526741828142377445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16082,7 +16028,7 @@ MonoBehaviour:
   biomes: []
   weight: 1
   totalSystemWeight: 0
-  atmosphereProfile: {fileID: 11400000, guid: 8cc0487e978305c49a20079f78f36ba0, type: 2}
+  atmosphereProfile: {fileID: 11400000, guid: d5d7bf7291ff26543afab46cf39bd892, type: 2}
   transitioningAtmosphere: 0
 --- !u!114 &6574139684374193975
 MonoBehaviour:
@@ -16138,7 +16084,7 @@ MonoBehaviour:
   cachedWeatherSphere: {fileID: 5883829255674357199}
   cachedSystem: {fileID: 0}
   transit: {fileID: 7456149326326449044}
-  perennialProfile: {fileID: 11400000, guid: 8ce0d8458b4495b4593c1e03027a0ce5, type: 2}
+  perennialProfile: {fileID: 11400000, guid: d7cc2afe0601a3b4da7e213b1ccac81e, type: 2}
   overrideDate: {fileID: 0}
   yearPercentage: 0.007704306
   transitioningTime: 0
@@ -16468,11 +16414,11 @@ MonoBehaviour:
   biomes: []
   weight: 1
   totalSystemWeight: 0
-  climateProfile: {fileID: 11400000, guid: e1a4bf0206b48d4428e0e961e057af39, type: 2}
+  climateProfile: {fileID: 11400000, guid: 7c939fb09009bce4d9e19c237fc382b8, type: 2}
   controlMethod: 1
   localTemperatureFilter: 0
   localPrecipitationFilter: 0
-  currentTemperature: 6.142
+  currentTemperature: 1.142
   currentPrecipitation: 50.705555
   snowAmount: 0.12045951
   snowMeltSpeed: 0.35
@@ -16494,7 +16440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cachedWeatherSphere: {fileID: 5883829255674357199}
   cachedSystem: {fileID: 0}
-  defaultWindProfile: {fileID: 11400000, guid: 94bed43d2a7d48f428f62cb4dcb20a81, type: 2}
+  defaultWindProfile: {fileID: 11400000, guid: e0afbd74e79f0464b9bc4d4245d79485, type: 2}
   windZone: {fileID: 0}
   windSpeed: 0.6
   windChangeSpeed: 10
@@ -16592,3 +16538,51 @@ MonoBehaviour:
   whileInBiome:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &158421084606764307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059227292147595426}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a63f037b9d8b54987e07c69557b6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cachedWeatherSphere: {fileID: 5883829255674357199}
+  cachedSystem: {fileID: 5883829255674357199}
+  biomes: []
+  weight: 0
+  totalSystemWeight: 0
+  cumulus: 0
+  cirrus: 0
+  altocumulus: 0
+  cirrostratus: 0
+  chemtrails: 0
+  nimbus: 0
+  nimbusHeight: 1
+  nimbusVariation: 0.945
+  borderHeight: 0.553
+  borderEffect: 1
+  borderVariation: 0.95
+  fogDensity: 1
+  filterSaturation: 0
+  filterValue: 0
+  filterColor: {r: 1, g: 1, b: 1, a: 0}
+  sunFilter: {r: 1, g: 1, b: 1, a: 0}
+  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
+  ecosystem:
+    forecastProfile: {fileID: 11400000, guid: 3fd94bc46d40b9c438f13c530686b890, type: 2}
+    weatherSelectionMode: 2
+    currentForecast: []
+    weatherTransitionTime: 15
+    weatherSphere: {fileID: 5883829255674357199}
+    system: {fileID: 5883829255674357199}
+    removeProfilesWithNoWeight: 1
+    currentWeather: {fileID: 11400000, guid: 6f674bb9d7dffb744aa46868aff7ba78, type: 2}
+    weatherChangeCheck: {fileID: 0}
+    weightedWeatherProfiles: []
+  currentWeatherProfiles: []
+  defaultFilter: {fileID: 11400000, guid: b3b90f04f4696264c9aab62e9c3c68a5, type: 2}
+  defaultClouds: {fileID: 11400000, guid: 40c748033998bf243ae542ca195124b7, type: 2}

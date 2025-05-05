@@ -9,18 +9,20 @@ namespace NJG.Utilities.PredicateStateMachines
         private Dictionary<Type, StateNode> _nodes = new();
         private HashSet<ITransition> _anyTransitions = new();
 
-        public void Update()
+        public IState CurrentState => _current.State;
+        
+        public void Update(float deltaTime)
         {
             ITransition transition = GetTransition();
             if (transition != null)
                 ChangeState(transition.To);
 
-            _current.State?.Update();
+            _current.State?.OnUpdate(deltaTime);
         }
         
-        public void FixedUpdate()
+        public void FixedUpdate(float fixedDeltaTime)
         {
-            _current.State?.FixedUpdate();
+            _current.State?.OnFixedUpdate(fixedDeltaTime);
         }
 
         public void SetState(IState state)

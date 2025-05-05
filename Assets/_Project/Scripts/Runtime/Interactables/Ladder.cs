@@ -1,65 +1,62 @@
-using System;
-using NJG.Runtime.Entity;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
     public class Ladder : MonoBehaviour
     {
-        [FoldoutGroup("Pos"), SerializeField] 
-        private float _topHeight = 3;
+        [FoldoutGroup("Ladder Segments"), SerializeField]
+        private Vector3 _ladderSegmentBottom;
+        [FoldoutGroup("Ladder Segments"), SerializeField]
+        private float _ladderSegmentLength;
 
-        [FoldoutGroup("Pos"), SerializeField] 
-        private Vector3 _bottomPos;
-        
-        [FoldoutGroup("Pos"), SerializeField] 
-        private Vector3 _topExitPos = new Vector3(0, 4, 1);
-        
-        public Quaternion ClimbRotation { get; private set; }
+        [FoldoutGroup("Points"), InfoBox("Points to move to when reaching one of the extremities and moving off of the ladder")]
+        [field: FoldoutGroup("Points"), SerializeField]
+        public Transform BottomReleasePoint { get; private set; }
+        [field: FoldoutGroup("Points"), SerializeField]
+        public Transform TopReleasePoint { get; private set; }
 
-        private void OnEnable()
+        // Gets the position of the bottom point of the ladder segment
+        public Vector3 BottomAnchorPoint => transform.position + transform.TransformVector(_ladderSegmentBottom);
+
+        // Gets the position of the top point of the ladder segment
+        public Vector3 TopAnchorPoint => transform.position + transform.TransformVector(_ladderSegmentBottom) 
+                                                            + (transform.up * _ladderSegmentLength);
+
+        public Vector3 ClosestPointOnLadderSegment(Vector3 fromPoint, out float onSegmentState)
         {
-            ClimbRotation = transform.rotation * Quaternion.Euler(0, 180, 0);
+            Vector3 segment = TopAnchorPoint - BottomAnchorPoint;            
+            Vector3 segmentPoint1ToPoint = fromPoint - BottomAnchorPoint;
+            float pointProjectionLength = Vector3.Dot(segmentPoint1ToPoint, segment.normalized);
+
+            // When higher than bottom point
+            if (pointProjectionLength > 0)
+            {
+                // If we are not higher than top point
+                if (pointProjectionLength <= segment.magnitude)
+                {
+                    onSegmentState = 0;
+                    return BottomAnchorPoint + (segment.normalized * pointProjectionLength);
+                }
+                // If we are higher than top point
+                else
+                {
+                    onSegmentState = pointProjectionLength - segment.magnitude;
+                    return TopAnchorPoint;
+                }
+            }
+            // When lower than bottom point
+            else
+            {
+                onSegmentState = pointProjectionLength;
+                return BottomAnchorPoint;
+            }
         }
 
-        public Vector3 GetClimbPosition()
+        private void OnDrawGizmos()
         {
-            return transform.TransformPoint(_bottomPos);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(BottomAnchorPoint, TopAnchorPoint);
         }
-
-        public Vector3 GetTopExitPos()
-        {
-            return transform.TransformPoint(_topExitPos);
-        }
-        public float GetBottomHeight()
-        {
-            return transform.TransformPoint(_bottomPos).y;
-        }
-
-        public float GetTopHeight()
-        {
-            return transform.TransformPoint(_bottomPos + new Vector3(0, _topHeight, 0)).y;
-        }
-
-        public bool IsCloserToTopPoint(float playerY)
-        {
-            float distanceToTop = Mathf.Abs(playerY - GetTopHeight()); 
-            float distanceToBottom = Mathf.Abs(playerY - GetBottomHeight()); 
-
-            return distanceToTop < distanceToBottom;
-        }
-        
-        #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.TransformPoint(_bottomPos),
-                transform.TransformPoint(_bottomPos + new Vector3(0, _topHeight, 0)));
-            Gizmos.DrawSphere(transform.TransformPoint(_bottomPos + new Vector3(0, _topHeight, 0)), 0.1f);
-            Gizmos.DrawSphere(transform.TransformPoint(_bottomPos), 0.1f);
-            Gizmos.DrawSphere(transform.TransformPoint(_topExitPos), 0.1f);
-        }
-        #endif
     }
 }

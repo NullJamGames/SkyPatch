@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class Pipe : MonoBehaviour
+    public class Pipe : MonoBehaviour, IActivatable
     {
         [FoldoutGroup("References"), SerializeField] 
         private GameObject _pipeWater;

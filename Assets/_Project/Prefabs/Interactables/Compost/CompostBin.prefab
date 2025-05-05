@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _compostPrefab: {fileID: 9078871094497697907, guid: 5ba5a829d0826c447970dcfdbe7a76e9, type: 3}
   _compostHolder: {fileID: 1806036416684360314}
+  _name: COMPOST BIN
 --- !u!1 &6878613218184660063
 GameObject:
   m_ObjectHideFlags: 0
