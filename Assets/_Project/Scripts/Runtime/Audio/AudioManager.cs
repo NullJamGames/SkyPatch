@@ -240,6 +240,7 @@ public class AudioManager : IInitializable, ILateDisposable
             return;
         _keyedInstances[keyObject][sound].stop(stopMode);
         _keyedInstances[keyObject][sound].release();
+        _keyedInstances[keyObject].Remove(sound);
     }
 
     public void DestroyKeyAndRemoveInstances(GameObject keyObject)
