@@ -49,5 +49,16 @@ namespace NJG.Runtime.Audio
         private void SetParamaterByLabel() => _audioManager.SetKeyedInstanceParamater(gameObject, _audioEvent, _paramaterName, _label);
         [FoldoutGroup("Keyed Instance"), Button(ButtonSizes.Medium)]
         private void StopKeyedInstance() => _audioManager.DestroyKeyAndRemoveInstances(gameObject);
+        
+        [FoldoutGroup("Global Parameter"), SerializeField]
+        private string _globalParameterName;
+        [FoldoutGroup("Global Parameter"), SerializeField]
+        private float _globalValue;
+        [FoldoutGroup("Global Parameter"), SerializeField]
+        private string _globalLabel;
+        [FoldoutGroup("Global Parameter"), Button(ButtonSizes.Medium)]
+        private void SetGlobalParameterByValue() => _audioManager.SetGlobalParameter(_globalParameterName, _globalValue);
+        [FoldoutGroup("Global Parameter"), Button(ButtonSizes.Medium)]
+        private void SetGlobalParameterByLabel() => _audioManager.SetGlobalParameter(_globalParameterName, _globalLabel);
     }
 }

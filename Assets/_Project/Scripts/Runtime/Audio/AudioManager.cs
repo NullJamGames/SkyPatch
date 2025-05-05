@@ -138,6 +138,16 @@ public class AudioManager : IInitializable, ILateDisposable
 
         _oneShotInstances.Clear();
     }
+
+    public void SetGlobalParameter(string parameterName, float value)
+    {
+        RuntimeManager.StudioSystem.setParameterByName(parameterName, value);
+    }
+    
+    public void SetGlobalParameter(string parameterName, string label)
+    {
+        RuntimeManager.StudioSystem.setParameterByNameWithLabel(parameterName, label);
+    }
     
     public void PlayPersistent(EventReference sound, GameObject sourceObject = null, Rigidbody2D sourceRigidbody = null)
     {
