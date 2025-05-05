@@ -21,19 +21,33 @@ namespace NJG.Runtime.Audio
             //_audioManager.PlayPersistent(_audioManager.AudioData.Music);
         }
 
-        [BoxGroup("Persistant"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("Persistant"), Button(ButtonSizes.Medium)]
         private void PlayPersistant() => _audioManager.PlayPersistent(_audioEvent);
-        [BoxGroup("Persistant"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("Persistant"), Button(ButtonSizes.Medium)]
         private void StopPersistant() => _audioManager.StopPersistent(_audioEvent);
-        [BoxGroup("Persistant"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("Persistant"), Button(ButtonSizes.Medium)]
         private void StopAllPersistantSounds() => _audioManager.StopAllPersistentSounds();
         
-        [BoxGroup("One Shot Tracked"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("One Shot Tracked"), Button(ButtonSizes.Medium)]
         private void PlayOneShotTracked() => _audioManager.PlayOneShotTracked(_audioEvent);
-        [BoxGroup("One Shot Tracked"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("One Shot Tracked"), Button(ButtonSizes.Medium)]
         private void StopAllTrackedOneShots() => _audioManager.StopAllTrackedOneShots();
         
-        [BoxGroup("One Shot and Forget"), Button(ButtonSizes.Medium)]
+        [FoldoutGroup("One Shot and Forget"), Button(ButtonSizes.Medium)]
         private void PlayOneShotAndForget() => _audioManager.PlayOneShotAndForget(_audioEvent);
+        [FoldoutGroup("Keyed Instance"), Button(ButtonSizes.Medium)]
+        private void StartKeyedInstance() => _audioManager.StartKeyedInstance(gameObject, _audioEvent);
+        [FoldoutGroup("Keyed Instance"), SerializeField]
+        private string _paramaterName;
+        [FoldoutGroup("Keyed Instance"), SerializeField]
+        private float _value;
+        [FoldoutGroup("Keyed Instance"), SerializeField]
+        private string _label;
+        [FoldoutGroup("Keyed Instance"), Button(ButtonSizes.Medium)]
+        private void SetParamaterByValue() => _audioManager.SetKeyedInstanceParamater(gameObject, _audioEvent, _paramaterName, _value);
+        [FoldoutGroup("Keyed Instance"), Button(ButtonSizes.Medium)]
+        private void SetParamaterByLabel() => _audioManager.SetKeyedInstanceParamater(gameObject, _audioEvent, _paramaterName, _label);
+        [FoldoutGroup("Keyed Instance"), Button(ButtonSizes.Medium)]
+        private void StopKeyedInstance() => _audioManager.DestroyKeyAndRemoveInstances(gameObject);
     }
 }
