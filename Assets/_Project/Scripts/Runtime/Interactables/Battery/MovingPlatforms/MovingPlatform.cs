@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using KBCore.Refs;
 using KinematicCharacterController;
 using Sirenix.OdinInspector;
@@ -11,7 +12,7 @@ namespace NJG.Runtime.Interactables
         public PhysicsMoverState MoverState;
     }
     
-    public class MovingPlatform : ValidatedMonoBehaviour, IMoverController
+    public class MovingPlatform : BatteryPowered, IMoverController
     {
         [FoldoutGroup("References"), SerializeField, Self] 
         private PhysicsMover _mover;
@@ -41,14 +42,30 @@ namespace NJG.Runtime.Interactables
         
         private const float _epsilon = 0.01f;
         
-        public bool IsMoving => _isMoving;
+        public override bool IsActive => _isMoving;
         
         private void Start()
         {
             _mover.MoverController = this;
             SetupPath();
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.TryGetComponent(out PickupableItem pickupable))
+            {
+                pickupable.AttachTo(transform);
+            }
+        }
         
+        private void OnCollisionExit(Collision other)
+        {
+            if (other.gameObject.TryGetComponent(out PickupableItem pickupable))
+            {
+                pickupable.Unattach();
+            }
+        }
+
         private void SetupPath()
         {
             _pathPoints = new Vector3[_waypoints.Length];
@@ -72,7 +89,7 @@ namespace NJG.Runtime.Interactables
                               .Pause();
         }
 
-        public void Activate()
+        public override void Activate()
         {
             if (_isReturning)
             {
@@ -83,7 +100,7 @@ namespace NJG.Runtime.Interactables
             _isMoving = true;
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
             if (_returnToStart)
             {

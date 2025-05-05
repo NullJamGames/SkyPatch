@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3166658466306067709}
   - component: {fileID: 7787055245914239028}
-  - component: {fileID: 2999295879340432796}
+  - component: {fileID: 4577096958876987271}
   - component: {fileID: 9078871094497697907}
   m_Layer: 9
   m_Name: Compost
@@ -148,8 +148,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2999295879340432796
-SphereCollider:
+--- !u!65 &4577096958876987271
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -167,8 +167,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Size: {x: 0.7911053, y: 0.70692325, z: 0.7723987}
+  m_Center: {x: -0.0015587807, y: 0.36166883, z: -0.0015586615}
 --- !u!114 &9078871094497697907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,5 +181,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299400bef5d4a0e8d5c7ef022ada876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 0}
+  _renderer: {fileID: 5326339909341940191}
   _name: COMPOST

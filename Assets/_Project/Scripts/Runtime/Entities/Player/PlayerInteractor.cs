@@ -117,24 +117,32 @@ namespace NJG.Runtime.Entities
             
             if (closestPickupable != null)
             {
-                if (!_playerInventory.CanPickup() || IsSameInteractable(closestPickupable))
+                if (IsSameInteractable(closestPickupable))
                     return;
-                
-                UnregisterInteractable();
-                _currentInteractable = closestPickupable;
-                RegisterInteractable();
-                OnInteractableChanged();
+
+                if (_playerInventory.CanPickup())
+                {
+                    UnregisterInteractable();
+                    _currentInteractable = closestPickupable;
+                    RegisterInteractable();
+                    OnInteractableChanged();
+                    return;
+                }
             }
-            else if (closestInteractable != null)
+
+            if (closestInteractable == null)
             {
-                if (IsSameInteractable(closestInteractable))
-                    return;
-                
-                UnregisterInteractable();
-                _currentInteractable = closestInteractable;
-                RegisterInteractable();
-                OnInteractableChanged();
+                HideTooltip();
+                return;
             }
+
+            if (IsSameInteractable(closestInteractable))
+                return;
+                
+            UnregisterInteractable();
+            _currentInteractable = closestInteractable;
+            RegisterInteractable();
+            OnInteractableChanged();
         }
 
         private bool IsSameInteractable(IInteractable interactable)

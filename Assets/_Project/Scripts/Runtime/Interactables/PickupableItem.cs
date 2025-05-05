@@ -58,6 +58,21 @@ namespace NJG.Runtime.Interactables
             _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         }
 
+        public virtual void AttachTo(Transform t)
+        {
+            transform.SetParent(t);
+            _rigidbody.interpolation = RigidbodyInterpolation.None;
+        }
+
+        public virtual void Unattach()
+        {
+            if (IsPickedUp)
+                return;
+            
+            transform.SetParent(null);
+            _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+
         public string GetTooltipText(PlayerInventory playerInventory)
         {
             string tooltipText = InteractionHelper.GetPickupableTooltip(playerInventory, this);

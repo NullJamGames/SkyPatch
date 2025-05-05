@@ -34,7 +34,7 @@ namespace NJG.Runtime.Entities
         public Vector3 LookVector;
     }
     
-    public class CharacterController : ValidatedMonoBehaviour, ICharacterController, IResetable
+    public class CharacterController : ValidatedMonoBehaviour, ICharacterController, ILaunchable, IResetable
     {
         #region Serialized Fields
 
@@ -340,7 +340,9 @@ namespace NJG.Runtime.Entities
             _moveInputVector = inputs.MoveVector;
             _lookInputVector = inputs.LookVector;
         }
-        
+
+        public void AddForce(Vector3 force) => AddVelocity(force);
+
         public void AddVelocity(Vector3 velocity)
         {
             switch (CurrentCharacterState)

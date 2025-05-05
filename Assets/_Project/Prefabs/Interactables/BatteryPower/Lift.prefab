@@ -135,7 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _batteryHolder: {fileID: 5614929000281116686}
   _name: LIFT PANEL
-  _movingPlatform: {fileID: 4700822357843633427}
+  _batteryPowered: {fileID: 4700822357843633427}
+  _activationDelay: 1
   _drainPerInterval: 3
   _drainInterval: 1
 --- !u!1 &6666222036459796085

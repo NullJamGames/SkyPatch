@@ -4,51 +4,63 @@ using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class MovingPlatformPanel : BatteryInteractable
+    public class BatteryPanel : BatteryInteractable
     {
         [FoldoutGroup("References"), SerializeField]
-        private MovingPlatform _movingPlatform;
+        private BatteryPowered _batteryPowered;
         
+        [FoldoutGroup("Settings"), SerializeField]
+        private float _activationDelay = 0.5f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainPerInterval = 1f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainInterval = 1f;
         
         private CountdownTimer _drainTimer;
+        private CountdownTimer _delayTimer;
 
         private void Awake()
         {
             _drainTimer = new CountdownTimer(_drainInterval);
             _drainTimer.OnTimerStop += OnDrainBattery;
+            
+            _delayTimer = new CountdownTimer(_activationDelay);
+            _delayTimer.OnTimerStop += ActivatePlatform;
         }
 
-        private void OnEnable() => TimerManager.RegisterTimer(_drainTimer);
-        private void OnDisable() => TimerManager.DeregisterTimer(_drainTimer);
-        
         protected override void OnBatteryInserted()
         {
             if (_battery.CurrentCharge <= 0f)
                 return;
             
-            _movingPlatform.Activate();
+            if (!_delayTimer.IsRunning)
+                _delayTimer.Start();
+        }
+
+        private void ActivatePlatform()
+        {
+            _batteryPowered.Activate();
             _drainTimer.Start();
         }
 
         protected override void OnBatteryRemoved()
         {
-            _movingPlatform.Deactivate();
+            if (_delayTimer.IsRunning)
+                _delayTimer.Pause();
+            
+            _batteryPowered.Deactivate();
             _drainTimer.Stop();
         }
 
         private void OnDrainBattery()
         {
-            if (_battery == null || !_movingPlatform.IsMoving)
+            if (_battery == null || !_batteryPowered.IsActive)
                 return;
 
             _battery.RemoveCharge(_drainPerInterval);
             if (_battery.CurrentCharge <= 0f)
             {
-                _movingPlatform.Deactivate();
+                _batteryPowered.Deactivate();
                 return;
             }
                 
