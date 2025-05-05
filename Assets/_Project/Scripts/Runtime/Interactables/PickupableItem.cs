@@ -47,6 +47,7 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = true;
             _collider.enabled = false;
             _rigidbody.isKinematic = true;
+            _rigidbody.interpolation = RigidbodyInterpolation.None;
         }
 
         public virtual void OnDrop()
@@ -54,6 +55,7 @@ namespace NJG.Runtime.Interactables
             IsPickedUp = false;
             _collider.enabled = true;
             _rigidbody.isKinematic = false;
+            _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         }
         
         public void AttachToPlatform(Transform platform)
