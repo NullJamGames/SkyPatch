@@ -51,7 +51,7 @@ namespace NJG.Runtime.Interactables
             
             State = _plotData.IsHarvestable ? PlotState.HarvestReady : PlotState.NoHarvest;
             Destroy(_currentVisual);
-            _currentVisual = Instantiate(_plotData.FullyGrownPrefab, transform.position, Quaternion.identity, transform);
+            _currentVisual = Instantiate(_plotData.FullyGrownPrefab, transform.position, transform.rotation, transform);
         }
 
         private void AssertState(PlayerInventory playerInventory)

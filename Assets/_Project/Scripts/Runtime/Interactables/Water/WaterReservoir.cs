@@ -33,8 +33,7 @@ namespace NJG.Runtime.Interactables
             _remainingUses = _numberOfUses;
             if (!_unlimitedWater && _remainingUses <= 0)
             {
-                _waterVisual.SetActive(false);
-                _collider.enabled = false;
+                SetNoWater();
             }
         }
 
@@ -54,10 +53,24 @@ namespace NJG.Runtime.Interactables
             
             if (!_unlimitedWater && _remainingUses <= 0)
             {
-                ContainsWater = false;
-                _waterVisual.SetActive(false);
-                _collider.enabled = false;
+                SetNoWater();
             }
+        }
+
+        public void SetUnlimitedWater()
+        {
+            _unlimitedWater = true;
+            ContainsWater = true;
+            _waterVisual.SetActive(true);
+            _collider.enabled = true;
+        }
+
+        public void SetNoWater()
+        {
+            _unlimitedWater = false;
+            ContainsWater = false;
+            _waterVisual.SetActive(false);
+            _collider.enabled = false;
         }
 
         public string GetTooltipText(PlayerInventory playerInventory)

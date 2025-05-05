@@ -32,6 +32,7 @@ namespace NJG.Runtime.Input
         public bool IsJumpKeyPressed => InputActions.Player.Jump.IsPressed();
         public bool IsCrouchKeyPressed => InputActions.Player.Crouch.IsPressed();
         public bool WasCrouchKeyReleased => InputActions.Player.Crouch.WasReleasedThisFrame();
+        public bool WasInteractKeyReleased => InputActions.Player.Interact.WasReleasedThisFrame();
         
         public void OnEnable()
         {
