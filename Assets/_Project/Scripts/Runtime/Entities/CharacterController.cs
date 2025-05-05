@@ -5,6 +5,7 @@ using KinematicCharacterController;
 using NJG.Runtime.Entity;
 using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
+using NJG.Runtime.Interfaces;
 using NJG.Utilities.PredicateStateMachines;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace NJG.Runtime.Entities
         public Vector3 LookVector;
     }
     
-    public class CharacterController : ValidatedMonoBehaviour, ICharacterController
+    public class CharacterController : ValidatedMonoBehaviour, ICharacterController, IResetable
     {
         #region Serialized Fields
 
@@ -125,7 +126,7 @@ namespace NJG.Runtime.Entities
         
         // Ladder vars
         private float _ladderUpDownInput;
-        private NewLadder _activeLadder { get; set; }
+        private Ladder _activeLadder { get; set; }
         private ClimbingState _internalClimbingState;
         private ClimbingState _climbingState
         {
@@ -155,10 +156,18 @@ namespace NJG.Runtime.Entities
         #region Other Properties
 
         public CharacterState CurrentCharacterState { get; private set; }
+        public Vector3 StartPosition { get; private set; }
+        public Quaternion StartRotation { get; private set; }
 
         #endregion
 
         #region Unity Callbacks
+
+        private void Awake()
+        {
+            StartPosition = transform.position;
+            StartRotation = transform.rotation;
+        }
 
         private void Start()
         {
@@ -252,7 +261,7 @@ namespace NJG.Runtime.Entities
                     if (_probedColliders[0] != null)
                     {
                         // Handle ladders
-                        if (_probedColliders[0].gameObject.TryGetComponent(out NewLadder ladder))
+                        if (_probedColliders[0].gameObject.TryGetComponent(out Ladder ladder))
                         {
                             // Transition to ladder climbing state
                             if (CurrentCharacterState == CharacterState.Default)
@@ -756,6 +765,8 @@ namespace NJG.Runtime.Entities
             float animSpeedValue = Motor.GroundingStatus.IsStableOnGround ? Motor.BaseVelocity.magnitude : 0f;
             Animator.SetFloat(_speedHash, animSpeedValue);
         }
+
+        public void ResetState() => Motor.SetPositionAndRotation(StartPosition, StartRotation);
 
         #endregion
     }

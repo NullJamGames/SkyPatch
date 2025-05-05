@@ -53,10 +53,10 @@ namespace NJG.Runtime.Entities
         private void Update()
         {
             // TODO: Temp for testing...
-            if (UnityEngine.Input.GetMouseButtonDown(0))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            // if (UnityEngine.Input.GetMouseButtonDown(0))
+            // {
+            //     Cursor.lockState = CursorLockMode.Locked;
+            // }
             
             HandleCharacterInput();
         }
@@ -112,10 +112,10 @@ namespace NJG.Runtime.Entities
 
             // Handle toggling zoom level
             // TODO: Testing temp...
-            if (UnityEngine.Input.GetMouseButtonDown(1))
-            {
-                _characterCamera.TargetDistance = (_characterCamera.TargetDistance == 0f) ? _characterCamera.DefaultDistance : 0f;
-            }
+            // if (UnityEngine.Input.GetMouseButtonDown(1))
+            // {
+            //     _characterCamera.TargetDistance = (_characterCamera.TargetDistance == 0f) ? _characterCamera.DefaultDistance : 0f;
+            // }
         }
         
         private void HandleCharacterInput()

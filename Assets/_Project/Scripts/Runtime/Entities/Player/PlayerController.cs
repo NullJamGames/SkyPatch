@@ -90,7 +90,7 @@ namespace NJG.Runtime.Entity
         private CountdownTimer _dashCooldownTimer;
 
         private bool _isClimbing;
-        private Ladder _ladder;
+        private OldLadder _oldLadder;
 
         private bool _isOnMovingPlatform;
         private Func<Vector3> _getPlatformerSpeed;

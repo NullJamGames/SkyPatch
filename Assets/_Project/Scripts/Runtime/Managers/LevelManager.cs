@@ -2,6 +2,7 @@
 using NJG.Utilities.Singletons;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace NJG.Runtime.Managers
@@ -28,10 +29,16 @@ namespace NJG.Runtime.Managers
             _gameManager.ToggleCursor(false);
         }
 
-        [Button(ButtonSizes.Large)]
-        private void TestNextScene()
+        public void RestartLevel()
         {
-            _levelChangeManager.LoadScene(_nextLevelName);
+            // TODO: Should this be incorporated into level change manager?
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        public void LoadMainMenu() => _levelChangeManager.LoadScene(_nextLevelName);
+
+        public void LoadNextLevel() => _levelChangeManager.LoadScene(_nextLevelName);
+
+        public void ExitGame() => Application.Quit();
     }
 }

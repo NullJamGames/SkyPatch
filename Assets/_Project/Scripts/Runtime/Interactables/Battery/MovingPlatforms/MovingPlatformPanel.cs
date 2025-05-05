@@ -42,10 +42,7 @@ namespace NJG.Runtime.Interactables
 
         private void OnDrainBattery()
         {
-            if (_battery == null)
-                return;
-            
-            if(!_movingPlatform.IsWorking)
+            if (_battery == null || !_movingPlatform.IsMoving)
                 return;
 
             _battery.RemoveCharge(_drainPerInterval);

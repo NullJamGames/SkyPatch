@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using MEC;
 using NJG.Runtime.Interactables;
+using NJG.Runtime.Managers;
 
 namespace NJG.Runtime.UI
 {
@@ -63,7 +62,10 @@ namespace NJG.Runtime.UI
             }
         }
 
-        public void OnClick_Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        public void OnClick_Exit() => Application.Quit();
+        public void OnClick_NextLevel() => LevelManager.Instance.LoadNextLevel();
+
+        public void OnClick_Restart() => LevelManager.Instance.RestartLevel();
+
+        public void OnClick_Exit() => LevelManager.Instance.ExitGame();
     }
 }

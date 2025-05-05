@@ -10,7 +10,7 @@ namespace NJG.Runtime.Entity
         protected enum ClimbingState { Anchoring, Climbing, DeAnchoring}
         
         protected float _ladderUpDownInput;
-        protected NewLadder _activeLadder { get; set; }
+        protected Ladder _activeLadder { get; set; }
         protected ClimbingState _internalClimbingState;
         protected ClimbingState _climbingState
         {
