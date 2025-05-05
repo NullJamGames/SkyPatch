@@ -14,71 +14,148 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Music>k__BackingField:
     Guid:
-      Data1: 1613407930
-      Data2: 1310175442
-      Data3: -955888229
-      Data4: 712879661
+      Data1: 145953164
+      Data2: 1298966097
+      Data3: 1612200071
+      Data4: 282546592
     Path: event:/Music/Music
   <PlayerFootstep>k__BackingField:
     Guid:
-      Data1: -757255438
-      Data2: 1341603612
-      Data3: 1168071613
-      Data4: 355377507
-    Path: event:/SFX/Player/Movment/Footsteps_Metal
-  <PlayerJump>k__BackingField:
-    Guid:
-      Data1: -837667295
-      Data2: 1256473928
-      Data3: 680992185
-      Data4: -1285549627
-    Path: event:/SFX/Player/Movment/Jump
+      Data1: -574891869
+      Data2: 1279285511
+      Data3: 257410191
+      Data4: -1843576221
+    Path: event:/SFX/Player/Footsteps
   <PlayerLand>k__BackingField:
     Guid:
-      Data1: 817314871
-      Data2: 1278386460
-      Data3: -1396199025
-      Data4: -683362782
-    Path: event:/SFX/Player/Movment/Land
-  <PlayerDash>k__BackingField:
-    Guid:
-      Data1: -1860297979
-      Data2: 1174013677
-      Data3: -69437271
-      Data4: 158211266
-    Path: event:/SFX/Player/Movment/Dash
-  <PlayerFall>k__BackingField:
-    Guid:
       Data1: 0
       Data2: 0
       Data3: 0
       Data4: 0
     Path: 
-  <PlayerAction>k__BackingField:
+  <PlayerBounce>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <Ambience>k__BackingField:
+      Data1: 1737337171
+      Data2: 1169508202
+      Data3: 1097144755
+      Data4: -776411188
+    Path: event:/SFX/Player/Bounce
+  <FillTheBucket>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -332991944
+      Data2: 1238317365
+      Data3: 1448745344
+      Data4: 728752106
+    Path: event:/SFX/Interact/Bucket/FillTheBucket
+  <PickupPlant>k__BackingField:
+    Guid:
+      Data1: -470194983
+      Data2: 1314288658
+      Data3: -2072313694
+      Data4: 85747390
+    Path: event:/SFX/Interact/Corn/PickupPlant
+  <WaterPlant>k__BackingField:
+    Guid:
+      Data1: 400008823
+      Data2: 1093394789
+      Data3: -236918141
+      Data4: 1780797902
+    Path: event:/SFX/Interact/Corn/WaterPlant
+  <RechargingAlarm>k__BackingField:
+    Guid:
+      Data1: -411262671
+      Data2: 1158476240
+      Data3: 678993794
+      Data4: -968976436
+    Path: event:/SFX/Interact/Solar Panel/RechargingAlarm
+  <SolarPanelStatic>k__BackingField:
+    Guid:
+      Data1: -326669536
+      Data2: 1269397645
+      Data3: -835169633
+      Data4: -1856204307
+    Path: event:/SFX/Interact/Solar Panel/SolarPanelStatic
+  <WaterTree>k__BackingField:
+    Guid:
+      Data1: -908062148
+      Data2: 1142483728
+      Data3: 1734670721
+      Data4: -890876430
+    Path: event:/SFX/Interact/Tree/WaterTree
+  <CompostBin>k__BackingField:
+    Guid:
+      Data1: -1806384717
+      Data2: 1204490804
+      Data3: 815172532
+      Data4: 1897031515
+    Path: event:/SFX/Interact/CompostBin
+  <Plant>k__BackingField:
+    Guid:
+      Data1: -372585530
+      Data2: 1187990714
+      Data3: -1743562054
+      Data4: -915741930
+    Path: event:/SFX/Interact/Plant
   <Birds>k__BackingField:
     Guid:
+      Data1: -1803393609
+      Data2: 1330101804
+      Data3: -585290596
+      Data4: -1134153578
+    Path: event:/SFX/Ambience/Birds
+  <HeavyRain>k__BackingField:
+    Guid:
+      Data1: 1499355448
+      Data2: 1103192131
+      Data3: 356425619
+      Data4: 156485701
+    Path: event:/SFX/Ambience/HeavyRain
+  <LightRain>k__BackingField:
+    Guid:
+      Data1: -1556516643
+      Data2: 1256203811
+      Data3: -1544046174
+      Data4: -40244963
+    Path: event:/SFX/Ambience/LightRain
+  <LightWind>k__BackingField:
+    Guid:
+      Data1: 1268340422
+      Data2: 1243827287
+      Data3: -2105629801
+      Data4: 1512711486
+    Path: event:/SFX/Ambience/LightWind
+  <WaterfallHeavy>k__BackingField:
+    Guid:
+      Data1: -592131105
+      Data2: 1091855536
+      Data3: 598875570
+      Data4: -1142304508
+    Path: event:/SFX/Ambience/WaterfallHeavy
+  <WaterfallMedium>k__BackingField:
+    Guid:
+      Data1: -1984320468
+      Data2: 1188240255
+      Data3: -1760176210
+      Data4: -1140600471
+    Path: event:/SFX/Ambience/WaterfallMedium
+  <UIPositive>k__BackingField:
+    Guid:
+      Data1: 1928317299
+      Data2: 1123026725
+      Data3: -1367970383
+      Data4: 457477455
+    Path: event:/UI/UI_Poisitive
+  <UINegative>k__BackingField:
+    Guid:
+      Data1: 1100703608
+      Data2: 1152573383
+      Data3: 394134667
+      Data4: -1219850403
+    Path: event:/UI/UI_Negative
+  <UIJobDone>k__BackingField:
+    Guid:
       Data1: 0
       Data2: 0
       Data3: 0
       Data4: 0
     Path: 
-  <UIButtonClick>k__BackingField:
-    Guid:
-      Data1: 175515288
-      Data2: 1339309644
-      Data3: -236753494
-      Data4: -1887769327
-    Path: event:/SFX/UI/UI_Click
