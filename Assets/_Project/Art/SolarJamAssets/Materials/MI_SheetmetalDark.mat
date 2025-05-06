@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MI_Sheetmetal
+  m_Name: MI_SheetmetalDark
   m_Shader: {fileID: -6465566751694194690, guid: 412674227ac969f44a76d495fd4e58a3, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 412674227ac969f44a76d495fd4e58a3, type: 3}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Base_Texture:
-        m_Texture: {fileID: 2800000, guid: 6fad75eec46b95e4f8bf1da7a6c53926, type: 3}
+        m_Texture: {fileID: 2800000, guid: a57dd4283a4d3a54b9e315d3493b7eb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RGBGrunge:
@@ -35,16 +35,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _Base_IsTexture: 1
-    - _Base_Roughness: 0.177
-    - _Base_Tile: 2.08
-    - _Metallic: 0
+    - _Base_Roughness: 0.208
+    - _Base_Tile: 2.82
     - _QueueControl: 0
     - _R: 1
     - _R_Rough: 1
-    - _R_Roughness: 0.836
+    - _R_Roughness: 0.597
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _R_color: {r: 0.6666667, g: 0.3647059, b: 0.13333334, a: 1}
+    - _R_color: {r: 0.6666667, g: 0.3647059, b: 0.13333334, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5347104006060388172
