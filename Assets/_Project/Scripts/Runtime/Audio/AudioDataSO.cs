@@ -44,7 +44,7 @@ namespace NJG.Runtime.Audio
         public EventReference SolarPanelStatic { get; private set; }
 
         [field: FoldoutGroup("Interact SFX"), SerializeField]
-        public EventReference WaterTree { get; private set; }
+        public EventReference ReviveTree { get; private set; }
 
         [field: FoldoutGroup("Interact SFX"), SerializeField]
         public EventReference CompostBin { get; private set; }

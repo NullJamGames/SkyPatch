@@ -75,13 +75,13 @@ MonoBehaviour:
       Data3: -835169633
       Data4: -1856204307
     Path: event:/SFX/Interact/Solar Panel/SolarPanelStatic
-  <WaterTree>k__BackingField:
+  <ReviveTree>k__BackingField:
     Guid:
       Data1: -908062148
       Data2: 1142483728
       Data3: 1734670721
       Data4: -890876430
-    Path: event:/SFX/Interact/Tree/WaterTree
+    Path: event:/SFX/Interact/Tree/ReviveTree
   <CompostBin>k__BackingField:
     Guid:
       Data1: -1806384717

@@ -1,6 +1,9 @@
+using Mono.CSharp;
+using NJG.Runtime.Audio;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -17,7 +20,9 @@ namespace NJG.Runtime.Interactables
         public float CurrentCharge { get; private set; } = 0f;
 
         protected const float _maxCharge = 100f;
-        
+
+
+
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
         {
             if (interactable is IBatteryReceiver batteryReceiver)

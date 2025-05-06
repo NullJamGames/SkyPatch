@@ -57,7 +57,7 @@ namespace NJG.Runtime.Interactables
             playerInventory.DetachPickupable();
             Destroy(compost.gameObject);
             OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
-            _audioManager.PlayPersistent(_audioManager.AudioData.Plant, gameObject);
+            _audioManager.StartKeyedInstance( gameObject, _audioManager.AudioData.Plant);
         }
         
         public void OnWater(PlayerInventory playerInventory, WaterContainer waterContainer)
@@ -69,7 +69,7 @@ namespace NJG.Runtime.Interactables
                 return;
             
             State = ObjectiveState.Reviving;
-            _audioManager.PlayPersistent(_audioManager.AudioData.WaterTree, gameObject);
+            _audioManager.StartKeyedInstance(gameObject,_audioManager.AudioData.ReviveTree);
             if (!_reviveRoutine.IsRunning)
                 _reviveRoutine = Timing.RunCoroutine(ReviveTreeRoutine(playerInventory));
         }

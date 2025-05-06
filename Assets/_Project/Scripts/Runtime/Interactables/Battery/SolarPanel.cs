@@ -14,7 +14,7 @@ namespace NJG.Runtime.Interactables
         private float _energyPerInterval = 10f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _timerInterval = 1f;
-        
+
         private CountdownTimer _intervalTimer;
         private bool _isDaytime;
         private SignalBus _signalBus;
@@ -24,7 +24,7 @@ namespace NJG.Runtime.Interactables
         [Inject]
         private void Construct(SignalBus signalBus) => _signalBus = signalBus;
         [Inject]
-        private void Construct(AudioManager audioManager) => _audioManager=audioManager;    
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
 
         private void Awake()
         {
@@ -41,7 +41,7 @@ namespace NJG.Runtime.Interactables
         private void OnDisable()
         {
             _signalBus.Unsubscribe<DayTimeChangeSignal>(OnDayTimeChanged);
-            
+
             TimerManager.DeregisterTimer(_intervalTimer);
         }
 
@@ -50,30 +50,31 @@ namespace NJG.Runtime.Interactables
             if (_isDaytime)
             {
                 _intervalTimer.Start();
-                FMOD.Studio.EventInstance istance;
-                istance = FMODUnity.RuntimeManager.CreateInstance(_audioManager.AudioData.RechargingAlarm);
-                _audioManager.PlayPersistent(_audioManager.AudioData.RechargingAlarm, gameObject);
+                if (_battery.CurrentCharge >= 100.0f)
+                    return;
+                else
+                    _audioManager.SetKeyedInstanceParamater(gameObject, _audioManager.AudioData.RechargingAlarm, "IsBatteryReady", "NotReady");
+                _audioManager.StartKeyedInstance(gameObject, _audioManager.AudioData.RechargingAlarm);
             }
         }
 
         protected override void OnBatteryRemoved()
         {
             _intervalTimer.Stop();
-            _audioManager.StopPersistent(_audioManager.AudioData.RechargingAlarm);
+            _audioManager.StopKeyedInstance(gameObject, _audioManager.AudioData.RechargingAlarm, FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
         private void OnTimerTick()
         {
             if (_battery == null)
                 return;
-                
+
             _battery.AddCharge(_energyPerInterval);
             _intervalTimer.Start();
-
-            //I am struggling to find a way to implement the battery recharged sound.
-            // I have a Parameter local to the RechargingAlarm named IsBatteryReady that has two parameters
-            // and is of type Label: NotReady/Ready
-            // I want that when the battery is fully charged the state will change from NotReady to Ready
+            if (_battery.CurrentCharge >= 100.0f)
+            {
+                _audioManager.SetKeyedInstanceParamater(gameObject, _audioManager.AudioData.RechargingAlarm, "IsBatteryReady", "Ready");
+            }
         }
 
         private void OnDayTimeChanged(DayTimeChangeSignal signal)
@@ -83,20 +84,24 @@ namespace NJG.Runtime.Interactables
             if (!_isDaytime)
             {
                 _audioManager.StopPersistent(_audioManager.AudioData.SolarPanelStatic);
-                _audioManager.StopPersistent(_audioManager.AudioData.RechargingAlarm);
+                _audioManager.StopKeyedInstance(gameObject, _audioManager.AudioData.RechargingAlarm, FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
             else
                 _audioManager.PlayPersistent(_audioManager.AudioData.SolarPanelStatic, gameObject);
 
+
             if (_battery == null)
                 return;
+            else 
+                if (_battery.CurrentCharge < 100.0f && _isDaytime)
+                    _audioManager.StartKeyedInstance(gameObject, _audioManager.AudioData.RechargingAlarm);
 
             if (!_isDaytime)
             {
                 _intervalTimer.Pause();
                 return;
             }
-            
+
             if (_intervalTimer.IsPaused)
                 _intervalTimer.Resume();
             else
