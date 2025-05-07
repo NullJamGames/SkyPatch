@@ -51,6 +51,12 @@ namespace NJG.Runtime.Entities
         private float _obstructionSharpness = 10000f;
         [field: FoldoutGroup("Obstruction"), SerializeField]
         public List<Collider> IgnoredColliders { get; private set; } = new ();
+
+        [FoldoutGroup("Scene Start"), SerializeField]
+        private Transform _startLookAt;
+        private bool _showSetStartDistance => _startLookAt != null;
+        [FoldoutGroup("Scene Start"), SerializeField, ShowIf("_showSetStartDistance")]
+        private float _startDistance;
         
         private bool _distanceIsObstructed;
         private float _currentDistance;
@@ -71,8 +77,11 @@ namespace NJG.Runtime.Entities
         protected override void OnValidate()
         {
             base.OnValidate();
-            
-            DefaultDistance = Mathf.Clamp(DefaultDistance, _minDistance, _maxDistance);
+
+            if (_showSetStartDistance)
+                DefaultDistance = _startDistance;
+            else
+                DefaultDistance = Mathf.Clamp(DefaultDistance, _minDistance, _maxDistance);
             _defaultVerticalAngle = Mathf.Clamp(_defaultVerticalAngle, _minVerticalAngle, _maxVerticalAngle);
         }
 
@@ -91,7 +100,10 @@ namespace NJG.Runtime.Entities
         public void SetFollowTransform(Transform t)
         {
             FollowTransform = t;
-            PlanarDirection = FollowTransform.forward;
+            if(_startLookAt != null)
+                PlanarDirection = (_startLookAt.position - t.position).normalized;
+            else
+                PlanarDirection = FollowTransform.forward;
             _currentFollowPosition = FollowTransform.position;
         }
 
