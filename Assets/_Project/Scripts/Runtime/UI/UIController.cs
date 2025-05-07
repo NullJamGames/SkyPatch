@@ -4,7 +4,9 @@ using TMPro;
 using UnityEngine;
 using MEC;
 using NJG.Runtime.Interactables;
+using NJG.Runtime.Manager;
 using NJG.Runtime.Managers;
+using Sirenix.OdinInspector;
 
 namespace NJG.Runtime.UI
 {
@@ -12,6 +14,8 @@ namespace NJG.Runtime.UI
     {
         [SerializeField]
         private GameObject _winScreen;
+        [SerializeField]
+        private TextMeshProUGUI _scoreText;
         [SerializeField]
         private TextMeshProUGUI _winText;
         [SerializeField]
@@ -52,14 +56,31 @@ namespace NJG.Runtime.UI
                 
                 if (treesAlive >= _revivableTrees.Count)
                 {
-                    _winScreen.SetActive(true);
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
+                    ActivateEndScreen();
                     yield break;
                 }
                 
                 yield return Timing.WaitForSeconds(checkInterval);
             }
+        }
+    
+        private void ActivateEndScreen()
+        {
+            _winScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            TryShowScore();
+        }
+
+        private void TryShowScore()
+        {
+            ScoreManager scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+            if(scoreManager == null)
+                return;
+            
+            int score = scoreManager.GetScore();
+            _scoreText.gameObject.SetActive(true);
+            _scoreText.text = $"Score: {score}";
         }
 
         public void OnClick_NextLevel() => LevelManager.Instance.LoadNextLevel();
