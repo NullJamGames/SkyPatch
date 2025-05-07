@@ -1959,6 +1959,7 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
+    floatVal: 1.17
     floatVal: 1
     curveVal:
       serializedVersion: 2
@@ -2018,7 +2019,7 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    floatVal: 120
+    floatVal: 151
     curveVal:
       serializedVersion: 2
       m_Curve:
