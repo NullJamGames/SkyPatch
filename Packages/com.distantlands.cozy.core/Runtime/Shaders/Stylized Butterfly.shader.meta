@@ -8,10 +8,3 @@ ShaderImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 278975
-  packageName: 'COZY Pro: Stylized Weather Bundle'
-  packageVersion: 3.6.2
-  assetPath: Packages/com.distantlands.cozy.core/Runtime/Shaders/Stylized Butterfly.shader
-  uploadId: 745002

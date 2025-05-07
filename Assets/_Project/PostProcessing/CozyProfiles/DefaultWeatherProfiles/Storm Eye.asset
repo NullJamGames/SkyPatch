@@ -10,38 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edc9e8ccf7e1f314da24a604c1a11094, type: 3}
-  m_Name: NJGMostlyCloudy
+  m_Name: Storm Eye
   m_EditorClassIdentifier: 
-  minTime: 0.125
-  maxTime: 0.33333334
+  minWeatherTime: 0.125
+  maxWeatherTime: 0.33333334
+  likelihood: 0.197
   chance:
-    baseChance: 0.441
+    baseChance: 0.197
     chanceEffectors:
-    - limitType: 1
+    - limitType: 4
       curve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 2
-          outSlope: 2
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.5101682
-          value: 0.9981295
-          inSlope: -0.4195633
-          outSlope: -0.4195633
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.9833374
-          value: 0
+          time: 1
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -53,9 +45,9 @@ MonoBehaviour:
         m_RotationOrder: 0
       customChanceEffector: {fileID: 0}
   forecastNext:
-  - {fileID: 11400000, guid: e4ff1978109cd0c47b334e1afecb8003, type: 2}
-  - {fileID: 11400000, guid: 5326656ce273c264b88ff6233b0af779, type: 2}
-  - {fileID: 11400000, guid: c0639355780b62a40928085b2232cede, type: 2}
+  - {fileID: 11400000, guid: 3daad8702a5ccbf418a5370bac12e4c0, type: 2}
+  - {fileID: 11400000, guid: 455ce7df2555ead47afd8bdb324c85ab, type: 2}
   forecastModifierMethod: 0
+  chances: []
   FX:
-  - {fileID: 11400000, guid: 2482d108cd55b19418aa3a8b6af4ff9b, type: 2}
+  - {fileID: 11400000, guid: fa7188b4fb90e3c4487d420ec97b5ecc, type: 2}

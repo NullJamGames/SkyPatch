@@ -5,10 +5,3 @@ PrefabImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 278975
-  packageName: 'COZY Pro: Stylized Weather Bundle'
-  packageVersion: 3.6.2
-  assetPath: Packages/com.distantlands.cozy.core/Samples~/UI Samples/COZY UI Canvas.prefab
-  uploadId: 745002

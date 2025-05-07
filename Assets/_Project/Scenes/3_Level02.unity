@@ -20,9 +20,9 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0, g: 0.5123631, b: 2.0085657, a: 1}
-  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0.95}
-  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0.95}
+  m_AmbientSkyColor: {r: 0.11268793, g: 0.62559533, b: 2.1212535, a: 1}
+  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0.9}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0.9}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
@@ -2453,6 +2453,59 @@ Transform:
   - {fileID: 67989026}
   m_Father: {fileID: 944056348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &755569559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 775486711062054662, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+  m_PrefabInstance: {fileID: 7862754179922594696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &755569569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755569559}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a63f037b9d8b54987e07c69557b6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cachedWeatherSphere: {fileID: 1464780320}
+  cachedSystem: {fileID: 1464780320}
+  biomes: []
+  weight: 0
+  totalSystemWeight: 0
+  cumulus: 0
+  cirrus: 0
+  altocumulus: 0
+  cirrostratus: 0
+  chemtrails: 0
+  nimbus: 0
+  nimbusHeight: 1
+  nimbusVariation: 0.945
+  borderHeight: 0.553
+  borderEffect: 1
+  borderVariation: 0.95
+  fogDensity: 1
+  filterSaturation: 0
+  filterValue: 0
+  filterColor: {r: 1, g: 1, b: 1, a: 0}
+  sunFilter: {r: 1, g: 1, b: 1, a: 0}
+  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
+  ecosystem:
+    forecastProfile: {fileID: 11400000, guid: 3fd94bc46d40b9c438f13c530686b890, type: 2}
+    weatherSelectionMode: 2
+    currentForecast: []
+    weatherTransitionTime: 15
+    weatherSphere: {fileID: 1464780320}
+    system: {fileID: 1464780320}
+    removeProfilesWithNoWeight: 1
+    currentWeather: {fileID: 11400000, guid: c0639355780b62a40928085b2232cede, type: 2}
+    weatherChangeCheck: {fileID: 0}
+    weightedWeatherProfiles: []
+  currentWeatherProfiles: []
+  defaultFilter: {fileID: 11400000, guid: b3b90f04f4696264c9aab62e9c3c68a5, type: 2}
+  defaultClouds: {fileID: 11400000, guid: 40c748033998bf243ae542ca195124b7, type: 2}
 --- !u!1001 &757687041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5265,6 +5318,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
   m_PrefabInstance: {fileID: 7862754179922594696}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1464780320 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 972495225840589568, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+  m_PrefabInstance: {fileID: 7862754179922594696}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17adf51a847d5a49b9b1b21927a8627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1483413728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7454,29 +7518,57 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: cumulus
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: chemtrails
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: cirrostratus
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: ecosystem.currentWeather
+      value: 
+      objectReference: {fileID: 11400000, guid: e4ff1978109cd0c47b334e1afecb8003, type: 2}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: ecosystem.weatherSelectionMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: currentWeatherProfiles.Array.data[0].profile
+      value: 
+      objectReference: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
+    - target: {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      propertyPath: ecosystem.weightedWeatherProfiles.Array.data[0].profile
+      value: 
+      objectReference: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 248.38274
+      value: 1.7320508
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 248.38274
+      value: 1.7320508
       objectReference: {fileID: 0}
     - target: {fileID: 8173757038119288409, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 248.38274
+      value: 1.7320508
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.132294
+      value: 12.119374
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.4756775
+      value: 11.972067
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.9555817
+      value: -2.6817937
       objectReference: {fileID: 0}
     - target: {fileID: 8740447580165575993, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7506,10 +7598,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7140460900347618249, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 775486711062054662, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 755569569}
   m_SourcePrefab: {fileID: 100100000, guid: 4b6c10ef755f1104e9c06e7dbe4c7cc2, type: 3}
 --- !u!1001 &8641040210897959240
 PrefabInstance:
