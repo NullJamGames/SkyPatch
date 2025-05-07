@@ -106,10 +106,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 278975
-  packageName: 'COZY Pro: Stylized Weather Bundle'
-  packageVersion: 3.6.2
-  assetPath: Packages/com.distantlands.cozy.core/Content/Art/Textures/Particle/Drop.png
-  uploadId: 745002

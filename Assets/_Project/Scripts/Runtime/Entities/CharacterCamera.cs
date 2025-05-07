@@ -15,8 +15,8 @@ namespace NJG.Runtime.Entities
         [FoldoutGroup("Framing"), SerializeField]
         private float _followingSharpness = 10000f;
         
-        [FoldoutGroup("Distance"), SerializeField]
-        private float _defaultDistance = 6f;
+        [field: FoldoutGroup("Distance"), SerializeField]
+        public float DefaultDistance { get; private set; } = 6f;
         [FoldoutGroup("Distance"), SerializeField]
         private float _minDistance = 0f;
         [FoldoutGroup("Distance"), SerializeField]
@@ -40,8 +40,8 @@ namespace NJG.Runtime.Entities
         private float _rotationSpeed = 1f;
         [FoldoutGroup("Rotation"), SerializeField]
         private float _rotationSharpness = 10000f;
-        [FoldoutGroup("Rotation"), SerializeField]
-        private bool _rotateWithPhysicsMover = false;
+        [field: FoldoutGroup("Rotation"), SerializeField]
+        public bool RotateWithPhysicsMover { get; private set; } = false;
         
         [FoldoutGroup("Obstruction"), SerializeField]
         private float _obstructionCheckRadius = 0.2f;
@@ -72,7 +72,7 @@ namespace NJG.Runtime.Entities
         {
             base.OnValidate();
             
-            _defaultDistance = Mathf.Clamp(_defaultDistance, _minDistance, _maxDistance);
+            DefaultDistance = Mathf.Clamp(DefaultDistance, _minDistance, _maxDistance);
             _defaultVerticalAngle = Mathf.Clamp(_defaultVerticalAngle, _minVerticalAngle, _maxVerticalAngle);
         }
 
@@ -80,7 +80,7 @@ namespace NJG.Runtime.Entities
         {
             Transform = transform;
             
-            _currentDistance = _defaultDistance;
+            _currentDistance = DefaultDistance;
             TargetDistance = _currentDistance;
             
             _targetVerticalAngle = 0f;

@@ -1,11 +1,14 @@
-﻿using NJG.Utilities.PredicateStateMachines;
+﻿using NJG.Runtime.Entities;
+using NJG.Runtime.Input;
+using NJG.Utilities.PredicateStateMachines;
 using UnityEngine;
+using CharacterController = NJG.Runtime.Entities.CharacterController;
 
 namespace NJG.Runtime.Entity
 {
     public abstract class BaseState : IState
     {
-        protected readonly PlayerController _player;
+        protected readonly CharacterController _character;
         protected readonly Animator _animator;
         
         protected static readonly int _locomotionHash = Animator.StringToHash("Locomotion");
@@ -17,9 +20,9 @@ namespace NJG.Runtime.Entity
 
         protected const float _crossFadeDuration = 0.1f;
 
-        protected BaseState(PlayerController player, Animator animator)
+        protected BaseState(CharacterController character, Animator animator)
         {
-            _player = player;
+            _character = character;
             _animator = animator;
         }
         
@@ -28,12 +31,52 @@ namespace NJG.Runtime.Entity
             // noop
         }
 
-        public virtual void Update()
+        public void OnUpdate(float deltaTime)
         {
             // noop
         }
 
-        public virtual void FixedUpdate()
+        public void OnFixedUpdate(float fixedDeltaTime)
+        {
+            // noop
+        }
+
+        public virtual void HandleInputs(InputReader inputs)
+        {
+            // noop
+        }
+
+        // public virtual void HandleInputs(ref AIInputs inputs)
+        // {
+        //     // noop
+        // }
+
+        public virtual void BeforeCharacterUpdate(float deltaTime)
+        {
+            // noop
+        }
+
+        public virtual void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
+        {
+            // noop
+        }
+
+        public virtual void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
+        {
+            // noop
+        }
+
+        public virtual void AfterCharacterUpdate(float deltaTime)
+        {
+            // noop
+        }
+
+        public virtual void PostGroundingUpdate(float deltaTime)
+        {
+            // noop
+        }
+        
+        public virtual void AddVelocity(Vector3 velocity)
         {
             // noop
         }

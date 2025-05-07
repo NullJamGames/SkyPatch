@@ -9,7 +9,7 @@ namespace NJG.Runtime.Input
 {
     public interface IInputReader
     {
-        public Vector2 Direction { get; }
+        public Vector2 MoveDirection { get; }
     }
     
     [CreateAssetMenu(fileName = "InputReader", menuName = "NJG/InputReader")]
@@ -26,8 +26,13 @@ namespace NJG.Runtime.Input
 
         public PlayerInputActions InputActions;
 
-        public Vector2 Direction => InputActions.Player.Move.ReadValue<Vector2>();
+        public Vector2 MoveDirection => InputActions.Player.Move.ReadValue<Vector2>();
+        public Vector2 LookDirection => InputActions.Player.Look.ReadValue<Vector2>();
+        public Vector2 ZoomDirection => InputActions.Player.Zoom.ReadValue<Vector2>();
         public bool IsJumpKeyPressed => InputActions.Player.Jump.IsPressed();
+        public bool IsCrouchKeyPressed => InputActions.Player.Crouch.IsPressed();
+        public bool WasCrouchKeyReleased => InputActions.Player.Crouch.WasReleasedThisFrame();
+        public bool WasInteractKeyReleased => InputActions.Player.Interact.WasReleasedThisFrame();
         
         public void OnEnable()
         {
@@ -106,6 +111,11 @@ namespace NJG.Runtime.Input
                     DashEvent.Invoke(false);
                     break;
             }
+        }
+
+        public void OnCrouch(InputAction.CallbackContext context)
+        {
+            
         }
 
         public void OnMouseControlCamera(InputAction.CallbackContext context)

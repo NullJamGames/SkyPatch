@@ -18,6 +18,7 @@ namespace DistantLands.Cozy.EditorScripts
 
 
         public VisualElement ProfileContainer => root.Q<VisualElement>("profile-container");
+        public VisualElement InspectorContainer;
         VisualElement root;
 
 
@@ -51,14 +52,24 @@ namespace DistantLands.Cozy.EditorScripts
 
             asset.CloneTree(root);
 
-            CozyProfileField<AtmosphereProfile> atmosphereProfile = new CozyProfileField<AtmosphereProfile>(serializedObject.FindProperty("atmosphereProfile"));
+            CozyProfileField<AtmosphereProfile> atmosphereProfile = new CozyProfileField<AtmosphereProfile>(serializedObject.FindProperty("atmosphereProfile"), (evt) => RefreshInspector());
             ProfileContainer.Add(atmosphereProfile);
 
-            InspectorElement inspector = new InspectorElement(atmosphereModule.atmosphereProfile);
-            inspector.AddToClassList("p-0");
-            root.Add(inspector);
+            InspectorContainer = new VisualElement();
+            root.Add(InspectorContainer);
+
+            RefreshInspector();
 
             return root;
+
+        }
+
+        public void RefreshInspector()
+        {
+            InspectorContainer.Clear();
+            InspectorElement inspector = new InspectorElement(atmosphereModule.atmosphereProfile);
+            inspector.AddToClassList("p-0");
+            InspectorContainer.Add(inspector);
 
         }
 

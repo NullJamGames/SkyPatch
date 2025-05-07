@@ -19,6 +19,7 @@ public class AudioManager : IInitializable, ILateDisposable
 {
     private readonly Dictionary<EventReference, EventInstance> _activeEvents = new();
     private readonly List<EventInstance> _oneShotInstances = new();
+    private readonly Dictionary<GameObject, Dictionary<EventReference, EventInstance>> _keyedInstances = new();
     
     public AudioDataSO AudioData { get; private set; }
     
@@ -137,6 +138,16 @@ public class AudioManager : IInitializable, ILateDisposable
 
         _oneShotInstances.Clear();
     }
+
+    public void SetGlobalParameter(string parameterName, float value)
+    {
+        RuntimeManager.StudioSystem.setParameterByName(parameterName, value);
+    }
+    
+    public void SetGlobalParameter(string parameterName, string label)
+    {
+        RuntimeManager.StudioSystem.setParameterByNameWithLabel(parameterName, label);
+    }
     
     public void PlayPersistent(EventReference sound, GameObject sourceObject = null, Rigidbody2D sourceRigidbody = null)
     {
@@ -194,10 +205,72 @@ public class AudioManager : IInitializable, ILateDisposable
         _activeEvents.Clear();
     }
 
+    public void StartKeyedInstance(GameObject keyObject, EventReference sound)
+    {
+        if (!_keyedInstances.ContainsKey(keyObject))
+            _keyedInstances[keyObject] = new();
+
+        if (!_keyedInstances[keyObject].ContainsKey(sound))
+            _keyedInstances[keyObject].Add(sound, RuntimeManager.CreateInstance(sound));
+        
+        _keyedInstances[keyObject][sound].start();
+    }
+
+    public void SetKeyedInstanceParamater(GameObject keyObject, EventReference sound, string parameterName,
+        float parameterValue)
+    {
+        if (!_keyedInstances.ContainsKey(keyObject) || !_keyedInstances[keyObject].ContainsKey(sound))
+            StartKeyedInstance(keyObject, sound);
+
+        _keyedInstances[keyObject][sound].setParameterByName(parameterName, parameterValue);
+    }
+    
+    public void SetKeyedInstanceParamater(GameObject keyObject, EventReference sound, string parameterName,
+        string label)
+    {
+        if (!_keyedInstances.ContainsKey(keyObject) || !_keyedInstances[keyObject].ContainsKey(sound))
+            StartKeyedInstance(keyObject, sound);
+
+        _keyedInstances[keyObject][sound].setParameterByNameWithLabel(parameterName, label);
+    }
+
+    public void StopKeyedInstance(GameObject keyObject, EventReference sound, STOP_MODE stopMode = STOP_MODE.IMMEDIATE)
+    {
+        if (!_keyedInstances.ContainsKey(keyObject) || !_keyedInstances[keyObject].ContainsKey(sound))
+            return;
+        _keyedInstances[keyObject][sound].stop(stopMode);
+        _keyedInstances[keyObject][sound].release();
+        _keyedInstances[keyObject].Remove(sound);
+    }
+
+    public void DestroyKeyAndRemoveInstances(GameObject keyObject)
+    {
+        if (!_keyedInstances.ContainsKey(keyObject))
+            return;
+        foreach (var VARIABLE in _keyedInstances[keyObject].Values)
+        {
+            VARIABLE.stop(STOP_MODE.IMMEDIATE);
+            VARIABLE.release();
+        }
+        _keyedInstances.Remove(keyObject);
+    }
+
+    private void StopAllKeyedInstances()
+    {
+        foreach (var VARIABLE in _keyedInstances)
+            foreach (var VARIABLE2 in VARIABLE.Value)
+            {
+                VARIABLE2.Value.stop(STOP_MODE.IMMEDIATE);
+                VARIABLE2.Value.release();
+            }
+        _keyedInstances.Clear();
+    }
+
     public void LateDispose()
     {
         StopAllPersistentSounds();
         StopAllTrackedOneShots();
+        StopAllKeyedInstances();
     }
 
     #endregion

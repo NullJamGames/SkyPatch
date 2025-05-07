@@ -1,6 +1,4 @@
-﻿using System;
-using NJG.Runtime.Entity;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
@@ -14,7 +12,8 @@ namespace NJG.Runtime.Interactables
         {
             if (other.gameObject.TryGetComponent(out ILaunchable bouncable))
             {
-                bouncable.Launch(_force);
+                Vector3 worldForce = transform.rotation * _force;
+                bouncable.AddForce(worldForce);
             }
         }
     }
