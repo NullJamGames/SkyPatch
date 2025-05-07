@@ -1432,7 +1432,7 @@ MonoBehaviour:
   <JumpPreGroundingGraceTime>k__BackingField: 0.1
   <JumpPostGroundingGraceTime>k__BackingField: 0.1
   <ClimbingSpeed>k__BackingField: 4
-  <AnchoringDuration>k__BackingField: 0.25
+  <AnchoringDuration>k__BackingField: 0.15
   <LadderLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 2048
