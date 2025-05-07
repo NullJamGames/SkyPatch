@@ -9,7 +9,7 @@ namespace NJG.Runtime.Manager
         private int _startScore = 1000;
         [FoldoutGroup("Score"), SerializeField, Tooltip("Start losing Score after this time")] 
         private int _lossStartTime = 20;
-        [SerializeField, Tooltip("Score loss per second")] 
+        [FoldoutGroup("Score"),SerializeField, Tooltip("Score loss per second")] 
         private float _lossSpeed = 1;
         
         private float _currTime = 0f;

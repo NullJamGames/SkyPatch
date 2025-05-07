@@ -1536,7 +1536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInventory: {fileID: 5570923870184142802}
   _tooltip: {fileID: 3114080898479792951}
-  _interactDistance: 0.8
+  _interactDistance: 1.2
   _interactableLayers:
     serializedVersion: 2
     m_Bits: 2560
