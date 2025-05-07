@@ -1536,10 +1536,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInventory: {fileID: 5570923870184142802}
   _tooltip: {fileID: 3114080898479792951}
-  _interactDistance: 2
+  _interactDistance: 0.8
   _interactableLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   _interactableCheckInterval: 0.1
   _maxInteractablesAtOnce: 10
 --- !u!1 &3788737450216217307
