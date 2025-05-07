@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MI_SolarPanel
+  m_Shader: {fileID: -6465566751694194690, guid: 412674227ac969f44a76d495fd4e58a3, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 412674227ac969f44a76d495fd4e58a3, type: 3}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Base_Texture:
+        m_Texture: {fileID: 2800000, guid: 1905a06b7540fb242998f562517f5dcd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBGrunge:
+        m_Texture: {fileID: 2800000, guid: d3b94b99a5f55964c84f9adb275c75ed, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _B: 1
+    - _B_Rough: 1
+    - _B_Roughness: 0
+    - _B_Value: 0.21
+    - _Base_IsTexture: 1
+    - _Base_IsTileNormal: 0
+    - _Base_Rotation_UV: 0
+    - _Base_Roughness: 1
+    - _Base_Tile: 4.74
+    - _Base_Triplaner: 0
+    - _G: 1
+    - _G_Contrast: 0.49
+    - _G_Rough: 1
+    - _G_Roughness: 0.462
+    - _G_Value: 0.6
+    - _Metallic: 0
+    - _QueueControl: 0
+    - _R: 1
+    - _RGB_Tile: 0.21
+    - _R_Contrast: 0.44
+    - _R_Rough: 1
+    - _R_Roughness: 0.203
+    - _R_Value: 0.38
+    m_Colors:
+    - _B_Color: {r: 0.5764706, g: 0.6745098, b: 0.70980394, a: 0}
+    - _BaseColor: {r: 0.19215688, g: 0.3372549, b: 0.36862746, a: 1}
+    - _G_color: {r: 0.024939628, g: 0.07165933, b: 0.08176088, a: 0}
+    - _R_color: {r: 0.20784315, g: 0.4901961, b: 0.50980395, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &8945371392603342137
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9

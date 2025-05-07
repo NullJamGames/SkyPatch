@@ -374,10 +374,10 @@ MonoBehaviour:
     colorVal: {r: 0.25882354, g: 0.25882354, b: 0.25882354, a: 1}
     gradientVal:
       serializedVersion: 2
-      key0: {r: 0, g: 0.11633993, b: 0.34901962, a: 1}
+      key0: {r: 0.15, g: 0.2679775, b: 0.5, a: 1}
       key1: {r: 0, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0.11633993, b: 0.34901962, a: 0}
+      key3: {r: 0.15, g: 0.2679775, b: 0.5, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
@@ -551,9 +551,9 @@ MonoBehaviour:
     colorVal: {r: 1, g: 1, b: 1, a: 1}
     gradientVal:
       serializedVersion: 2
-      key0: {r: 0, g: 0.2140509, b: 0.6301887, a: 1}
+      key0: {r: 0.27, g: 0.48521742, b: 0.9, a: 1}
       key1: {r: 0, g: 0.72895586, b: 2.9960787, a: 1}
-      key2: {r: 0, g: 0.2100001, b: 0.63, a: 0}
+      key2: {r: 0.27, g: 0.48130432, b: 0.9, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}

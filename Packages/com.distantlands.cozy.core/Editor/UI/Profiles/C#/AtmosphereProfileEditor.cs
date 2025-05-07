@@ -232,7 +232,8 @@ namespace DistantLands.Cozy.EditorScripts
             ContentContainer.Add(fogVariationDistanceField);
 
             VisualElement heightFogContainer = new VisualElement();
-            SetVisible(heightFogContainer, WeatherSphere.fogStyle == CozyWeather.FogStyle.heightFog);
+            if (WeatherSphere) 
+                SetVisible(heightFogContainer, WeatherSphere.fogStyle == CozyWeather.FogStyle.heightFog);
 
             Label heightFog = new Label("Height Fog");
             heightFog.AddToClassList("h2");
@@ -296,28 +297,32 @@ namespace DistantLands.Cozy.EditorScripts
 
             VariablePropertyField cloudHighlightColorField = new VariablePropertyField(serializedObject.FindProperty("cloudHighlightColor"), true);
             cloudHighlightColorField.Label.text = "Sun Highlight Color";
-            SetVisible(cloudHighlightColorField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury && WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture);
+            if (WeatherSphere)
+                SetVisible(cloudHighlightColorField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury && WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(cloudHighlightColorField);
 
             VariablePropertyField cloudSunHighlightFalloffField = new VariablePropertyField(serializedObject.FindProperty("cloudSunHighlightFalloff"), 0, 50);
             cloudSunHighlightFalloffField.Label.text = "Sun Highlight Falloff";
-            SetVisible(cloudSunHighlightFalloffField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury && WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture);
+            if (WeatherSphere)
+                SetVisible(cloudSunHighlightFalloffField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury && WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(cloudSunHighlightFalloffField);
 
             VariablePropertyField cloudMoonColorField = new VariablePropertyField(serializedObject.FindProperty("cloudMoonColor"), true);
             cloudMoonColorField.Label.text = "Moon Highlight Color";
-            SetVisible(cloudMoonColorField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile);
+            if (WeatherSphere)
+                SetVisible(cloudMoonColorField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile);
             ContentContainer.Add(cloudMoonColorField);
 
             VariablePropertyField cloudMoonHighlightFalloffField = new VariablePropertyField(serializedObject.FindProperty("cloudMoonHighlightFalloff"), 0, 50);
             cloudMoonHighlightFalloffField.Label.text = "Moon Highlight Falloff";
-            SetVisible(cloudMoonHighlightFalloffField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile);
+            if (WeatherSphere)
+                SetVisible(cloudMoonHighlightFalloffField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.luxury &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile);
             cloudMoonHighlightFalloffField.AddToClassList("mb-md");
             ContentContainer.Add(cloudMoonHighlightFalloffField);
 
@@ -342,256 +347,286 @@ namespace DistantLands.Cozy.EditorScripts
             ContentContainer.Add(cloudDetailAmountField);
 
             VariablePropertyField acScaleField = new VariablePropertyField(serializedObject.FindProperty("acScale"), 0.1f, 3);
-            SetVisible(acScaleField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
+            if (WeatherSphere)
+                SetVisible(acScaleField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
             acScaleField.Label.text = "Altocumulus Scale";
             ContentContainer.Add(acScaleField);
 
             VariablePropertyField cirroMoveSpeedField = new VariablePropertyField(serializedObject.FindProperty("cirroMoveSpeed"), 0, 3);
             cirroMoveSpeedField.Label.text = "Cirrostratus Movement";
-            SetVisible(cirroMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
+            if (WeatherSphere)
+                SetVisible(cirroMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
             ContentContainer.Add(cirroMoveSpeedField);
 
             VariablePropertyField cirrusMoveSpeedField = new VariablePropertyField(serializedObject.FindProperty("cirrusMoveSpeed"), 0, 3);
             cirroMoveSpeedField.Label.text = "Cirrus Movement";
-            SetVisible(cirrusMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
+            if (WeatherSphere)
+                SetVisible(cirrusMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
             ContentContainer.Add(cirrusMoveSpeedField);
 
             VariablePropertyField chemtrailsMoveSpeedField = new VariablePropertyField(serializedObject.FindProperty("chemtrailsMoveSpeed"), 0, 3);
             cirroMoveSpeedField.Label.text = "Chemtrails Movement";
-            SetVisible(chemtrailsMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
-                                                      WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
+            if (WeatherSphere)
+                SetVisible(chemtrailsMoveSpeedField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliMobile &&
+                                                          WeatherSphere.cloudStyle != CozyWeather.CloudStyle.ghibliDesktop);
             ContentContainer.Add(chemtrailsMoveSpeedField);
 
             VariablePropertyField cloudTextureColorField = new VariablePropertyField(serializedObject.FindProperty("cloudTextureColor"), true);
-            SetVisible(cloudTextureColorField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
-                                                      WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
+            if (WeatherSphere)
+                SetVisible(cloudTextureColorField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+                                                          WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(cloudTextureColorField);
 
             VariablePropertyField cloudCohesionField = new VariablePropertyField(serializedObject.FindProperty("cloudCohesion"), 0, 10);
-            SetVisible(cloudCohesionField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
+            if (WeatherSphere)
+                SetVisible(cloudCohesionField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliMobile);
             ContentContainer.Add(cloudCohesionField);
 
             VariablePropertyField spherizeField = new VariablePropertyField(serializedObject.FindProperty("spherize"), 0, 1);
-            SetVisible(spherizeField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
+            if (WeatherSphere)
+                SetVisible(spherizeField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliMobile);
             ContentContainer.Add(spherizeField);
 
             VariablePropertyField shadowDistanceField = new VariablePropertyField(serializedObject.FindProperty("shadowDistance"), 0, 10);
-            SetVisible(shadowDistanceField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
+            if (WeatherSphere)
+                SetVisible(shadowDistanceField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliDesktop ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.ghibliMobile);
             ContentContainer.Add(shadowDistanceField);
 
             VariablePropertyField cloudThicknessField = new VariablePropertyField(serializedObject.FindProperty("cloudThickness"), 0, 4);
-            SetVisible(cloudThicknessField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyDesktop &&
+            if (WeatherSphere)
+                SetVisible(cloudThicknessField, WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyDesktop &&
                                                       WeatherSphere.cloudStyle != CozyWeather.CloudStyle.cozyMobile &&
                                                       WeatherSphere.cloudStyle != CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(cloudThicknessField);
 
             VariablePropertyField textureAmountField = new VariablePropertyField(serializedObject.FindProperty("textureAmount"), 0, 3);
-            SetVisible(shadowDistanceField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies);
+            if (WeatherSphere)
+                SetVisible(shadowDistanceField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies);
             ContentContainer.Add(textureAmountField);
             textureAmountField.AddToClassList("mb-md");
 
             VisualElement currentSettings = new VisualElement();
-            SetVisible(currentSettings, !WeatherSphere.weatherModule);
+            if (WeatherSphere)
+                SetVisible(currentSettings, !WeatherSphere.weatherModule);
 
-            
+
             Label texturesLabel = new Label("Cloud Textures");
             texturesLabel.AddToClassList("h2");
             texturesLabel.AddToClassList("mb-md");
-            SetVisible(texturesLabel, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop || 
-                                      WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies || 
+            if (WeatherSphere)
+                SetVisible(texturesLabel, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop ||
+                                      WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(texturesLabel);
-            
+
             PropertyField cloudTextureField = new PropertyField();
             cloudTextureField.BindProperty(serializedObject.FindProperty("cloudTexture"));
-            SetVisible(cloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+            if (WeatherSphere)
+                SetVisible(cloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(cloudTextureField);
-            
+
             PropertyField texturePanDirectionField = new PropertyField();
             texturePanDirectionField.BindProperty(serializedObject.FindProperty("texturePanDirection"));
-            SetVisible(texturePanDirectionField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
+            if (WeatherSphere)
+                SetVisible(texturePanDirectionField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.singleTexture);
             ContentContainer.Add(texturePanDirectionField);
-            
+
             PropertyField chemtrailsTextureField = new PropertyField();
             chemtrailsTextureField.BindProperty(serializedObject.FindProperty("chemtrailsTexture"));
-            SetVisible(chemtrailsTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+            if (WeatherSphere)
+                SetVisible(chemtrailsTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop);
             ContentContainer.Add(chemtrailsTextureField);
-            
+
             PropertyField cirrusCloudTextureField = new PropertyField();
             cirrusCloudTextureField.BindProperty(serializedObject.FindProperty("cirrusCloudTexture"));
-            SetVisible(cirrusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+            if (WeatherSphere)
+                SetVisible(cirrusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop);
             ContentContainer.Add(cirrusCloudTextureField);
-            
+
             PropertyField cirrostratusCloudTextureField = new PropertyField();
             cirrostratusCloudTextureField.BindProperty(serializedObject.FindProperty("cirrostratusCloudTexture"));
-            SetVisible(cirrostratusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+            if (WeatherSphere)
+                SetVisible(cirrostratusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop);
             ContentContainer.Add(cirrostratusCloudTextureField);
-            
+
             PropertyField altocumulusCloudTextureField = new PropertyField();
             altocumulusCloudTextureField.BindProperty(serializedObject.FindProperty("altocumulusCloudTexture"));
-            SetVisible(altocumulusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
+            if (WeatherSphere)
+                SetVisible(altocumulusCloudTextureField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.paintedSkies ||
                                                       WeatherSphere.cloudStyle == CozyWeather.CloudStyle.cozyDesktop);
             ContentContainer.Add(altocumulusCloudTextureField);
 
             Label luxuryTexturesLabel = new Label("Luxury Clouds Textures");
             luxuryTexturesLabel.AddToClassList("h2");
             luxuryTexturesLabel.AddToClassList("mb-md");
-            SetVisible(luxuryTexturesLabel, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(luxuryTexturesLabel, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(luxuryTexturesLabel);
 
             PropertyField partlyCloudyLuxuryCloudsField = new PropertyField();
             partlyCloudyLuxuryCloudsField.BindProperty(serializedObject.FindProperty("partlyCloudyLuxuryClouds"));
-            SetVisible(partlyCloudyLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(partlyCloudyLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(partlyCloudyLuxuryCloudsField);
 
             PropertyField mostlyCloudyLuxuryCloudsField = new PropertyField();
             mostlyCloudyLuxuryCloudsField.BindProperty(serializedObject.FindProperty("mostlyCloudyLuxuryClouds"));
-            SetVisible(mostlyCloudyLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(mostlyCloudyLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(mostlyCloudyLuxuryCloudsField);
 
             PropertyField overcastLuxuryCloudsField = new PropertyField();
             overcastLuxuryCloudsField.BindProperty(serializedObject.FindProperty("overcastLuxuryClouds"));
-            SetVisible(overcastLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(overcastLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(overcastLuxuryCloudsField);
 
             PropertyField lowBorderLuxuryCloudsField = new PropertyField();
             lowBorderLuxuryCloudsField.BindProperty(serializedObject.FindProperty("lowBorderLuxuryClouds"));
-            SetVisible(lowBorderLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(lowBorderLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(lowBorderLuxuryCloudsField);
 
             PropertyField highBorderLuxuryCloudsField = new PropertyField();
             highBorderLuxuryCloudsField.BindProperty(serializedObject.FindProperty("highBorderLuxuryClouds"));
-            SetVisible(highBorderLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(highBorderLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(highBorderLuxuryCloudsField);
 
             PropertyField lowNimbusLuxuryCloudsField = new PropertyField();
             lowNimbusLuxuryCloudsField.BindProperty(serializedObject.FindProperty("lowNimbusLuxuryClouds"));
-            SetVisible(lowNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(lowNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(lowNimbusLuxuryCloudsField);
 
             PropertyField midNimbusLuxuryCloudsField = new PropertyField();
             midNimbusLuxuryCloudsField.BindProperty(serializedObject.FindProperty("midNimbusLuxuryClouds"));
-            SetVisible(midNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(midNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(midNimbusLuxuryCloudsField);
 
             PropertyField highNimbusLuxuryCloudsField = new PropertyField();
             highNimbusLuxuryCloudsField.BindProperty(serializedObject.FindProperty("highNimbusLuxuryClouds"));
-            SetVisible(highNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(highNimbusLuxuryCloudsField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(highNimbusLuxuryCloudsField);
 
             PropertyField luxuryVariationField = new PropertyField();
             luxuryVariationField.BindProperty(serializedObject.FindProperty("luxuryVariation"));
-            SetVisible(luxuryVariationField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
+            if (WeatherSphere)
+                SetVisible(luxuryVariationField, WeatherSphere.cloudStyle == CozyWeather.CloudStyle.luxury);
             ContentContainer.Add(luxuryVariationField);
+            if (WeatherSphere)
+            {
+                Label currentCloudSettingsLabel = new Label("Current Settings");
+                currentCloudSettingsLabel.AddToClassList("h2");
+                currentCloudSettingsLabel.AddToClassList("mb-md");
+                currentSettings.Add(currentCloudSettingsLabel);
 
-            Label currentCloudSettingsLabel = new Label("Current Settings");
-            currentCloudSettingsLabel.AddToClassList("h2");
-            currentCloudSettingsLabel.AddToClassList("mb-md");
-            currentSettings.Add(currentCloudSettingsLabel);
+                Slider cumulusField = new Slider("Cumulus Clouds")
+                {
+                    value = WeatherSphere.cumulus,
+                    lowValue = 0,
+                    highValue = 1,
+                    showInputField = true
+                };
+                cumulusField.AddToClassList("unity-base-field__aligned");
+                cumulusField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.cumulus = evt.newValue;
+                });
+                currentSettings.Add(cumulusField);
 
-            Slider cumulusField = new Slider("Cumulus Clouds")
-            {
-                value = WeatherSphere.cumulus,
-                lowValue = 0,
-                highValue = 1,
-                showInputField = true
-            };
-            cumulusField.AddToClassList("unity-base-field__aligned");
-            cumulusField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.cumulus = evt.newValue;
-            });
-            currentSettings.Add(cumulusField);
+                Slider altocumulusField = new Slider("Altocumulus Clouds")
+                {
+                    value = WeatherSphere.altocumulus,
+                    lowValue = 0,
+                    highValue = 2,
+                    showInputField = true
+                };
+                altocumulusField.AddToClassList("unity-base-field__aligned");
+                altocumulusField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.altocumulus = evt.newValue;
+                });
+                currentSettings.Add(altocumulusField);
 
-            Slider altocumulusField = new Slider("Altocumulus Clouds")
-            {
-                value = WeatherSphere.altocumulus,
-                lowValue = 0,
-                highValue = 2,
-                showInputField = true
-            };
-            altocumulusField.AddToClassList("unity-base-field__aligned");
-            altocumulusField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.altocumulus = evt.newValue;
-            });
-            currentSettings.Add(altocumulusField);
+                Slider chemtrailsField = new Slider("Chemtrails")
+                {
+                    value = WeatherSphere.chemtrails,
+                    lowValue = 0,
+                    highValue = 2,
+                    showInputField = true
+                };
+                chemtrailsField.AddToClassList("unity-base-field__aligned");
+                chemtrailsField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.chemtrails = evt.newValue;
+                });
+                currentSettings.Add(chemtrailsField);
 
-            Slider chemtrailsField = new Slider("Chemtrails")
-            {
-                value = WeatherSphere.chemtrails,
-                lowValue = 0,
-                highValue = 2,
-                showInputField = true
-            };
-            chemtrailsField.AddToClassList("unity-base-field__aligned");
-            chemtrailsField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.chemtrails = evt.newValue;
-            });
-            currentSettings.Add(chemtrailsField);
+                Slider cirrusField = new Slider("Cirrus Clouds")
+                {
+                    value = WeatherSphere.cirrus,
+                    lowValue = 0,
+                    highValue = 2,
+                    showInputField = true
+                };
+                cirrusField.AddToClassList("unity-base-field__aligned");
+                cirrusField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.cirrus = evt.newValue;
+                });
+                currentSettings.Add(cirrusField);
 
-            Slider cirrusField = new Slider("Cirrus Clouds")
-            {
-                value = WeatherSphere.cirrus,
-                lowValue = 0,
-                highValue = 2,
-                showInputField = true
-            };
-            cirrusField.AddToClassList("unity-base-field__aligned");
-            cirrusField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.cirrus = evt.newValue;
-            });
-            currentSettings.Add(cirrusField);
+                Slider nimbusField = new Slider("Nimbus Clouds")
+                {
+                    value = WeatherSphere.nimbus,
+                    lowValue = 0,
+                    highValue = 2,
+                    showInputField = true
+                };
+                nimbusField.AddToClassList("unity-base-field__aligned");
+                nimbusField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.nimbus = evt.newValue;
+                });
+                currentSettings.Add(nimbusField);
 
-            Slider nimbusField = new Slider("Nimbus Clouds")
-            {
-                value = WeatherSphere.nimbus,
-                lowValue = 0,
-                highValue = 2,
-                showInputField = true
-            };
-            nimbusField.AddToClassList("unity-base-field__aligned");
-            nimbusField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.nimbus = evt.newValue;
-            });
-            currentSettings.Add(nimbusField);
+                Slider borderField = new Slider("Border Clouds")
+                {
+                    value = WeatherSphere.borderHeight,
+                    lowValue = 0,
+                    highValue = 2,
+                    showInputField = true
+                };
+                borderField.AddToClassList("unity-base-field__aligned");
+                borderField.RegisterCallback((ChangeEvent<float> evt) =>
+                {
+                    WeatherSphere.borderHeight = evt.newValue;
+                });
+                currentSettings.Add(borderField);
 
-            Slider borderField = new Slider("Border Clouds")
-            {
-                value = WeatherSphere.borderHeight,
-                lowValue = 0,
-                highValue = 2,
-                showInputField = true
-            };
-            borderField.AddToClassList("unity-base-field__aligned");
-            borderField.RegisterCallback((ChangeEvent<float> evt) =>
-            {
-                WeatherSphere.borderHeight = evt.newValue;
-            });
-            currentSettings.Add(borderField);
-
-            ContentContainer.Add(currentSettings);
+                ContentContainer.Add(currentSettings);
+            }
 
         }
 

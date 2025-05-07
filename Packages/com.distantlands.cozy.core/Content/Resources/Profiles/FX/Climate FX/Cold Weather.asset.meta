@@ -6,11 +6,3 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 278975
-  packageName: 'COZY Pro: Stylized Weather Bundle'
-  packageVersion: 3.6.2
-  assetPath: Packages/com.distantlands.cozy.core/Content/Resources/Profiles/FX/Climate
-    FX/Cold Weather.asset
-  uploadId: 745002
