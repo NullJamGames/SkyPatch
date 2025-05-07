@@ -78,9 +78,9 @@ namespace NJG.Runtime.UI
             if(scoreManager == null)
                 return;
             
-            int score = scoreManager.GetScore();
+            SScoreRank scoreRank  = scoreManager.GetScoreRank();
             _scoreText.gameObject.SetActive(true);
-            _scoreText.text = $"Score: {score}";
+            _scoreText.text = $"Score: {scoreRank.Score} \n Rank: {scoreRank.Rank}";
         }
 
         public void OnClick_NextLevel() => LevelManager.Instance.LoadNextLevel();
