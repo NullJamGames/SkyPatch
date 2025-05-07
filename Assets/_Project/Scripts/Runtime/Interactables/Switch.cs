@@ -73,7 +73,7 @@ namespace NJG.Runtime.Interactables
 
         public string GetTooltipText(PlayerInventory playerInventory)
         {
-            return "[Switch]\nTOOLTIP NOT IMPLEMENTED";
+            return "[SWITCH]\nPress E to pull";
         }
     }
 }
