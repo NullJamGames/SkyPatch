@@ -404,11 +404,9 @@ MonoBehaviour:
   Plugins: []
   MasterBanks:
   - Master
-  Banks:
-  - Music
-  - SFX
-  - VO
-  BanksToLoad: []
+  Banks: []
+  BanksToLoad:
+  - Master
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
   AndroidUseOBB: 0

@@ -205,15 +205,20 @@ public class AudioManager : IInitializable, ILateDisposable
         _activeEvents.Clear();
     }
 
-    public void StartKeyedInstance(GameObject keyObject, EventReference sound)
+    public void StartKeyedInstance(GameObject keyObject, EventReference sound, Rigidbody2D sourceRigidbody = null)
     {
         if (!_keyedInstances.ContainsKey(keyObject))
             _keyedInstances[keyObject] = new();
 
         if (!_keyedInstances[keyObject].ContainsKey(sound))
             _keyedInstances[keyObject].Add(sound, RuntimeManager.CreateInstance(sound));
-        
-        _keyedInstances[keyObject][sound].start();
+            if (keyObject != null)
+            {
+                Rigidbody2D rb = sourceRigidbody ?? keyObject.GetComponent<Rigidbody2D>();
+                RuntimeManager.AttachInstanceToGameObject(_keyedInstances[keyObject][sound], keyObject, rb);
+            }
+
+            _keyedInstances[keyObject][sound].start();
     }
 
     public void SetKeyedInstanceParamater(GameObject keyObject, EventReference sound, string parameterName,

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using MEC;
+using NJG.Runtime.Audio;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -30,7 +32,12 @@ namespace NJG.Runtime.Interactables
         public Transform Transform => transform;
         
         public event Action<string> OnTooltipTextChanged;
-        
+
+        private AudioManager _audioManager;
+
+        [Inject]
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
+
         public void Interact(PlayerInventory playerInventory)
         {
             AssertState(playerInventory);
@@ -40,6 +47,7 @@ namespace NJG.Runtime.Interactables
         {
             if (!_growToFullRoutine.IsRunning)
                 _growToFullRoutine = Timing.RunCoroutine(GrowToFullRoutine(waterContainer));
+
         }
         
         private IEnumerator<float> GrowToFullRoutine(WaterContainer waterContainer)
@@ -76,6 +84,7 @@ namespace NJG.Runtime.Interactables
         {
             State = PlotState.Growing;
             _currentVisual = Instantiate(_plotData.SeedPrefab, transform.position, Quaternion.identity, transform);
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.Plant);
         }
 
         private void GrowingPlotInteraction(PlayerInventory playerInventory)
@@ -95,6 +104,7 @@ namespace NJG.Runtime.Interactables
             float yOffset = transform.position.y + _harvestSpawnOffset;
             Vector3 spawnPosition = new (transform.position.x, yOffset, transform.position.z);
             Instantiate(_plotData.HarvestablePlantPrefab, spawnPosition, Quaternion.identity);
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.PickupPlant);
         }
 
         public string GetTooltipText(PlayerInventory playerInventory)

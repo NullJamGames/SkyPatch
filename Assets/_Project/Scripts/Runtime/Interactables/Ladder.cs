@@ -1,9 +1,12 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using NJG.Runtime.Entity;
+using NJG.Runtime.UI.Tooltips;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Interactables
 {
-    public class Ladder : MonoBehaviour
+    public class Ladder : MonoBehaviour, ITooltipProvider
     {
         [FoldoutGroup("Ladder Segments"), SerializeField]
         private Vector3 _ladderSegmentBottom;
@@ -58,5 +61,12 @@ namespace NJG.Runtime.Interactables
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(BottomAnchorPoint, TopAnchorPoint);
         }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            return "Ladder";
+        }
+
+        public event Action<string> OnTooltipTextChanged;
     }
 }

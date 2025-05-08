@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using MEC;
 using NJG.Runtime.Entity;
+using NJG.Runtime.Audio;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -13,7 +15,9 @@ namespace NJG.Runtime.Interactables
         private GameObject _waterVisual;
         [FoldoutGroup("References"), SerializeField]
         private Transform _spillPoint;
-        
+
+        [FoldoutGroup("Settings"), SerializeField]
+        private bool _hasInfiniteWater = false;
         [FoldoutGroup("Settings"), SerializeField]
         private float _maxWaterAmount = 100;
         [FoldoutGroup("Settings"), SerializeField]
@@ -36,10 +40,16 @@ namespace NJG.Runtime.Interactables
         private float _waterAmount;
         
         public bool HasWater => _waterAmount > 0;
-        
+
+        private AudioManager _audioManager;
+
+        [Inject]
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
 
         private void Start()
         {
+            if (_hasInfiniteWater)
+                TryFillWater();
             InvokeRepeating(nameof(CheckForSpill), 0f, 0.5f);
             InvokeRepeating(nameof(CheckForWaterFillArea), 0f, 0.2f);
         }
@@ -59,6 +69,7 @@ namespace NJG.Runtime.Interactables
 
             _waterAmount = _maxWaterAmount;
             _waterVisual.SetActive(true);
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.FillTheBucket);
             return true;
         }
 
@@ -67,8 +78,11 @@ namespace NJG.Runtime.Interactables
             if (!HasWater)
                 return false;
 
-            _waterAmount = 0;
+            if(!_hasInfiniteWater)
+                _waterAmount = 0;
             _waterVisual.SetActive(false);
+
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.WaterPlant);
 
             if (shouldSplash && _splashVFXPrefab != null)
             {
