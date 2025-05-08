@@ -11,29 +11,29 @@ namespace NJG.Runtime.Interactables
     {
         [FoldoutGroup("Arm"), SerializeField]
         private Transform _arm;
-        [FoldoutGroup("Arm"), SerializeField] 
+        [FoldoutGroup("Arm"), SerializeField]
         private float _xRotation = 30;
-        [FoldoutGroup("Arm"), SerializeField] 
+        [FoldoutGroup("Arm"), SerializeField]
         private float _rotateTime = 0.3f;
-        [FoldoutGroup("Arm"), SerializeField] 
+        [FoldoutGroup("Arm"), SerializeField]
         private Ease _ease = Ease.InOutQuad;
-        
+
         [FoldoutGroup("Activatables"), SerializeField]
         private List<ActivatableField> _activatables = new();
         [FoldoutGroup("Activatables/Reverse"), SerializeField]
         private List<ActivatableField> _reverseActivatables = new();
-        
+
         private bool _isActive;
         private Tween _tween;
-        
+
         public Transform Transform => transform;
         public event Action<string> OnTooltipTextChanged;
 
         private void Start()
         {
             _arm.localRotation = Quaternion.Euler(-_xRotation, 0, 0);
-            
-            foreach (var reverseActivatable in _reverseActivatables)
+
+            foreach (ActivatableField reverseActivatable in _reverseActivatables)
                 reverseActivatable.Activatable?.Activate();
         }
 
@@ -45,13 +45,15 @@ namespace NJG.Runtime.Interactables
                 Deactivate();
         }
 
+        public string GetTooltipText(PlayerInventory playerInventory) => "[SWITCH]\nPress E to pull";
+
         protected virtual void Activate()
         {
             _isActive = true;
             RotateArm(_xRotation);
-            foreach (var activatable in _activatables)
+            foreach (ActivatableField activatable in _activatables)
                 activatable.Activatable?.Activate();
-            foreach (var reverseActivatable in _reverseActivatables)
+            foreach (ActivatableField reverseActivatable in _reverseActivatables)
                 reverseActivatable.Activatable?.Deactivate();
         }
 
@@ -59,9 +61,9 @@ namespace NJG.Runtime.Interactables
         {
             _isActive = false;
             RotateArm(-_xRotation);
-            foreach (var activatable in _activatables)
+            foreach (ActivatableField activatable in _activatables)
                 activatable.Activatable?.Deactivate();
-            foreach (var reverseActivatable in _reverseActivatables)
+            foreach (ActivatableField reverseActivatable in _reverseActivatables)
                 reverseActivatable.Activatable?.Activate();
         }
 
@@ -69,11 +71,6 @@ namespace NJG.Runtime.Interactables
         {
             _tween?.Kill();
             _tween = _arm.DOLocalRotate(new Vector3(desiredRot, 0f, 0f), _rotateTime).SetEase(_ease);
-        }
-
-        public string GetTooltipText(PlayerInventory playerInventory)
-        {
-            return "[SWITCH]\nPress E to pull";
         }
     }
 }

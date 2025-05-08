@@ -8,7 +8,7 @@ namespace NJG.Runtime.Interactables
     {
         [field: BoxGroup("General"), SerializeField]
         public string PlantName { get; private set; }
-        
+
         [field: BoxGroup("Prefabs"), SerializeField]
         public GameObject SeedPrefab { get; private set; }
         [field: BoxGroup("Prefabs"), SerializeField]

@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -5,17 +6,19 @@ namespace NJG.Runtime.Interactables
 {
     public interface IActivatable
     {
-        public void Activate(){}
-        public void Deactivate(){}
+        public void Activate() { }
+
+        public void Deactivate() { }
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct ActivatableField
     {
         [SerializeField, OnValueChanged(nameof(OnFieldChanged)), ValidateInput("@_activatable is IActivatable")]
         private MonoBehaviour _activatable;
-        
+
         public IActivatable Activatable => _activatable as IActivatable;
+
         private void OnFieldChanged()
         {
             Debug.Log("check");

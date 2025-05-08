@@ -18,34 +18,28 @@ namespace NJG.Runtime.Entities
         private InputReader _input;
 
         private PhysicsMover _physicsMover;
-        
+
         public PlayerInteractor Interactor { get; private set; }
         public PlayerInventory Inventory { get; private set; }
-        
+
         private void Awake()
         {
             Interactor = GetComponent<PlayerInteractor>();
             Inventory = GetComponent<PlayerInventory>();
-            
+
             if (_character.Motor.AttachedRigidbody != null)
                 _physicsMover = _character.Motor.AttachedRigidbody.GetComponent<PhysicsMover>();
-            
+
             InitializeController();
-        }
-        
-        private void OnEnable()
-        {
-            _input.InteractEvent += OnInteract;
-            _input.PickupEvent += OnPickup;
         }
 
         private void Start()
         {
             //Cursor.lockState = CursorLockMode.Locked;
             _input.EnablePlayerActions();
-            
+
             _characterCamera.SetFollowTransform(_character.CameraFollowPoint);
-            
+
             _characterCamera.IgnoredColliders.Clear();
             _characterCamera.IgnoredColliders.AddRange(_character.GetComponentsInChildren<Collider>());
         }
@@ -57,7 +51,7 @@ namespace NJG.Runtime.Entities
             // {
             //     Cursor.lockState = CursorLockMode.Locked;
             // }
-            
+
             HandleCharacterInput();
         }
 
@@ -66,18 +60,27 @@ namespace NJG.Runtime.Entities
             // Handle rotating the camera along with physics movers
             if (_characterCamera.RotateWithPhysicsMover && _physicsMover != null)
             {
-                _characterCamera.PlanarDirection = _physicsMover.RotationDeltaFromInterpolation * _characterCamera.PlanarDirection;
-                _characterCamera.PlanarDirection = Vector3.ProjectOnPlane(_characterCamera.PlanarDirection, _character.Motor.CharacterUp).normalized;
+                _characterCamera.PlanarDirection =
+                    _physicsMover.RotationDeltaFromInterpolation * _characterCamera.PlanarDirection;
+                _characterCamera.PlanarDirection = Vector3
+                                                   .ProjectOnPlane(_characterCamera.PlanarDirection,
+                                                       _character.Motor.CharacterUp).normalized;
             }
 
             HandleCameraInput();
+        }
+
+        private void OnEnable()
+        {
+            _input.InteractEvent += OnInteract;
+            _input.PickupEvent += OnPickup;
         }
 
         private void OnDisable()
         {
             _input.InteractEvent -= OnInteract;
             _input.PickupEvent -= OnPickup;
-            
+
             if (_input != null)
                 _input.DisablePlayerActions();
         }
@@ -86,6 +89,7 @@ namespace NJG.Runtime.Entities
         private void InitializeController() => _character.Initialize(this);
 
         private void OnInteract() => Interactor.Interact();
+
         private void OnPickup() => Inventory.Drop();
 
         private void HandleCameraInput()
@@ -93,13 +97,11 @@ namespace NJG.Runtime.Entities
             // Create the look input vector for the camera
             float mouseLookAxisUp = _input.LookDirection.y;
             float mouseLookAxisRight = _input.LookDirection.x;
-            Vector3 lookInputVector = new (mouseLookAxisRight, mouseLookAxisUp, 0f);
+            Vector3 lookInputVector = new(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
             // Prevent moving the camera while the cursor isn't locked
             if (Cursor.lockState != CursorLockMode.Locked)
-            {
                 lookInputVector = Vector3.zero;
-            }
 
             // Input for zooming the camera (disabled in WebGL because it can cause problems)
             float scrollInput = -_input.ZoomDirection.y;
@@ -117,11 +119,11 @@ namespace NJG.Runtime.Entities
             //     _characterCamera.TargetDistance = (_characterCamera.TargetDistance == 0f) ? _characterCamera.DefaultDistance : 0f;
             // }
         }
-        
+
         private void HandleCharacterInput()
         {
-            PlayerCharacterInputs characterInputs = new ();
-        
+            PlayerCharacterInputs characterInputs = new();
+
             // Build the CharacterInputs struct
             characterInputs.MoveAxisForward = _input.MoveDirection.y;
             characterInputs.MoveAxisRight = _input.MoveDirection.x;
@@ -130,7 +132,7 @@ namespace NJG.Runtime.Entities
             characterInputs.CrouchDown = _input.IsCrouchKeyPressed;
             characterInputs.CrouchUp = _input.WasCrouchKeyReleased;
             characterInputs.Interact = _input.WasInteractKeyReleased;
-        
+
             // Apply inputs to character
             _character.SetInputs(ref characterInputs);
         }

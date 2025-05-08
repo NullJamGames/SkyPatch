@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEditor;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace NJG.Utilities.Editor
 {
     [CustomPropertyDrawer(typeof(NJGEnumConditionAttribute))]
     public class NJGEnumConditionAttributeDrawer : PropertyDrawer
     {
-        private static Dictionary<string, string> _cachedPaths = new ();
+        private static readonly Dictionary<string, string> _cachedPaths = new();
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -16,13 +16,13 @@ namespace NJG.Utilities.Editor
             bool previouslyEnabled = GUI.enabled;
             GUI.enabled = enabled;
             if (!enumConditionAttribute.Hidden || enabled)
-            {
                 EditorGUI.PropertyField(position, property, label, true);
-            }
             GUI.enabled = previouslyEnabled;
         }
 
-        private bool GetConditionAttributeResult(NJGEnumConditionAttribute enumConditionAttribute, SerializedProperty property)
+        private bool GetConditionAttributeResult(NJGEnumConditionAttribute enumConditionAttribute,
+            SerializedProperty property
+        )
         {
             bool enabled = true;
 
@@ -45,7 +45,8 @@ namespace NJG.Utilities.Editor
             }
             else
             {
-                Debug.LogWarning("No matching enum found for NJGEnumConditionAttribute in object: " + enumConditionAttribute.ConditionEnum);
+                Debug.LogWarning("No matching enum found for NJGEnumConditionAttribute in object: " +
+                                 enumConditionAttribute.ConditionEnum);
             }
 
             return enabled;
@@ -57,13 +58,9 @@ namespace NJG.Utilities.Editor
             bool enabled = GetConditionAttributeResult(enumConditionAttribute, property);
 
             if (!enumConditionAttribute.Hidden || enabled)
-            {
                 return EditorGUI.GetPropertyHeight(property, label);
-            }
-            else
-            {
-                return -EditorGUIUtility.standardVerticalSpacing;
-            }
+
+            return -EditorGUIUtility.standardVerticalSpacing;
         }
     }
 }

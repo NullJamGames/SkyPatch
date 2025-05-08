@@ -4,14 +4,11 @@ namespace NJG.Runtime.SpawnSystem
 {
     public class LinearSpawnPointStrategy : ISpawnPointStrategy
     {
-        private int _index = 0;
-        private Transform[] _spawnPoints;
+        private readonly Transform[] _spawnPoints;
+        private int _index;
 
-        public LinearSpawnPointStrategy(Transform[] spawnPoints)
-        {
-            _spawnPoints = spawnPoints;
-        }
-        
+        public LinearSpawnPointStrategy(Transform[] spawnPoints) => _spawnPoints = spawnPoints;
+
         public Transform NextSpawnPoint()
         {
             Transform result = _spawnPoints[_index];

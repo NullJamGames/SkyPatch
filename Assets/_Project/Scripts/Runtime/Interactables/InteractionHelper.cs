@@ -11,14 +11,13 @@ namespace NJG.Runtime.Interactables
                 pickupable.InteractWith(interactable, playerInventory);
                 return true;
             }
-            else if (interactable is IGivableInteractable givable)
-            {
+
+            if (interactable is IGivableInteractable givable)
                 return givable.TryGivePickupable(playerInventory);
-            }
 
             return false;
         }
-        
+
         // ===================== TOOLTIPS =====================
         public static string GetBatteryInteractableTooltip(PlayerInventory playerInventory,
             BatteryInteractable batteryInteractable
@@ -36,11 +35,11 @@ namespace NJG.Runtime.Interactables
                 false => "Looks like I can insert a battery here..."
             };
         }
-        
+
         public static string GetPickupableTooltip(PlayerInventory playerInventory, PickupableItem pickupable)
         {
             bool playerHasPickupable = playerInventory.Pickupable != null;
-            
+
             return playerHasPickupable switch
             {
                 true => "Hands are full...",
@@ -60,13 +59,13 @@ namespace NJG.Runtime.Interactables
                 _ => interactableHasCompost ? "Press E to take compost" : "Looks like I can compost something here..."
             };
         }
-        
+
         public static string GetPlotInteractableTooltip(PlayerInventory playerInventory, Plot plot)
         {
             bool hasWater = false;
             if (playerInventory.Pickupable is WaterContainer waterContainer)
                 hasWater = waterContainer.HasWater;
-            
+
             Plot.PlotState plotState = plot.State;
 
             return plotState switch
@@ -80,7 +79,7 @@ namespace NJG.Runtime.Interactables
                 _ => "ERROR: Something went wrong, notify dev..."
             };
         }
-        
+
         public static string GetRevivableTreeInteractableTooltip(PlayerInventory playerInventory, RevivableTree tree)
         {
             bool hasWater = false;
@@ -106,7 +105,7 @@ namespace NJG.Runtime.Interactables
                 _ => "ERROR: Something went wrong, notify dev..."
             };
         }
-        
+
         public static string GetWaterSourceTooltip(PlayerInventory playerInventory)
         {
             bool hasWater = false;

@@ -1,5 +1,4 @@
-﻿using System;
-using NJG.Runtime.Interfaces;
+﻿using NJG.Runtime.Interfaces;
 using UnityEngine;
 
 namespace NJG.Runtime.Zones
@@ -9,9 +8,7 @@ namespace NJG.Runtime.Zones
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IResetable resetable))
-            {
                 resetable.ResetState();
-            }
         }
     }
 }

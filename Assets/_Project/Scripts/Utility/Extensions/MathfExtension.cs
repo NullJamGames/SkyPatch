@@ -1,9 +1,9 @@
 ﻿#if ENABLED_UNITY_MATHEMATICS
 #endif
 
-namespace NJG.Utilities.Extensions 
+namespace NJG.Utilities.Extensions
 {
-    public static class MathfExtension 
+    public static class MathfExtension
     {
         #region Min
 
@@ -34,27 +34,18 @@ namespace NJG.Utilities.Extensions
         }
 #endif
 
-        public static double Min(double a, double b) 
-        {
-            return (a < b) ? a : b;
-        }
+        public static double Min(double a, double b) => a < b ? a : b;
 
-        public static double Min(params double[] values) 
+        public static double Min(params double[] values)
         {
             int num = values.Length;
-            if (num == 0) 
-            {
+            if (num == 0)
                 return 0f;
-            }
 
             double num2 = values[0];
-            for (int i = 1; i < num; i++) 
-            {
-                if (values[i] < num2) 
-                {
+            for (int i = 1; i < num; i++)
+                if (values[i] < num2)
                     num2 = values[i];
-                }
-            }
 
             return num2;
         }
@@ -90,27 +81,18 @@ namespace NJG.Utilities.Extensions
         }
 #endif
 
-        public static double Max(double a, double b) 
-        {
-            return (a > b) ? a : b;
-        }
+        public static double Max(double a, double b) => a > b ? a : b;
 
-        public static double Max(params double[] values) 
+        public static double Max(params double[] values)
         {
             int num = values.Length;
-            if (num == 0) 
-            {
+            if (num == 0)
                 return 0f;
-            }
 
             double num2 = values[0];
-            for (int i = 1; i < num; i++) 
-            {
-                if (values[i] > num2) 
-                {
+            for (int i = 1; i < num; i++)
+                if (values[i] > num2)
                     num2 = values[i];
-                }
-            }
 
             return num2;
         }

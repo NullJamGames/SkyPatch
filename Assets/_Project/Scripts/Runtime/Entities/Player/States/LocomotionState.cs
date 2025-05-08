@@ -1,30 +1,28 @@
-﻿using NJG.Runtime.Entities;
-using NJG.Runtime.Input;
-using UnityEngine;
+﻿using UnityEngine;
 using CharacterController = NJG.Runtime.Entities.CharacterController;
 
 namespace NJG.Runtime.Entity
 {
     public class LocomotionState : BaseState
     {
+        protected bool _canWallJump = false;
+        protected bool _doubleJumpConsumed = false;
+        protected Vector3 _internalVelocityAdd = Vector3.zero;
+        protected bool _isCrouching = false;
+        protected bool _jumpConsumed = false;
+        protected bool _jumpedThisFrame = false;
+
+        protected bool _jumpRequested = false;
+        protected Vector3 _lookInputVector;
+        protected Vector3 _moveInputVector;
         protected Collider[] _probedColliders = new Collider[8];
         protected RaycastHit[] _probedHits = new RaycastHit[8];
-        protected Vector3 _moveInputVector;
-        protected Vector3 _lookInputVector;
-        protected Vector3 _internalVelocityAdd = Vector3.zero;
-        
-        protected bool _jumpRequested = false;
-        protected bool _doubleJumpConsumed = false;
-        protected bool _jumpedThisFrame = false;
-        protected bool _jumpConsumed = false;
-        protected bool _canWallJump = false;
-        protected Vector3 _wallJumpNormal;
+
+        protected bool _shouldBeCrouching = false;
         protected float _timeSinceJumpRequested = Mathf.Infinity;
         protected float _timeSinceLastAbleToJump = 0f;
-        
-        protected bool _shouldBeCrouching = false;
-        protected bool _isCrouching = false;
-        
+        protected Vector3 _wallJumpNormal;
+
         public LocomotionState(CharacterController character, Animator animator) : base(character, animator) { }
 
         // public override void OnEnter()

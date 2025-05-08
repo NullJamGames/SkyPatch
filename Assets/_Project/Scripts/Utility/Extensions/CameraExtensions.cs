@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-namespace NJG.Utilities.Extensions 
+namespace NJG.Utilities.Extensions
 {
-    public static class CameraExtensions 
+    public static class CameraExtensions
     {
         /// <summary>
-        /// Calculates and returns viewport extents with an optional margin. Useful for calculating a frustum for culling.
+        ///     Calculates and returns viewport extents with an optional margin. Useful for calculating a frustum for culling.
         /// </summary>
         /// <param name="camera">The camera object this method extends.</param>
         /// <param name="viewportMargin">Optional margin to be applied to viewport extents. Default is 0.2, 0.2.</param>
         /// <returns>Viewport extents as a Vector2 after applying the margin.</returns>
-        public static Vector2 GetViewportExtentsWithMargin(this Camera camera, Vector2? viewportMargin = null) 
+        public static Vector2 GetViewportExtentsWithMargin(this Camera camera, Vector2? viewportMargin = null)
         {
             Vector2 margin = viewportMargin ?? new Vector2(0.2f, 0.2f);
 

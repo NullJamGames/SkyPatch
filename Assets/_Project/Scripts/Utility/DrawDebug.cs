@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,7 +10,6 @@ namespace NJG.Utilities
         private const float _defaultIconSize = 0.1f;
         private static readonly Color _defaultIconColor = Color.magenta;
 
-
         public static void Lines(params Vector4[] lines)
         {
             Lines(null, lines);
@@ -20,13 +17,14 @@ namespace NJG.Utilities
 
         public static void Lines(Color? lineColor, params Vector4[] lines)
         {
-            if (lines == null) return;
+            if (lines == null)
+                return;
 
             for (int i = 0; i < lines.Length; i++)
             {
                 Vector4 line = lines[i];
                 Debug.DrawLine(new Vector3(line.x, line.y), new Vector3(line.z, line.w),
-                    lineColor ?? Color.HSVToRGB(((i * 1) % 360) / 360F, 1, 1));
+                    lineColor ?? Color.HSVToRGB(i * 1 % 360 / 360F, 1, 1));
             }
         }
 
@@ -47,12 +45,13 @@ namespace NJG.Utilities
 
         public static void Points(float iconSize, Color iconColor, params Vector2[] points)
         {
-            if (points == null) return;
+            if (points == null)
+                return;
 
-            Vector2 bottomLeft = new (-iconSize, -iconSize);
-            Vector2 bottomRight = new (iconSize, -iconSize);
-            Vector2 topLeft = new (-iconSize, iconSize);
-            Vector2 topRight = new (iconSize, iconSize);
+            Vector2 bottomLeft = new(-iconSize, -iconSize);
+            Vector2 bottomRight = new(iconSize, -iconSize);
+            Vector2 topLeft = new(-iconSize, iconSize);
+            Vector2 topRight = new(iconSize, iconSize);
 
             foreach (Vector2 point in points)
             {

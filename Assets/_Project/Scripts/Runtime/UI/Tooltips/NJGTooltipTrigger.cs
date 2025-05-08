@@ -11,7 +11,7 @@ namespace NJG.Runtime.UI.Tooltips
     {
         [FoldoutGroup("References"), SerializeField, Self]
         private TooltipTrigger _tooltipTrigger;
-        
+
         private ITooltipProvider _tooltipProvider;
 
         private void Awake()
@@ -36,10 +36,10 @@ namespace NJG.Runtime.UI.Tooltips
         {
             if (!colliderInfo.TryGetComponent(out PlayerInventory playerInventory))
                 return;
-            
+
             _tooltipTrigger.isRemotelyActivated = true;
             _tooltipTrigger.staysOpen = true;
-            
+
             UpdateTooltipText(_tooltipProvider.GetTooltipText(playerInventory));
         }
 
@@ -47,7 +47,7 @@ namespace NJG.Runtime.UI.Tooltips
         {
             if (!colliderInfo.TryGetComponent(out PlayerInventory playerInventory))
                 return;
-            
+
             _tooltipTrigger.ForceHideTooltip();
         }
 
@@ -55,7 +55,7 @@ namespace NJG.Runtime.UI.Tooltips
         {
             // Reset tooltip just in case.
             _tooltipTrigger.ForceHideTooltip();
-            
+
             _tooltipTrigger.SetText("BodyText", text);
             // Popup the tooltip (Note: duration doesn't matter, since StaysOpen is True)
             _tooltipTrigger.Popup(1f, gameObject);

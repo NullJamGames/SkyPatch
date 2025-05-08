@@ -3,20 +3,16 @@ using UnityEngine;
 namespace NJG.Utilities
 {
     /// <summary>
-    /// Provides utilities for generating and validating random points within specific
-    /// boundaries in a 2D space, useful for dynamic object placement in games.
+    ///     Provides utilities for generating and validating random points within specific
+    ///     boundaries in a 2D space, useful for dynamic object placement in games.
     /// </summary>
     public static class PointService
     {
-        public static Vector2 RandomPoint(float minX = 0, float minY = 0, float maxX = 1, float maxY = 1)
-        {
-            return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        }
+        public static Vector2 RandomPoint(float minX = 0, float minY = 0, float maxX = 1, float maxY = 1) =>
+            new(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
-        public static Vector2 RandomPointInRadius(Vector2 center, float radius)
-        {
-            return center + Random.insideUnitCircle.normalized * radius;
-        }
+        public static Vector2 RandomPointInRadius(Vector2 center, float radius) =>
+            center + Random.insideUnitCircle.normalized * radius;
 
         public static Vector2 RandomValidPoint(float minX, float minY, float maxX, float maxY, LayerMask mask)
         {

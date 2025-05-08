@@ -7,13 +7,10 @@ namespace NJG.Runtime.Entity
     public class CharacterPhysics
     {
         private Rigidbody _rigidbody;
-        
+
         public Vector3 Velocity { get; private set; }
 
-        public CharacterPhysics(Rigidbody rigidbody)
-        {
-            _rigidbody = rigidbody;
-        }
+        public CharacterPhysics(Rigidbody rigidbody) => _rigidbody = rigidbody;
 
         public void OnPhysicsUpdate()
         {

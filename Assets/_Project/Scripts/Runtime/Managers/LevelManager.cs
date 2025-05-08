@@ -13,17 +13,17 @@ namespace NJG.Runtime.Managers
         private string _nextLevelName = "";
         [FoldoutGroup("Scene References"), SerializeField]
         private string _mainMenuName = "2_MainMenu";
-        
+
         private GameManager _gameManager;
         private LevelChangeManager _levelChangeManager;
-        
+
         [Inject]
         private void Construct(GameManager gameManager, LevelChangeManager levelChangeManager)
         {
             _gameManager = gameManager;
             _levelChangeManager = levelChangeManager;
         }
-        
+
         public void Start()
         {
             _gameManager.ToggleCursor(false);
@@ -34,7 +34,7 @@ namespace NJG.Runtime.Managers
             // TODO: Should this be incorporated into level change manager?
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        
+
         public void LoadMainMenu() => _levelChangeManager.LoadScene(_nextLevelName);
 
         public void LoadNextLevel() => _levelChangeManager.LoadScene(_nextLevelName);

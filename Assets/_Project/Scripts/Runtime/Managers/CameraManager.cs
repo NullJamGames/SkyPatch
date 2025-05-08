@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using KBCore.Refs;
-using MEC;
+﻿using KBCore.Refs;
 using NJG.Runtime.Input;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
@@ -20,7 +17,7 @@ namespace NJG.Runtime.Managers
         private float _gain = 1f;
 
         private CinemachineInputAxisController _inputAxisController;
-        
+
         // private bool _isRMBPressed;
         // private bool _cameraMovementLock;
 
@@ -50,15 +47,14 @@ namespace NJG.Runtime.Managers
 
         private void SetCameraGain()
         {
-            foreach (var controller in _inputAxisController.Controllers)
-            {
+            foreach (InputAxisControllerBase<CinemachineInputAxisController.Reader>.Controller controller in
+                     _inputAxisController.Controllers)
                 controller.Input.Gain = controller.Name switch
                 {
                     "Look Orbit X" => _gain,
                     "Look Orbit Y" => -_gain,
                     _ => controller.InputValue
                 };
-            }
         }
 
         // private void OnLook(Vector2 cameraMovement, bool isDeviceMouse)

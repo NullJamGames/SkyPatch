@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KBCore.Refs;
 using KinematicCharacterController;
-using NJG.Runtime.Entity;
-using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
-using NJG.Utilities.PredicateStateMachines;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NJG.Runtime.Entities
 {
     public enum CharacterState { Default, Climbing }
+
     public enum ClimbingState { Anchoring, Climbing, DeAnchoring }
+
     public enum OrientationMethod { TowardsCamera, TowardsMovement }
+
     public enum BonusOrientationMethod { None, TowardsGravity, TowardsGroundSlopeAndGravity }
 
     public struct PlayerCharacterInputs
@@ -33,7 +32,7 @@ namespace NJG.Runtime.Entities
         public Vector3 MoveVector;
         public Vector3 LookVector;
     }
-    
+
     public class CharacterController : ValidatedMonoBehaviour, ICharacterController, ILaunchable, IResetable
     {
         #region Serialized Fields
@@ -58,23 +57,23 @@ namespace NJG.Runtime.Entities
         public float AirAccelerationSpeed { get; private set; } = 15f;
         [field: FoldoutGroup("Air Movement"), SerializeField]
         public float Drag = 0.1f;
-        
+
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public bool AllowJumping { get; private set; } = false;
+        public bool AllowJumping { get; private set; }
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public bool AllowJumpingWhenSliding { get; private set; } = false;
+        public bool AllowJumpingWhenSliding { get; private set; }
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public bool AllowDoubleJump { get; private set; } = false;
+        public bool AllowDoubleJump { get; private set; }
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public bool AllowWallJump { get; private set; } = false;
+        public bool AllowWallJump { get; private set; }
         [field: FoldoutGroup("Jumping"), SerializeField]
         public float JumpSpeed { get; private set; } = 10f;
         [field: FoldoutGroup("Jumping"), SerializeField]
         public float JumpScalableForwardSpeed { get; private set; } = 10f;
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public float JumpPreGroundingGraceTime { get; private set; } = 0f;
+        public float JumpPreGroundingGraceTime { get; private set; }
         [field: FoldoutGroup("Jumping"), SerializeField]
-        public float JumpPostGroundingGraceTime { get; private set; } = 0f;
+        public float JumpPostGroundingGraceTime { get; private set; }
 
         [field: FoldoutGroup("Ladder Climbing"), SerializeField]
         public float ClimbingSpeed { get; private set; } = 4f;
@@ -82,7 +81,7 @@ namespace NJG.Runtime.Entities
         public float AnchoringDuration { get; private set; } = 0.25f;
         [field: FoldoutGroup("Ladder Climbing"), SerializeField]
         public LayerMask LadderLayer { get; private set; }
-        
+
         [field: FoldoutGroup("Misc"), SerializeField]
         public List<Collider> IgnoredColliders { get; private set; } = new();
         [field: FoldoutGroup("Misc"), SerializeField]
@@ -90,7 +89,7 @@ namespace NJG.Runtime.Entities
         [field: FoldoutGroup("Misc"), SerializeField]
         public float BonusOrientationSharpness { get; private set; } = 10f;
         [field: FoldoutGroup("Misc"), SerializeField]
-        public Vector3 Gravity { get; private set; } = new (0f, -30f, 0f);
+        public Vector3 Gravity { get; private set; } = new(0f, -30f, 0f);
         [field: FoldoutGroup("Misc"), SerializeField]
         public Transform MeshRoot { get; private set; }
         [field: FoldoutGroup("Misc"), SerializeField]
@@ -102,28 +101,28 @@ namespace NJG.Runtime.Entities
 
         #region Private Fields
 
-        private Collider[] _probedColliders = new Collider[8];
+        private readonly Collider[] _probedColliders = new Collider[8];
         private RaycastHit[] _probedHits = new RaycastHit[8];
         private Vector3 _moveInputVector;
         private Vector3 _lookInputVector;
-        private bool _jumpRequested = false;
-        private bool _jumpConsumed = false;
-        private bool _doubleJumpConsumed = false;
-        private bool _jumpedThisFrame = false;
-        private bool _canWallJump = false;
+        private bool _jumpRequested;
+        private bool _jumpConsumed;
+        private bool _doubleJumpConsumed;
+        private bool _jumpedThisFrame;
+        private bool _canWallJump;
         private Vector3 _wallJumpNormal;
         private float _timeSinceJumpRequested = Mathf.Infinity;
-        private float _timeSinceLastAbleToJump = 0f;
+        private float _timeSinceLastAbleToJump;
         private Vector3 _internalVelocityAdd = Vector3.zero;
-        private bool _shouldBeCrouching = false;
-        private bool _isCrouching = false;
+        private bool _shouldBeCrouching;
+        private bool _isCrouching;
 
         private Vector3 _lastInnerNormal = Vector3.zero;
         private Vector3 _lastOuterNormal = Vector3.zero;
 
         private Quaternion _tmpTransientRot;
         private Player _player;
-        
+
         // Ladder vars
         private float _ladderUpDownInput;
         private Ladder _activeLadder { get; set; }
@@ -141,12 +140,12 @@ namespace NJG.Runtime.Entities
         }
         private Vector3 _ladderTargetPosition;
         private Quaternion _ladderTargetRotation;
-        private float _onLadderSegmentState = 0;
-        private float _anchoringTimer = 0f;
+        private float _onLadderSegmentState;
+        private float _anchoringTimer;
         private Vector3 _anchoringStartPosition = Vector3.zero;
         private Quaternion _anchoringStartRotation = Quaternion.identity;
         private Quaternion _rotationBeforeClimbing = Quaternion.identity;
-        
+
         // Animator Params
         private static readonly int _speedHash = Animator.StringToHash("Speed");
         private static readonly int _ySpeedHash = Animator.StringToHash("ySpeed");
@@ -185,7 +184,7 @@ namespace NJG.Runtime.Entities
         #region State Transitions
 
         /// <summary>
-        /// Handles movement state transitions and enter/exit callbacks
+        ///     Handles movement state transitions and enter/exit callbacks
         /// </summary>
         public void TransitionToState(CharacterState newState)
         {
@@ -196,7 +195,7 @@ namespace NJG.Runtime.Entities
         }
 
         /// <summary>
-        /// Event when entering a state
+        ///     Event when entering a state
         /// </summary>
         private void OnStateEnter(CharacterState state, CharacterState fromState)
         {
@@ -216,15 +215,16 @@ namespace NJG.Runtime.Entities
                     Animator.Play(_climbAnimationHash);
 
                     // Store the target position and rotation to snap to
-                    _ladderTargetPosition = _activeLadder.ClosestPointOnLadderSegment(Motor.TransientPosition, out _onLadderSegmentState);
+                    _ladderTargetPosition =
+                        _activeLadder.ClosestPointOnLadderSegment(Motor.TransientPosition, out _onLadderSegmentState);
                     _ladderTargetRotation = _activeLadder.transform.rotation;
                     break;
                 }
             }
         }
-        
+
         /// <summary>
-        /// Event when exiting a state
+        ///     Event when exiting a state
         /// </summary>
         private void OnStateExit(CharacterState state, CharacterState toState)
         {
@@ -251,7 +251,7 @@ namespace NJG.Runtime.Entities
         public void Initialize(Player player) => _player = player;
 
         /// <summary>
-        /// This is called every frame by Player.cs in order to tell the character what its inputs are
+        ///     This is called every frame by Player.cs in order to tell the character what its inputs are
         /// </summary>
         public void SetInputs(ref PlayerCharacterInputs inputs)
         {
@@ -259,12 +259,9 @@ namespace NJG.Runtime.Entities
             _ladderUpDownInput = inputs.MoveAxisForward;
             // TODO: !_player.Interactor.HasInteractable
             if (inputs.Interact)
-            {
-                if (Motor.CharacterOverlap(Motor.TransientPosition, Motor.TransientRotation, _probedColliders, LadderLayer,
-                        QueryTriggerInteraction.Collide) > 0)
-                {
+                if (Motor.CharacterOverlap(Motor.TransientPosition, Motor.TransientRotation, _probedColliders,
+                        LadderLayer, QueryTriggerInteraction.Collide) > 0)
                     if (_probedColliders[0] != null)
-                    {
                         // Handle ladders
                         if (_probedColliders[0].gameObject.TryGetComponent(out Ladder ladder))
                         {
@@ -282,22 +279,19 @@ namespace NJG.Runtime.Entities
                                 _ladderTargetRotation = _rotationBeforeClimbing;
                             }
                         }
-                    }
-                }
-            }
-            
+
             //Clamp inputs
-            Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
-            
+            Vector3 moveInputVector =
+                Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
+
             // Calculate camera direction and rotation on the character plane
             Vector3 cameraPlanarDirection =
                 Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.forward, Motor.CharacterUp).normalized;
             if (cameraPlanarDirection.sqrMagnitude == 0f)
-            {
-                cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.up, Motor.CharacterUp).normalized;
-            }
+                cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.up, Motor.CharacterUp)
+                                               .normalized;
             Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, Motor.CharacterUp);
-            
+
             switch (CurrentCharacterState)
             {
                 case CharacterState.Default:
@@ -318,12 +312,12 @@ namespace NJG.Runtime.Entities
                         _timeSinceJumpRequested = 0f;
                         _jumpRequested = true;
                     }
-                     
+
                     // Crouching input
                     if (inputs.CrouchDown)
                     {
                         _shouldBeCrouching = true;
-            
+
                         if (!_isCrouching)
                         {
                             _isCrouching = true;
@@ -335,11 +329,12 @@ namespace NJG.Runtime.Entities
                     {
                         _shouldBeCrouching = false;
                     }
+
                     break;
                 }
             }
         }
-        
+
         public void HandleInputs(ref AIInputs inputs)
         {
             _moveInputVector = inputs.MoveVector;
@@ -354,13 +349,13 @@ namespace NJG.Runtime.Entities
             {
                 case CharacterState.Default:
                 {
-                    Motor.ForceUnground(0.1f);
+                    Motor.ForceUnground();
                     _internalVelocityAdd += velocity;
                     break;
                 }
             }
         }
-        
+
         public void SetLocalScale(Vector3 localScale)
         {
             if (MeshRoot != null)
@@ -372,15 +367,15 @@ namespace NJG.Runtime.Entities
         #region Kinematic Character Controller Callbacks
 
         /// <summary>
-        /// (Called by KinematicCharacterMotor during its update cycle)
-        /// This is called before the character begins its movement update
+        ///     (Called by KinematicCharacterMotor during its update cycle)
+        ///     This is called before the character begins its movement update
         /// </summary>
         public void BeforeCharacterUpdate(float deltaTime) { }
 
         /// <summary>
-        /// (Called by KinematicCharacterMotor during its update cycle)
-        /// This is where you tell your character what its rotation should be right now. 
-        /// This is the ONLY place where you should set the character's rotation
+        ///     (Called by KinematicCharacterMotor during its update cycle)
+        ///     This is where you tell your character what its rotation should be right now.
+        ///     This is the ONLY place where you should set the character's rotation
         /// </summary>
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
         {
@@ -391,18 +386,18 @@ namespace NJG.Runtime.Entities
                     if (_lookInputVector.sqrMagnitude > 0f && OrientationSharpness > 0f)
                     {
                         // Smoothly interpolate from current to target look direction
-                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, 
-                            _lookInputVector, 1 - Mathf.Exp(-OrientationSharpness * deltaTime)).normalized;
-            
+                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _lookInputVector,
+                            1 - Mathf.Exp(-OrientationSharpness * deltaTime)).normalized;
+
                         // Set the current rotation (which will be used by the KinematicCharacterMotor)
                         currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
                     }
-            
+
                     Vector3 currentUp = currentRotation * Vector3.up;
                     if (BonusOrientationMethod == BonusOrientationMethod.TowardsGravity)
                     {
                         // Rotate from current up to invert gravity
-                        Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, -Gravity.normalized, 
+                        Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, -Gravity.normalized,
                             1 - Mathf.Exp(-BonusOrientationSharpness * deltaTime));
                         currentRotation = Quaternion.FromToRotation(currentUp, smoothedGravityDir) * currentRotation;
                     }
@@ -410,29 +405,34 @@ namespace NJG.Runtime.Entities
                     {
                         if (Motor.GroundingStatus.IsStableOnGround)
                         {
-                            Vector3 initialCharacterBottomHemiCenter = Motor.TransientPosition + (currentUp * Motor.Capsule.radius);
-            
-                            Vector3 smoothedGroundNormal = Vector3.Slerp(Motor.CharacterUp, Motor.GroundingStatus.GroundNormal, 
+                            Vector3 initialCharacterBottomHemiCenter =
+                                Motor.TransientPosition + currentUp * Motor.Capsule.radius;
+
+                            Vector3 smoothedGroundNormal = Vector3.Slerp(Motor.CharacterUp,
+                                Motor.GroundingStatus.GroundNormal,
                                 1 - Mathf.Exp(-BonusOrientationSharpness * deltaTime));
-                            currentRotation = Quaternion.FromToRotation(currentUp, smoothedGroundNormal) * currentRotation;
-            
+                            currentRotation = Quaternion.FromToRotation(currentUp, smoothedGroundNormal) *
+                                              currentRotation;
+
                             // Move the position to create a rotation around the bottom hemi center instead of around the pivot
-                            Motor.SetTransientPosition(initialCharacterBottomHemiCenter + 
-                                                       (currentRotation * Vector3.down * Motor.Capsule.radius));
+                            Motor.SetTransientPosition(initialCharacterBottomHemiCenter +
+                                                       currentRotation * Vector3.down * Motor.Capsule.radius);
                         }
                         else
                         {
-                            Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, -Gravity.normalized, 
+                            Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, -Gravity.normalized,
                                 1 - Mathf.Exp(-BonusOrientationSharpness * deltaTime));
-                            currentRotation = Quaternion.FromToRotation(currentUp, smoothedGravityDir) * currentRotation;
+                            currentRotation = Quaternion.FromToRotation(currentUp, smoothedGravityDir) *
+                                              currentRotation;
                         }
                     }
                     else
                     {
-                        Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, Vector3.up, 
+                        Vector3 smoothedGravityDir = Vector3.Slerp(currentUp, Vector3.up,
                             1 - Mathf.Exp(-BonusOrientationSharpness * deltaTime));
                         currentRotation = Quaternion.FromToRotation(currentUp, smoothedGravityDir) * currentRotation;
                     }
+
                     break;
                 }
                 case CharacterState.Climbing:
@@ -441,8 +441,7 @@ namespace NJG.Runtime.Entities
                     {
                         ClimbingState.Climbing => _activeLadder.transform.rotation,
                         ClimbingState.Anchoring or ClimbingState.DeAnchoring => Quaternion.Slerp(
-                            _anchoringStartRotation, _ladderTargetRotation, (_anchoringTimer / AnchoringDuration)
-                        ),
+                            _anchoringStartRotation, _ladderTargetRotation, _anchoringTimer / AnchoringDuration),
                         _ => currentRotation
                     };
                     break;
@@ -451,9 +450,9 @@ namespace NJG.Runtime.Entities
         }
 
         /// <summary>
-        /// (Called by KinematicCharacterMotor during its update cycle)
-        /// This is where you tell your character what its velocity should be right now. 
-        /// This is the ONLY place where you can set the character's velocity
+        ///     (Called by KinematicCharacterMotor during its update cycle)
+        ///     This is where you tell your character what its velocity should be right now.
+        ///     This is the ONLY place where you can set the character's velocity
         /// </summary>
         public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
         {
@@ -465,17 +464,18 @@ namespace NJG.Runtime.Entities
                     if (Motor.GroundingStatus.IsStableOnGround)
                     {
                         // Reorient velocity on slope
-                        currentVelocity = Motor.GetDirectionTangentToSurface(currentVelocity, 
+                        currentVelocity = Motor.GetDirectionTangentToSurface(currentVelocity,
                             Motor.GroundingStatus.GroundNormal) * currentVelocity.magnitude;
 
                         // Calculate target velocity
                         Vector3 inputRight = Vector3.Cross(_moveInputVector, Motor.CharacterUp);
-                        Vector3 reorientedInput = Vector3.Cross(Motor.GroundingStatus.GroundNormal, 
-                            inputRight).normalized * _moveInputVector.magnitude;
+                        Vector3 reorientedInput =
+                            Vector3.Cross(Motor.GroundingStatus.GroundNormal, inputRight).normalized *
+                            _moveInputVector.magnitude;
                         targetMovementVelocity = reorientedInput * MaxStableMoveSpeed;
 
                         // Smooth movement Velocity
-                        currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity, 
+                        currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,
                             1 - Mathf.Exp(-StableMovementSharpness * deltaTime));
                     }
                     else
@@ -488,12 +488,17 @@ namespace NJG.Runtime.Entities
                             // Prevent climbing on un-stable slopes with air movement
                             if (Motor.GroundingStatus.FoundAnyGround)
                             {
-                                Vector3 perpenticularObstructionNormal = Vector3.Cross(Vector3.Cross(
-                                    Motor.CharacterUp, Motor.GroundingStatus.GroundNormal), Motor.CharacterUp).normalized;
-                                targetMovementVelocity = Vector3.ProjectOnPlane(targetMovementVelocity, perpenticularObstructionNormal);
+                                Vector3 perpenticularObstructionNormal = Vector3
+                                                                         .Cross(
+                                                                             Vector3.Cross(Motor.CharacterUp,
+                                                                                 Motor.GroundingStatus.GroundNormal),
+                                                                             Motor.CharacterUp).normalized;
+                                targetMovementVelocity = Vector3.ProjectOnPlane(targetMovementVelocity,
+                                    perpenticularObstructionNormal);
                             }
 
-                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
+                            Vector3 velocityDiff =
+                                Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
                             currentVelocity += velocityDiff * (AirAccelerationSpeed * deltaTime);
                         }
 
@@ -501,7 +506,7 @@ namespace NJG.Runtime.Entities
                         currentVelocity += Gravity * deltaTime;
 
                         // Drag
-                        currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+                        currentVelocity *= 1f / (1f + Drag * deltaTime);
                     }
 
                     // Handle jumping
@@ -512,43 +517,41 @@ namespace NJG.Runtime.Entities
                         {
                             // Handle double jump
                             if (AllowDoubleJump)
-                            {
-                                if (_jumpConsumed && !_doubleJumpConsumed && (AllowJumpingWhenSliding 
-                                        ? !Motor.GroundingStatus.FoundAnyGround : !Motor.GroundingStatus.IsStableOnGround))
+                                if (_jumpConsumed && !_doubleJumpConsumed && (AllowJumpingWhenSliding
+                                        ? !Motor.GroundingStatus.FoundAnyGround
+                                        : !Motor.GroundingStatus.IsStableOnGround))
                                 {
-                                    Motor.ForceUnground(0.1f);
+                                    Motor.ForceUnground();
 
                                     // Add to the return velocity and reset jump state
-                                    currentVelocity += (Motor.CharacterUp * JumpSpeed) - Vector3.Project(currentVelocity, 
+                                    currentVelocity += Motor.CharacterUp * JumpSpeed - Vector3.Project(currentVelocity,
                                         Motor.CharacterUp);
                                     _jumpRequested = false;
                                     _doubleJumpConsumed = true;
                                     _jumpedThisFrame = true;
                                 }
-                            }
 
                             // See if we actually are allowed to jump
-                            if (_canWallJump ||
-                                (!_jumpConsumed && ((AllowJumpingWhenSliding ? Motor.GroundingStatus.FoundAnyGround 
-                                    : Motor.GroundingStatus.IsStableOnGround) || _timeSinceLastAbleToJump <= JumpPostGroundingGraceTime)))
+                            if (_canWallJump || (!_jumpConsumed &&
+                                                 ((AllowJumpingWhenSliding
+                                                      ? Motor.GroundingStatus.FoundAnyGround
+                                                      : Motor.GroundingStatus.IsStableOnGround) ||
+                                                  _timeSinceLastAbleToJump <= JumpPostGroundingGraceTime)))
                             {
                                 // Calculate jump direction before ungrounding
                                 Vector3 jumpDirection = Motor.CharacterUp;
                                 if (_canWallJump)
-                                {
                                     jumpDirection = _wallJumpNormal;
-                                }
-                                else if (Motor.GroundingStatus.FoundAnyGround && !Motor.GroundingStatus.IsStableOnGround)
-                                {
+                                else if (Motor.GroundingStatus.FoundAnyGround &&
+                                         !Motor.GroundingStatus.IsStableOnGround)
                                     jumpDirection = Motor.GroundingStatus.GroundNormal;
-                                }
 
                                 // Makes the character skip ground probing/snapping on its next update. 
                                 // If this line weren't here, the character would remain snapped to the ground when trying to jump. Try commenting this line out and see.
-                                Motor.ForceUnground(0.1f);
+                                Motor.ForceUnground();
 
                                 // Add to the return velocity and reset jump state
-                                currentVelocity += (jumpDirection * JumpSpeed) - Vector3.Project(currentVelocity, 
+                                currentVelocity += jumpDirection * JumpSpeed - Vector3.Project(currentVelocity,
                                     Motor.CharacterUp);
                                 _jumpRequested = false;
                                 _jumpConsumed = true;
@@ -566,6 +569,7 @@ namespace NJG.Runtime.Entities
                         currentVelocity += _internalVelocityAdd;
                         _internalVelocityAdd = Vector3.zero;
                     }
+
                     break;
                 }
                 case CharacterState.Climbing:
@@ -575,23 +579,26 @@ namespace NJG.Runtime.Entities
                     switch (_climbingState)
                     {
                         case ClimbingState.Climbing:
-                            currentVelocity = (_ladderUpDownInput * _activeLadder.transform.up).normalized * ClimbingSpeed;
+                            currentVelocity = (_ladderUpDownInput * _activeLadder.transform.up).normalized *
+                                              ClimbingSpeed;
                             break;
                         case ClimbingState.Anchoring:
                         case ClimbingState.DeAnchoring:
-                            Vector3 tmpPosition = Vector3.Lerp(_anchoringStartPosition, _ladderTargetPosition, 
-                                (_anchoringTimer / AnchoringDuration));
-                            currentVelocity = Motor.GetVelocityForMovePosition(Motor.TransientPosition, tmpPosition, deltaTime);
+                            Vector3 tmpPosition = Vector3.Lerp(_anchoringStartPosition, _ladderTargetPosition,
+                                _anchoringTimer / AnchoringDuration);
+                            currentVelocity =
+                                Motor.GetVelocityForMovePosition(Motor.TransientPosition, tmpPosition, deltaTime);
                             break;
                     }
+
                     break;
                 }
             }
         }
-        
+
         /// <summary>
-        /// (Called by KinematicCharacterMotor during its update cycle)
-        /// This is called after the character has finished its movement update
+        ///     (Called by KinematicCharacterMotor during its update cycle)
+        ///     This is called after the character has finished its movement update
         /// </summary>
         public void AfterCharacterUpdate(float deltaTime)
         {
@@ -603,11 +610,11 @@ namespace NJG.Runtime.Entities
                     {
                         // Handle jumping pre-ground grace period
                         if (_jumpRequested && _timeSinceJumpRequested > JumpPreGroundingGraceTime)
-                        {
                             _jumpRequested = false;
-                        }
 
-                        if (AllowJumpingWhenSliding ? Motor.GroundingStatus.FoundAnyGround : Motor.GroundingStatus.IsStableOnGround)
+                        if (AllowJumpingWhenSliding
+                                ? Motor.GroundingStatus.FoundAnyGround
+                                : Motor.GroundingStatus.IsStableOnGround)
                         {
                             // If we're on a ground surface, reset jumping values
                             if (!_jumpedThisFrame)
@@ -615,6 +622,7 @@ namespace NJG.Runtime.Entities
                                 _doubleJumpConsumed = false;
                                 _jumpConsumed = false;
                             }
+
                             _timeSinceLastAbleToJump = 0f;
                         }
                         else
@@ -629,12 +637,8 @@ namespace NJG.Runtime.Entities
                     {
                         // Do an overlap test with the character's standing height to see if there are any obstructions
                         Motor.SetCapsuleDimensions(0.5f, 2f, 1f);
-                        if (Motor.CharacterOverlap(
-                                Motor.TransientPosition,
-                                Motor.TransientRotation,
-                                _probedColliders,
-                                Motor.CollidableLayers,
-                                QueryTriggerInteraction.Ignore) > 0)
+                        if (Motor.CharacterOverlap(Motor.TransientPosition, Motor.TransientRotation, _probedColliders,
+                                Motor.CollidableLayers, QueryTriggerInteraction.Ignore) > 0)
                         {
                             // If obstructions, just stick to crouching dimensions
                             Motor.SetCapsuleDimensions(0.5f, 1f, 0.5f);
@@ -646,6 +650,7 @@ namespace NJG.Runtime.Entities
                             _isCrouching = false;
                         }
                     }
+
                     break;
                 }
                 case CharacterState.Climbing:
@@ -654,7 +659,8 @@ namespace NJG.Runtime.Entities
                     {
                         case ClimbingState.Climbing:
                             // Detect getting off ladder during climbing
-                            _activeLadder.ClosestPointOnLadderSegment(Motor.TransientPosition, out _onLadderSegmentState);
+                            _activeLadder.ClosestPointOnLadderSegment(Motor.TransientPosition,
+                                out _onLadderSegmentState);
                             if (Mathf.Abs(_onLadderSegmentState) > 0.05f)
                             {
                                 _climbingState = ClimbingState.DeAnchoring;
@@ -672,6 +678,7 @@ namespace NJG.Runtime.Entities
                                     _ladderTargetRotation = _activeLadder.BottomReleasePoint.rotation;
                                 }
                             }
+
                             break;
                         case ClimbingState.Anchoring:
                         case ClimbingState.DeAnchoring:
@@ -679,19 +686,16 @@ namespace NJG.Runtime.Entities
                             if (_anchoringTimer >= AnchoringDuration)
                             {
                                 if (_climbingState == ClimbingState.Anchoring)
-                                {
                                     _climbingState = ClimbingState.Climbing;
-                                }
                                 else if (_climbingState == ClimbingState.DeAnchoring)
-                                {
                                     TransitionToState(CharacterState.Default);
-                                }
                             }
 
                             // Keep track of time since we started anchoring
                             _anchoringTimer += deltaTime;
                             break;
                     }
+
                     break;
                 }
             }
@@ -701,13 +705,9 @@ namespace NJG.Runtime.Entities
         {
             // Handle landing and leaving ground
             if (Motor.GroundingStatus.IsStableOnGround && !Motor.LastGroundingStatus.IsStableOnGround)
-            {
                 OnLanded();
-            }
             else if (!Motor.GroundingStatus.IsStableOnGround && Motor.LastGroundingStatus.IsStableOnGround)
-            {
                 OnLeaveStableGround();
-            }
         }
 
         public bool IsColliderValidForCollisions(Collider coll)
@@ -718,9 +718,13 @@ namespace NJG.Runtime.Entities
             return !IgnoredColliders.Contains(coll);
         }
 
-        public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+        public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint,
+            ref HitStabilityReport hitStabilityReport
+        ) { }
 
-        public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
+        public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint,
+            ref HitStabilityReport hitStabilityReport
+        )
         {
             switch (CurrentCharacterState)
             {
@@ -732,15 +736,16 @@ namespace NJG.Runtime.Entities
                         _canWallJump = true;
                         _wallJumpNormal = hitNormal;
                     }
+
                     break;
                 }
             }
         }
-        
-        public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition,
-            Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport
+
+        public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint,
+            Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport
         ) { }
-        
+
         public void OnDiscreteCollisionDetected(Collider hitCollider) { }
 
         #endregion
@@ -748,27 +753,27 @@ namespace NJG.Runtime.Entities
         #region Private Methods
 
         /// <summary>
-        /// Called when the character lands on a stable ground
+        ///     Called when the character lands on a stable ground
         /// </summary>
         private void OnLanded()
         {
             Animator.Play(_locomotionAnimationHash);
         }
-        
+
         /// <summary>
-        /// Called when the character leaves a stable ground
+        ///     Called when the character leaves a stable ground
         /// </summary>
         private void OnLeaveStableGround()
         {
             Animator.Play(_airLocomotionAnimationHash);
         }
-        
+
         private void UpdateAnimator()
         {
             float animSpeedValue = Motor.GroundingStatus.IsStableOnGround ? Motor.BaseVelocity.magnitude : 0f;
             Animator.SetFloat(_speedHash, animSpeedValue);
-            
-            Animator.SetFloat(_ySpeedHash, Motor.Velocity.y); 
+
+            Animator.SetFloat(_ySpeedHash, Motor.Velocity.y);
         }
 
         public void ResetState() => Motor.SetPositionAndRotation(StartPosition, StartRotation);

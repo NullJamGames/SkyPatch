@@ -7,7 +7,7 @@ namespace NJG.Runtime.Interactables
     {
         [FoldoutGroup("Settings"), SerializeField]
         private Vector3 _force;
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out ILaunchable bouncable))

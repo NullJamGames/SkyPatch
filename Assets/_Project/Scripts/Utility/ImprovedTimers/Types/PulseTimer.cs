@@ -3,25 +3,24 @@
     public class PulseTimer : Timer
     {
         private bool _isOnPhase = true;
-        
-        public float OnDuration { get; private set; }
-        public float OffDuration { get; private set; }
-        
+
         public PulseTimer(float onDuration, float offDuration) : base(onDuration)
         {
             OnDuration = onDuration;
             OffDuration = offDuration;
         }
 
+        public float OnDuration { get; }
+        public float OffDuration { get; }
+
         public override void Tick(float deltaTime)
         {
             if (IsRunning && Time > 0)
-            {
                 Time -= deltaTime;
-            }
 
-            if (!IsRunning || !(Time <= 0)) return;
-            
+            if (!IsRunning || !(Time <= 0))
+                return;
+
             if (_isOnPhase)
             {
                 Time = OffDuration;

@@ -1,35 +1,28 @@
 using DistantLands.Cozy;
-using FMODUnity;
-using NJG.Runtime.Audio;
-using NJG.Runtime.WeatherSystem;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
-namespace NJG
+namespace NJG.Runtime.Audio
 {
-
     public class MusicManager : MonoBehaviour
     {
-
+        private const float _danNightCheckInterval = 5f;
+        private const string _dayNightCycleParam = "Day_Night_Cycle";
         private AudioManager _audioManager;
 
         [Inject]
         private void Construct(AudioManager audioManager) => _audioManager = audioManager;
-        void Start()
+
+        private void Start()
         {
             _audioManager.PlayPersistent(_audioManager.AudioData.Music);
-            StartCoroutine(SyncTimeWithFMOD());
+            InvokeRepeating(nameof(SyncCozyTime), 0f, _danNightCheckInterval);
         }
 
-        IEnumerator SyncTimeWithFMOD()
+        private void SyncCozyTime()
         {
-            while (true)
-            {
-                float time = CozyWeather.instance.timeModule.currentTime;
-              _audioManager.SetGlobalParameter("Day_Night_Cycle", time);
-                yield return new WaitForSeconds(5f);
-            }
+            float time = CozyWeather.instance.timeModule.currentTime;
+            _audioManager.SetGlobalParameter(_dayNightCycleParam, time);
         }
     }
 }

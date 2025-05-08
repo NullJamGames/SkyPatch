@@ -1,12 +1,12 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace NJG.Runtime.LevelChangeSystem
 {
-	public class LevelChangeManager : MonoBehaviour
-	{
-		[SerializeField] private LevelChanger _levelChanger;
+    public class LevelChangeManager : MonoBehaviour
+    {
+        [SerializeField]
+        private LevelChanger _levelChanger;
 
         public void ReloadScene()
         {

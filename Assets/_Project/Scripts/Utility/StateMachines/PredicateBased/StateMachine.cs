@@ -5,12 +5,12 @@ namespace NJG.Utilities.PredicateStateMachines
 {
     public class StateMachine
     {
+        private readonly HashSet<ITransition> _anyTransitions = new();
+        private readonly Dictionary<Type, StateNode> _nodes = new();
         private StateNode _current;
-        private Dictionary<Type, StateNode> _nodes = new();
-        private HashSet<ITransition> _anyTransitions = new();
 
         public IState CurrentState => _current.State;
-        
+
         public void Update(float deltaTime)
         {
             ITransition transition = GetTransition();
@@ -19,7 +19,7 @@ namespace NJG.Utilities.PredicateStateMachines
 
             _current.State?.OnUpdate(deltaTime);
         }
-        
+
         public void FixedUpdate(float fixedDeltaTime)
         {
             _current.State?.OnFixedUpdate(fixedDeltaTime);
@@ -38,7 +38,7 @@ namespace NJG.Utilities.PredicateStateMachines
 
             IState previousState = _current.State;
             IState nextState = _nodes[state.GetType()].State;
-            
+
             previousState?.OnExit();
             nextState?.OnEnter();
             _current = _nodes[state.GetType()];
@@ -49,7 +49,7 @@ namespace NJG.Utilities.PredicateStateMachines
             foreach (ITransition transition in _anyTransitions)
                 if (transition.Condition.Evaluate())
                     return transition;
-            
+
             foreach (ITransition transition in _current.Transitions)
                 if (transition.Condition.Evaluate())
                     return transition;
@@ -79,17 +79,17 @@ namespace NJG.Utilities.PredicateStateMachines
 
             return node;
         }
-        
+
         private class StateNode
         {
-            public IState State { get; }
-            public HashSet<ITransition> Transitions { get; }
-
             public StateNode(IState state)
             {
                 State = state;
                 Transitions = new HashSet<ITransition>();
             }
+
+            public IState State { get; }
+            public HashSet<ITransition> Transitions { get; }
 
             public void AddTransition(IState to, IPredicate condition)
             {

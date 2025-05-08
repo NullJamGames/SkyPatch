@@ -23,39 +23,39 @@ namespace NJG.Runtime.UI
         [FoldoutGroup("References"), SerializeField]
         private Button _mainMenuButton;
 
-        private readonly List<GameObject> _panels = new ();
+        private readonly List<GameObject> _panels = new();
 
         private LevelChangeManager _levelChangeManager;
-        
+
         [Inject]
-        void Construct(LevelChangeManager levelChangeManager)
+        private void Construct(LevelChangeManager levelChangeManager)
         {
             _levelChangeManager = levelChangeManager;
         }
-        
+
         private void OnEnable()
         {
             foreach (SPanelOpener panelOpener in _panelOpeners)
             {
                 _panels.Add(panelOpener.Panel);
                 GameObject panel = panelOpener.Panel;
-                panelOpener.Button.onClick.AddListener(()=>OpenPanel(panel));
+                panelOpener.Button.onClick.AddListener(() => OpenPanel(panel));
             }
-            
+
             _panels.Add(_menuPanel);
-            
-            _playButton.onClick.AddListener(()=>_pauseManager.Resume());
-            _restartButton.onClick.AddListener(()=>
+
+            _playButton.onClick.AddListener(() => _pauseManager.Resume());
+            _restartButton.onClick.AddListener(() =>
             {
                 Time.timeScale = 1;
                 _levelChangeManager.ReloadScene();
             });
-            _mainMenuButton.onClick.AddListener(()=>
+            _mainMenuButton.onClick.AddListener(() =>
             {
                 Time.timeScale = 1;
                 _levelChangeManager.LoadMenuScene();
             });
-            
+
             OpenPanel(_menuPanel);
         }
 
@@ -63,9 +63,8 @@ namespace NJG.Runtime.UI
         {
             foreach (GameObject go in _panels)
                 go.SetActive(false);
-            
+
             panel.SetActive(true);
         }
-        
     }
 }

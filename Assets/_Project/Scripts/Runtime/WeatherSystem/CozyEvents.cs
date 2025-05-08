@@ -14,7 +14,7 @@ namespace NJG.Runtime.WeatherSystem
         {
             _signalBus = signalBus;
         }
-        
+
         private void Start()
         {
             float currentTime = CozyWeather.instance.timeModule.currentTime;

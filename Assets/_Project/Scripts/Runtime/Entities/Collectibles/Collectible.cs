@@ -12,10 +12,8 @@ namespace NJG.Runtime.Entity
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-            {
                 //_scoreChannel.Invoke(_score);
                 Destroy(gameObject);
-            }
         }
     }
 }

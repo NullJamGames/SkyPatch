@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace NJG.Runtime.Interactables
         private bool _destroyOnCompletion = true;
 
         private Tween _tween;
-        
+
         [Button(ButtonSizes.Large)]
         public void Activate() => Move();
 
@@ -31,17 +30,16 @@ namespace NJG.Runtime.Interactables
                 Debug.Log("[ObjectMover] Direction was 0,0,0, this will not work.. setting back to default.");
                 _direction = Vector3.up;
             }
-            
+
             _tween?.Kill();
 
             Vector3 worldDirection = transform.TransformDirection(_direction);
             float distance = worldDirection.magnitude;
             float time = distance / _speed;
-            
-            _tween = transform.DOMove(transform.position + _direction, time)
-                                .SetEase(Ease.Linear)
-                                .SetLoops(-1, LoopType.Incremental);
-            
+
+            _tween = transform.DOMove(transform.position + _direction, time).SetEase(Ease.Linear)
+                              .SetLoops(-1, LoopType.Incremental);
+
             //if (_destroyOnCompletion)
         }
 

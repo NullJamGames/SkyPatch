@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
 using KBCore.Refs;
-using NJG.Runtime.Entities;
 using NJG.Runtime.Input;
 using NJG.Runtime.Interactables;
-using NJG.Runtime.Interfaces;
-using NJG.Utilities.PredicateStateMachines;
 using NJG.Utilities.ImprovedTimers;
+using NJG.Utilities.PredicateStateMachines;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
 using UnityEngine;
 
 namespace NJG.Runtime.Entity
 {
-    public class PlayerController : ValidatedMonoBehaviour//, IResetable, IPlatformRider, ILaunchable, IPlatformStopper
+    public class PlayerController : ValidatedMonoBehaviour //, IResetable, IPlatformRider, ILaunchable, IPlatformStopper
     {
+        private const float ZERO_F = 0f;
+
+        // Animator Params
+        private static readonly int _speedHash = Animator.StringToHash("Speed");
+        private static readonly int _climbSpeedHash = Animator.StringToHash("climbSpeed");
         [FoldoutGroup("References"), SerializeField, Self]
         private Rigidbody _rigidBody;
         [FoldoutGroup("References"), SerializeField, Child]
@@ -27,7 +30,7 @@ namespace NJG.Runtime.Entity
         private InputReader _input;
         [FoldoutGroup("References"), SerializeField, Self]
         private PlayerInventory _inventory;
-        
+
         [FoldoutGroup("Movement Settings"), SerializeField]
         private float _moveSpeed = 6f;
         [FoldoutGroup("Movement Settings"), SerializeField]
@@ -50,7 +53,7 @@ namespace NJG.Runtime.Entity
         [FoldoutGroup("Jump Settings"), SerializeField]
         private float _jumpDuration = 0.5f;
         [FoldoutGroup("Jump Settings"), SerializeField]
-        private float _jumpCooldown = 0f;
+        private float _jumpCooldown;
         [FoldoutGroup("Jump Settings"), SerializeField]
         private float _gravityMultiplier = 3f;
 
@@ -60,7 +63,7 @@ namespace NJG.Runtime.Entity
         private float _dashDuration = 1f;
         [FoldoutGroup("Dash Settings"), SerializeField]
         private float _dashCooldown = 2f;
-        
+
         [FoldoutGroup("Climb Settings"), SerializeField]
         private float _climbSpeed = 100f;
         [FoldoutGroup("Climb Settings"), SerializeField]
@@ -71,38 +74,32 @@ namespace NJG.Runtime.Entity
         private float _ladderDistance = 1;
         [FoldoutGroup("Climb Settings"), SerializeField]
         private float _climbCooldown = 0.8f;
-        
-        private Camera _mainCamera;
-        private StateMachine _stateMachine;
+        private float _climbVelocity;
+        private float _currentClimbSpeed;
+        private Vector2 _currentHorizontalSpeed;
 
         private float _currentSpeed;
-        private float _currentClimbSpeed;
-        private Vector2 _velocity;
-        private float _jumpVelocity;
-        private float _dashVelocity = 1f;
-        private float _climbVelocity;
-        private Vector3 _movement;
-        private Vector2 _currentHorizontalSpeed;
-        private List<Timer> _timers;
-        private CountdownTimer _jumpTimer;
-        private CountdownTimer _jumpCooldownTimer;
-        private CountdownTimer _dashTimer;
         private CountdownTimer _dashCooldownTimer;
+        private CountdownTimer _dashTimer;
+        private float _dashVelocity = 1f;
+        private Func<Vector3> _getPlatformerSpeed;
 
         private bool _isClimbing;
-        private OldLadder _oldLadder;
 
         private bool _isOnMovingPlatform;
-        private Func<Vector3> _getPlatformerSpeed;
-        
+        private CountdownTimer _jumpCooldownTimer;
+        private CountdownTimer _jumpTimer;
+        private float _jumpVelocity;
+
+        private Camera _mainCamera;
+        private Vector3 _movement;
+        private OldLadder _oldLadder;
+
         private Vector3 _requestedForce = Vector3.zero;
-        
-        private const float ZERO_F = 0f;
-        
-        // Animator Params
-        private static readonly int _speedHash = Animator.StringToHash("Speed");
-        private static readonly int _climbSpeedHash = Animator.StringToHash("climbSpeed");
-        
+        private StateMachine _stateMachine;
+        private List<Timer> _timers;
+        private Vector2 _velocity;
+
         // public Vector3 StartPosition { get; private set; }
         // public Quaternion StartRotation { get; private set; }
         //

@@ -1,3 +1,4 @@
+using System;
 using NJG.Runtime.Audio;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,24 +9,25 @@ namespace NJG.Runtime.UI
 {
     public class VolumeSettings : MonoBehaviour
     {
-        [FoldoutGroup("References"), SerializeField] 
+        [FoldoutGroup("References"), SerializeField]
         private SVolumeSlider[] _volumeSliders;
-        
+
         private AudioManager _audioManager;
 
         [Inject]
-        void Construct(AudioManager audioManager)
+        private void Construct(AudioManager audioManager)
         {
             _audioManager = audioManager;
         }
-        
+
         private void Start()
         {
             foreach (SVolumeSlider volumeSlider in _volumeSliders)
             {
                 volumeSlider.Slider.SetValueWithoutNotify(_audioManager.GetCurrentVolume(volumeSlider.VolumeType));
-                    
-                volumeSlider.Slider.onValueChanged.AddListener((val) => OnSliderValueChanged(val, volumeSlider.VolumeType));
+
+                volumeSlider.Slider.onValueChanged.AddListener(val =>
+                    OnSliderValueChanged(val, volumeSlider.VolumeType));
             }
         }
 
@@ -33,16 +35,16 @@ namespace NJG.Runtime.UI
         {
             _audioManager.SetCurrentVolume(volType, val);
         }
-
-        
     }
-    
-    [System.Serializable]
+
+    [Serializable]
     public struct SVolumeSlider
     {
-        [SerializeField] private Slider _slider;
-        [SerializeField] private VolumeType _volumeType;
-        
+        [SerializeField]
+        private Slider _slider;
+        [SerializeField]
+        private VolumeType _volumeType;
+
         public Slider Slider => _slider;
         public VolumeType VolumeType => _volumeType;
     }

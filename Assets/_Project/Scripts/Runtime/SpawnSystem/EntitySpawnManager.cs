@@ -1,21 +1,14 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NJG.Runtime.SpawnSystem
 {
     public abstract class EntitySpawnManager : MonoBehaviour
     {
-        protected enum SpawnPointStrategyType
-        {
-            Linear,
-            Random
-        }
-
         [SerializeField]
         protected SpawnPointStrategyType _spawnPointStrategyType = SpawnPointStrategyType.Linear;
         [SerializeField]
         protected Transform[] _spawnPoints;
-        
+
         protected ISpawnPointStrategy _spawnPointStrategy;
 
         protected virtual void Awake()
@@ -29,5 +22,11 @@ namespace NJG.Runtime.SpawnSystem
         }
 
         public abstract void Spawn();
+
+        protected enum SpawnPointStrategyType
+        {
+            Linear,
+            Random
+        }
     }
 }

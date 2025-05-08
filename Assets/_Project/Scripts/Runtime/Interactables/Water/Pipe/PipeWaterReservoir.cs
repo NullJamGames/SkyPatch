@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using MEC;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using MEC;
 
 namespace NJG.Runtime.Interactables
 {
@@ -38,7 +38,7 @@ namespace NJG.Runtime.Interactables
             ContainsWater = true;
             _waterVisual.SetActive(true);
         }
-        
+
         private IEnumerator<float> EmptyOperation()
         {
             yield return Timing.WaitForSeconds(_emptyTime);

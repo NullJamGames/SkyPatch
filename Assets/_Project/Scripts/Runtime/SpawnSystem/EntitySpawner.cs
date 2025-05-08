@@ -2,18 +2,15 @@
 {
     public class EntitySpawner<T> where T : Entity.Entity
     {
-        private IEntityFactory<T> _entityFactory;
-        private ISpawnPointStrategy _spawnPointStrategy;
-        
+        private readonly IEntityFactory<T> _entityFactory;
+        private readonly ISpawnPointStrategy _spawnPointStrategy;
+
         public EntitySpawner(IEntityFactory<T> entityFactory, ISpawnPointStrategy spawnPointStrategy)
         {
             _entityFactory = entityFactory;
             _spawnPointStrategy = spawnPointStrategy;
         }
 
-        public T Spawn()
-        {
-            return _entityFactory.Create(_spawnPointStrategy.NextSpawnPoint());
-        }
+        public T Spawn() => _entityFactory.Create(_spawnPointStrategy.NextSpawnPoint());
     }
 }
