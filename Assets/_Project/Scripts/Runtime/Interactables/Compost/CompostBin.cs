@@ -1,7 +1,9 @@
 using System;
+using NJG.Runtime.Audio;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -21,7 +23,11 @@ namespace NJG.Runtime.Interactables
         public bool HasCompost => _compost != null;
         
         public event Action<string> OnTooltipTextChanged;
-        
+
+        private AudioManager _audioManager;
+
+        [Inject]
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
         public void Interact(PlayerInventory playerInventory)
         {
             InteractionHelper.TryInteract(playerInventory, this);
@@ -30,6 +36,7 @@ namespace NJG.Runtime.Interactables
         public void Compost(PlayerInventory playerInventory, ICompostable compostable)
         {
             playerInventory.DetachPickupable();
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.CompostBin);
             compostable.OnComposted();
             _compost = Instantiate(_compostPrefab, _compostHolder.position, _compostHolder.rotation, _compostHolder);
         }

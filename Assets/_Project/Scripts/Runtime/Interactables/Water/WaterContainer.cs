@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using MEC;
 using NJG.Runtime.Entity;
+using NJG.Runtime.Audio;
+using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
@@ -36,7 +38,11 @@ namespace NJG.Runtime.Interactables
         private float _waterAmount;
         
         public bool HasWater => _waterAmount > 0;
-        
+
+        private AudioManager _audioManager;
+
+        [Inject]
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
 
         private void Start()
         {
@@ -59,6 +65,7 @@ namespace NJG.Runtime.Interactables
 
             _waterAmount = _maxWaterAmount;
             _waterVisual.SetActive(true);
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.FillTheBucket);
             return true;
         }
 
@@ -69,6 +76,8 @@ namespace NJG.Runtime.Interactables
 
             _waterAmount = 0;
             _waterVisual.SetActive(false);
+
+            _audioManager.PlayOneShotAndForget(_audioManager.AudioData.WaterPlant);
 
             if (shouldSplash && _splashVFXPrefab != null)
             {

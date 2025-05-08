@@ -7,44 +7,86 @@ namespace NJG.Runtime.Audio
     [CreateAssetMenu(fileName = "AudioData", menuName = "NJG/Audio/AudioData")]
     public class AudioDataSO : ScriptableObject
     {
-    #region Music
+        #region Music
 
-    [field: FoldoutGroup("Music"), SerializeField]
-    public EventReference Music { get; private set; }
+        [field: FoldoutGroup("Music"), SerializeField]
+        public EventReference Music { get; private set; }
 
-    #endregion
+        #endregion
 
-    #region Player SFX
+        #region Player SFX
 
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerFootstep { get; private set; }
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerJump { get; private set; }
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerLand { get; private set; }
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerDash { get; private set; }
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerFall { get; private set; }
-    [field: FoldoutGroup("Player SFX"), SerializeField]
-    public EventReference PlayerAction { get; private set; }
-    
-    #endregion
+        [field: FoldoutGroup("Player SFX"), SerializeField]
+        public EventReference PlayerFootstep { get; private set; }
 
-    #region Ambience
+        [field: FoldoutGroup("Player SFX"), SerializeField]
+        public EventReference PlayerLand { get; private set; }
 
-    [field: FoldoutGroup("Ambience"), SerializeField]
-    public EventReference Ambience { get; private set; }
-    [field: FoldoutGroup("Ambience"), SerializeField]
-    public EventReference Birds { get; private set; }
+        [field: FoldoutGroup("Player SFX"), SerializeField]
+        public EventReference PlayerBounce { get; private set; }
+        #endregion
 
-    #endregion
+        #region Interact SFX
 
-    #region UI SFX
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference FillTheBucket { get; private set; }
 
-    [field: FoldoutGroup("UI SFX"), SerializeField]
-    public EventReference UIButtonClick { get; private set; }
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference PickupPlant { get; private set; }
 
-    #endregion
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference WaterPlant { get; private set; }
+
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference RechargingAlarm { get; private set; }
+
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference SolarPanelStatic { get; private set; }
+
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference ReviveTree { get; private set; }
+
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference CompostBin { get; private set; }
+
+        [field: FoldoutGroup("Interact SFX"), SerializeField]
+        public EventReference Plant { get; private set; }
+
+        #endregion
+
+        #region Ambience
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference Birds { get; private set; }
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference HeavyRain { get; private set; }
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference LightRain { get; private set; }
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference LightWind { get; private set; }
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference WaterfallHeavy { get; private set; }
+
+        [field: FoldoutGroup("Ambience"), SerializeField]
+        public EventReference WaterfallMedium { get; private set; }
+
+        #endregion
+
+        #region UI SFX
+
+        [field: FoldoutGroup("UI SFX"), SerializeField]
+        public EventReference UIPositive { get; private set; }
+
+        [field: FoldoutGroup("UI SFX"), SerializeField]
+        public EventReference UINegative { get; private set; }
+
+        [field: FoldoutGroup("UI SFX"), SerializeField]
+        public EventReference UIJobDone { get; private set; }
+
+        #endregion
     }
 }

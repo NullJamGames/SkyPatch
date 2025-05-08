@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MEC;
+using NJG.Runtime.Audio;
 using NJG.Runtime.Entity;
 using NJG.Runtime.Managers;
 using Sirenix.OdinInspector;
@@ -35,7 +36,12 @@ namespace NJG.Runtime.Interactables
         public Transform Transform => transform;
         
         public event Action<string> OnTooltipTextChanged;
-        
+
+        private AudioManager _audioManager;
+
+        [Inject]
+        private void Construct(AudioManager audioManager) => _audioManager = audioManager;
+
         public void Interact(PlayerInventory playerInventory)
         {
             InteractionHelper.TryInteract(playerInventory, this);
@@ -51,6 +57,7 @@ namespace NJG.Runtime.Interactables
             playerInventory.DetachPickupable();
             Destroy(compost.gameObject);
             OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
+            _audioManager.StartKeyedInstance( gameObject, _audioManager.AudioData.Plant);
         }
         
         public void OnWater(PlayerInventory playerInventory, WaterContainer waterContainer)
@@ -62,6 +69,7 @@ namespace NJG.Runtime.Interactables
                 return;
             
             State = ObjectiveState.Reviving;
+            _audioManager.StartKeyedInstance(gameObject,_audioManager.AudioData.ReviveTree);
             if (!_reviveRoutine.IsRunning)
                 _reviveRoutine = Timing.RunCoroutine(ReviveTreeRoutine(playerInventory));
         }
