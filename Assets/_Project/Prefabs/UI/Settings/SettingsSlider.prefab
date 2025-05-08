@@ -479,8 +479,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Master Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8d479fd6d1e6b6e46a4485bd96dbf555, type: 2}
-  m_sharedMaterial: {fileID: -4767324397227094292, guid: 8d479fd6d1e6b6e46a4485bd96dbf555, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b3345e8a1782f4945b600fa18d6cbe58, type: 2}
+  m_sharedMaterial: {fileID: -4767324397227094292, guid: b3345e8a1782f4945b600fa18d6cbe58, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 2
+  m_characterSpacing: 3
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
