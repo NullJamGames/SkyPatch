@@ -318,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755319057806110512, guid: e64e0e9d5da6a0847bbd38349358fe62, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4755319057806110512, guid: e64e0e9d5da6a0847bbd38349358fe62, type: 3}
       propertyPath: m_LocalPosition.x
@@ -394,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7792162686453775255, guid: e64e0e9d5da6a0847bbd38349358fe62, type: 3}
       propertyPath: m_Name
-      value: Toggle Variant
+      value: SettingsToggle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
