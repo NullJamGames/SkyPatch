@@ -3,6 +3,7 @@ using KBCore.Refs;
 using ModelShark;
 using NJG.Runtime.Entity;
 using NJG.Runtime.Interactables;
+using NJG.Runtime.UI.Tooltips;
 using NJG.Utilities.ImprovedTimers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -28,6 +29,9 @@ namespace NJG.Runtime.Entities
 
         private CountdownTimer _checkForInteractableTimer;
         private IInteractable _currentInteractable;
+        private ITooltipProvider _nonInteractableTooltipProvider;
+        private bool _isRegisteredNonInteractableTooltip;
+        private string _currentTooltipText;
         
         private readonly Collider[] _hitColliders = new Collider[10];
         
@@ -72,19 +76,23 @@ namespace NJG.Runtime.Entities
             
             if (hits < 1)
             {
-                if (_currentInteractable == null)
+                if (_currentInteractable == null && _nonInteractableTooltipProvider == null)
                     return;
                 
                 UnregisterInteractable();
+                UnRegisterNonInteractableTooltip();
                 _currentInteractable = null;
-                OnInteractableChanged();
+                _nonInteractableTooltipProvider = null;
+                UpdateToolTip();
                 return;
             }
 
             IPickupable closestPickupable = null;
             IInteractable closestInteractable = null;
+            ITooltipProvider closestNonInteractableTooltipProvider = null;
             float closestPickupableDistance = float.MaxValue;
             float closestInteractableDistance = float.MaxValue;
+            float closestNonInteractableTooltipDistance = float.MaxValue;
 
             for (int i = 0; i < hits; i++)
             {
@@ -112,6 +120,17 @@ namespace NJG.Runtime.Entities
                         closestInteractableDistance = distance;
                         closestInteractable = interactable;
                     }
+                    
+                    continue;
+                }
+
+                if (hit.TryGetComponent(out ITooltipProvider tooltipProvider))
+                {
+                    if (distance < closestNonInteractableTooltipDistance)
+                    {
+                        closestNonInteractableTooltipDistance = distance;
+                        closestNonInteractableTooltipProvider = tooltipProvider;
+                    }
                 }
             }
             
@@ -123,26 +142,44 @@ namespace NJG.Runtime.Entities
                 if (_playerInventory.CanPickup())
                 {
                     UnregisterInteractable();
+                    UnRegisterNonInteractableTooltip();
                     _currentInteractable = closestPickupable;
                     RegisterInteractable();
-                    OnInteractableChanged();
+                    UpdateToolTip();
                     return;
                 }
             }
 
             if (closestInteractable == null)
             {
-                HideTooltip();
+                _currentInteractable = null;
+            }
+            else
+            {
+                if (IsSameInteractable(closestInteractable))
+                    return;
+                
+                UnregisterInteractable();
+                UnRegisterNonInteractableTooltip();
+                _currentInteractable = closestInteractable;
+                RegisterInteractable();
+                UpdateToolTip();
                 return;
             }
 
-            if (IsSameInteractable(closestInteractable))
-                return;
-                
-            UnregisterInteractable();
-            _currentInteractable = closestInteractable;
-            RegisterInteractable();
-            OnInteractableChanged();
+            if (closestNonInteractableTooltipProvider == null)
+            {
+                UnRegisterNonInteractableTooltip();
+                _nonInteractableTooltipProvider = null;
+                HideTooltip();
+            }
+            else
+            {
+                UnRegisterNonInteractableTooltip();
+                _nonInteractableTooltipProvider = closestNonInteractableTooltipProvider;
+                RegisterNonInteractableTooltip();
+                UpdateToolTip();
+            }
         }
 
         private bool IsSameInteractable(IInteractable interactable)
@@ -166,12 +203,33 @@ namespace NJG.Runtime.Entities
             _currentInteractable.OnTooltipTextChanged -= OnUpdateTooltip;
         }
 
-        private void OnInteractableChanged()
+        private void RegisterNonInteractableTooltip()
         {
-            if (_currentInteractable == null)
-                HideTooltip();
-            else
+            if(_isRegisteredNonInteractableTooltip)
+                return;
+            if (_nonInteractableTooltipProvider == null)
+                return;
+            
+            _isRegisteredNonInteractableTooltip = true;
+            _nonInteractableTooltipProvider.OnTooltipTextChanged += OnUpdateTooltip;
+        }
+
+        private void UnRegisterNonInteractableTooltip()
+        {
+            if (_nonInteractableTooltipProvider != null)
+                _nonInteractableTooltipProvider.OnTooltipTextChanged -= OnUpdateTooltip;
+            _isRegisteredNonInteractableTooltip = false;
+        }
+
+
+        private void UpdateToolTip()
+        {
+            if (_currentInteractable != null)
                 UpdateTooltipText(_currentInteractable.GetTooltipText(_playerInventory));
+            else if (_nonInteractableTooltipProvider != null)
+                UpdateTooltipText(_nonInteractableTooltipProvider.GetTooltipText(_playerInventory));
+            else
+                HideTooltip();
         }
 
         private void OnUpdateTooltip(string text)
@@ -187,6 +245,9 @@ namespace NJG.Runtime.Entities
         
         private void UpdateTooltipText(string text)
         {
+            if(_currentTooltipText == text)
+                return;
+            _currentTooltipText = text;
             // Reset tooltip just in case.
             _tooltip.ForceHideTooltip();
             
@@ -195,6 +256,11 @@ namespace NJG.Runtime.Entities
             _tooltip.Popup(1f, gameObject);
         }
 
-        private void HideTooltip() => _tooltip.ForceHideTooltip();
+        private void HideTooltip()
+        {
+            _currentTooltipText = "";
+            _tooltip.ForceHideTooltip();
+        } 
+            
     }
 }

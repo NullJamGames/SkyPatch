@@ -149,7 +149,10 @@ namespace NJG.Runtime.Entities
         
         // Animator Params
         private static readonly int _speedHash = Animator.StringToHash("Speed");
-        private static readonly int _climbSpeedHash = Animator.StringToHash("climbSpeed");
+        private static readonly int _ySpeedHash = Animator.StringToHash("ySpeed");
+        private static readonly int _climbAnimationHash = Animator.StringToHash("Climb");
+        private static readonly int _locomotionAnimationHash = Animator.StringToHash("Locomotion");
+        private static readonly int _airLocomotionAnimationHash = Animator.StringToHash("AirLocomotion");
 
         #endregion
 
@@ -210,6 +213,7 @@ namespace NJG.Runtime.Entities
                     Motor.SetMovementCollisionsSolvingActivation(false);
                     Motor.SetGroundSolvingActivation(false);
                     _climbingState = ClimbingState.Anchoring;
+                    Animator.Play(_climbAnimationHash);
 
                     // Store the target position and rotation to snap to
                     _ladderTargetPosition = _activeLadder.ClosestPointOnLadderSegment(Motor.TransientPosition, out _onLadderSegmentState);
@@ -234,6 +238,7 @@ namespace NJG.Runtime.Entities
                 {
                     Motor.SetMovementCollisionsSolvingActivation(true);
                     Motor.SetGroundSolvingActivation(true);
+                    Animator.Play(_locomotionAnimationHash);
                     break;
                 }
             }
@@ -747,7 +752,7 @@ namespace NJG.Runtime.Entities
         /// </summary>
         private void OnLanded()
         {
-            
+            Animator.Play(_locomotionAnimationHash);
         }
         
         /// <summary>
@@ -755,17 +760,15 @@ namespace NJG.Runtime.Entities
         /// </summary>
         private void OnLeaveStableGround()
         {
-            
+            Animator.Play(_airLocomotionAnimationHash);
         }
         
         private void UpdateAnimator()
         {
-            //Debug.Log(_rigidBody.linearVelocity.y);
-            if (CurrentCharacterState == CharacterState.Climbing)
-                Animator.SetFloat(_climbSpeedHash, Mathf.Clamp(Motor.BaseVelocity.y, 0f, 1f));
-            
             float animSpeedValue = Motor.GroundingStatus.IsStableOnGround ? Motor.BaseVelocity.magnitude : 0f;
             Animator.SetFloat(_speedHash, animSpeedValue);
+            
+            Animator.SetFloat(_ySpeedHash, Motor.Velocity.y); 
         }
 
         public void ResetState() => Motor.SetPositionAndRotation(StartPosition, StartRotation);

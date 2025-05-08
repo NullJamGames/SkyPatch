@@ -15,7 +15,9 @@ namespace NJG.Runtime.Interactables
         private GameObject _waterVisual;
         [FoldoutGroup("References"), SerializeField]
         private Transform _spillPoint;
-        
+
+        [FoldoutGroup("Settings"), SerializeField]
+        private bool _hasInfiniteWater = false;
         [FoldoutGroup("Settings"), SerializeField]
         private float _maxWaterAmount = 100;
         [FoldoutGroup("Settings"), SerializeField]
@@ -46,6 +48,8 @@ namespace NJG.Runtime.Interactables
 
         private void Start()
         {
+            if (_hasInfiniteWater)
+                TryFillWater();
             InvokeRepeating(nameof(CheckForSpill), 0f, 0.5f);
             InvokeRepeating(nameof(CheckForWaterFillArea), 0f, 0.2f);
         }
@@ -74,7 +78,8 @@ namespace NJG.Runtime.Interactables
             if (!HasWater)
                 return false;
 
-            _waterAmount = 0;
+            if(!_hasInfiniteWater)
+                _waterAmount = 0;
             _waterVisual.SetActive(false);
 
             _audioManager.PlayOneShotAndForget(_audioManager.AudioData.WaterPlant);

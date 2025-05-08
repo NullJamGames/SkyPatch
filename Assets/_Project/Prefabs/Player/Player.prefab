@@ -1432,7 +1432,7 @@ MonoBehaviour:
   <JumpPreGroundingGraceTime>k__BackingField: 0.1
   <JumpPostGroundingGraceTime>k__BackingField: 0.1
   <ClimbingSpeed>k__BackingField: 4
-  <AnchoringDuration>k__BackingField: 0.25
+  <AnchoringDuration>k__BackingField: 0.15
   <LadderLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 2048
@@ -1536,10 +1536,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInventory: {fileID: 5570923870184142802}
   _tooltip: {fileID: 3114080898479792951}
-  _interactDistance: 2
+  _interactDistance: 1.2
   _interactableLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   _interactableCheckInterval: 0.1
   _maxInteractablesAtOnce: 10
 --- !u!1 &3788737450216217307
