@@ -1513,6 +1513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickupParent: {fileID: 7829943486205509431}
+  _pickupParticleEffect: {fileID: 3919984740194955686, guid: ebe86bf109a51014c9319170718b1d3f, type: 3}
   _pickupLayers:
     serializedVersion: 2
     m_Bits: 512
