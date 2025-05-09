@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pauseManager: {fileID: 4246836954741553146}
   _panelOpeners:
-  - Button: {fileID: 6307379016129553593}
+  - Button: {fileID: 3263340778014510975}
     Panel: {fileID: 1353939307287665140}
   - Button: {fileID: 886632694087605924}
     Panel: {fileID: 1697186061704430970}
@@ -3657,14 +3657,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6305691759514033369, guid: 2cd9fdf7a0b18cd4e9c4a6ca47b5dd1d, type: 3}
   m_PrefabInstance: {fileID: 4616133011079043491}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &3567119560954756483 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8182821528847262752, guid: 2cd9fdf7a0b18cd4e9c4a6ca47b5dd1d, type: 3}
-  m_PrefabInstance: {fileID: 4616133011079043491}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6307379016129553593 stripped
+--- !u!114 &3263340778014510975 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1695468130818964762, guid: 2cd9fdf7a0b18cd4e9c4a6ca47b5dd1d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7874116933812491996, guid: 2cd9fdf7a0b18cd4e9c4a6ca47b5dd1d, type: 3}
   m_PrefabInstance: {fileID: 4616133011079043491}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -3673,3 +3668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3567119560954756483 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8182821528847262752, guid: 2cd9fdf7a0b18cd4e9c4a6ca47b5dd1d, type: 3}
+  m_PrefabInstance: {fileID: 4616133011079043491}
+  m_PrefabAsset: {fileID: 0}
