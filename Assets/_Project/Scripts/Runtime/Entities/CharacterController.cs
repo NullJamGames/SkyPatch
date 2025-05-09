@@ -4,6 +4,7 @@ using KinematicCharacterController;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Interfaces;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace NJG.Runtime.Entities
@@ -41,6 +42,9 @@ namespace NJG.Runtime.Entities
         public KinematicCharacterMotor Motor { get; private set; }
         [field: FoldoutGroup("References"), SerializeField, Child]
         public Animator Animator { get; private set; }
+
+        [FoldoutGroup("References/VFX"), SerializeField]
+        private GameObject _landVFX;
 
         [field: FoldoutGroup("Stable Movement"), SerializeField]
         public float MaxStableMoveSpeed { get; private set; } = 10f;
@@ -758,6 +762,8 @@ namespace NJG.Runtime.Entities
         private void OnLanded()
         {
             Animator.Play(_locomotionAnimationHash);
+            if (_landVFX)
+                Instantiate(_landVFX, transform.position, quaternion.identity);
         }
 
         /// <summary>

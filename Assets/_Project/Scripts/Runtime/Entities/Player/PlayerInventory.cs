@@ -8,6 +8,8 @@ namespace NJG.Runtime.Entity
     {
         [FoldoutGroup("References"), SerializeField]
         private Transform _pickupParent;
+        [FoldoutGroup("References"), SerializeField]
+        private GameObject _pickupParticleEffect;
 
         [FoldoutGroup("Settings"), SerializeField]
         private LayerMask _pickupLayers;
@@ -42,6 +44,9 @@ namespace NJG.Runtime.Entity
             if (Pickupable != null)
                 return;
 
+            if (_pickupParticleEffect)
+                Instantiate(_pickupParticleEffect, pickupable.Transform.position, Quaternion.identity);
+            
             Pickupable = pickupable;
             Pickupable.Transform.SetParent(_pickupParent);
             Pickupable.Transform.position = transform.position + _carryOffset;
@@ -63,6 +68,9 @@ namespace NJG.Runtime.Entity
 
         public void PickUp(IPickupable pickupable)
         {
+            if (_pickupParticleEffect)
+                Instantiate(_pickupParticleEffect, pickupable.Transform.position, Quaternion.identity);
+            
             Pickupable = pickupable;
             Pickupable.OnPickup();
             Pickupable.Transform.SetParent(_pickupParent);
