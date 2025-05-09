@@ -31,6 +31,7 @@ namespace NJG.Runtime.Interactables
         {
             _intervalTimer = new CountdownTimer(_timerInterval);
             _intervalTimer.OnTimerStop += OnTimerTick;
+            _audioManager.PlayPersistent(_audioManager.AudioData.SolarPanelStatic, gameObject);
         }
 
         private void OnEnable() => _signalBus.Subscribe<DayTimeChangeSignal>(OnDayTimeChanged);
@@ -79,13 +80,11 @@ namespace NJG.Runtime.Interactables
 
             if (!_isDaytime)
             {
-                _audioManager.StopPersistent(_audioManager.AudioData.SolarPanelStatic);
-                _audioManager.StopKeyedInstance(gameObject, _audioManager.AudioData.RechargingAlarm,
-                    STOP_MODE.ALLOWFADEOUT);
+                _audioManager.SetGlobalParameter("IsDay", "false");
             }
             else
             {
-                _audioManager.PlayPersistent(_audioManager.AudioData.SolarPanelStatic, gameObject);
+                _audioManager.SetGlobalParameter("IsDay", "true");
             }
 
             if (_battery == null)
