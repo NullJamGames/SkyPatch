@@ -1416,6 +1416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Motor>k__BackingField: {fileID: 6869415927292332332}
   <Animator>k__BackingField: {fileID: 4740447226793543853}
+  _landVFX: {fileID: 7895987943349747809, guid: ade791a37158461449200b419943c520, type: 3}
   <MaxStableMoveSpeed>k__BackingField: 6
   <StableMovementSharpness>k__BackingField: 15
   <OrientationSharpness>k__BackingField: 20
