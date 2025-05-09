@@ -31,6 +31,7 @@ namespace NJG.Runtime.Interactables
             _battery.Transform.position = _batteryHolder.position;
             _battery.Transform.rotation = _batteryHolder.rotation;
             OnBatteryInserted();
+            battery.OnBatteryPlaced();
             OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
 
             return true;

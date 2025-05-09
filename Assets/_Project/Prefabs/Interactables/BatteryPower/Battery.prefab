@@ -186,4 +186,5 @@ MonoBehaviour:
   _emptyMaterial: {fileID: 2100000, guid: d0d7f80161900b54a9a9668a27a1c6d3, type: 2}
   _notFullMaterial: {fileID: 2100000, guid: ad5a26bf741798f478a4c3754cf3ade2, type: 2}
   _fullMaterial: {fileID: 2100000, guid: afd57c5898b4e994f8fb26c6f6e82ee3, type: 2}
+  _particleEffect: {fileID: 7680900537556279518, guid: a1c8c5c2ef911304494d7d7482e5d691, type: 3}
   <CurrentCharge>k__BackingField: 0

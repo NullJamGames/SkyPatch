@@ -14,6 +14,9 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("References"), SerializeField]
         private Material _fullMaterial;
 
+        [FoldoutGroup("References"), SerializeField]
+        private GameObject _particleEffect;
+
         [field: SerializeField, ReadOnly]
         public float CurrentCharge { get; private set; }
 
@@ -35,6 +38,12 @@ namespace NJG.Runtime.Interactables
             CurrentCharge -= amount;
             CurrentCharge = Mathf.Clamp(CurrentCharge, 0f, _maxCharge);
             UpdateMaterial();
+        }
+
+        public void OnBatteryPlaced()
+        {
+            if(_particleEffect)
+                Instantiate(_particleEffect, transform.position, Quaternion.identity);
         }
 
         private void UpdateMaterial()
