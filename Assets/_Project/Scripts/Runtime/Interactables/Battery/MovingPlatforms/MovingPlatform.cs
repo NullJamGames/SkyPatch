@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using KBCore.Refs;
 using KinematicCharacterController;
 using Sirenix.OdinInspector;
@@ -14,6 +13,7 @@ namespace NJG.Runtime.Interactables
 
     public class MovingPlatform : BatteryPowered, IMoverController
     {
+        private const float _epsilon = 0.01f;
         [FoldoutGroup("References"), SerializeField, Self]
         private PhysicsMover _mover;
 
@@ -22,33 +22,31 @@ namespace NJG.Runtime.Interactables
         [FoldoutGroup("Settings"), SerializeField]
         private float _platformSpeed = 1f;
         [FoldoutGroup("Settings"), SerializeField]
-        private bool _returnToStartOnDeactivate = false;
+        private bool _returnToStartOnDeactivate;
         [FoldoutGroup("Settings"), SerializeField]
         private bool _infiniteLoops = true;
         [FoldoutGroup("Settings"), SerializeField, HideIf(nameof(_infiniteLoops))]
         private int _loops = 3;
         [FoldoutGroup("Settings"), SerializeField]
         private float _stopDuration = 1f;
-
-        private Vector3[] _pathPoints;
-        private float[] _segmentDurations;
+        private int _completedLoops;
+        private int _currentSegmentIndex;
+        private float _elapsedSegmentTime;
 
         private bool _isMoving;
-        private bool _isWaiting;
         private bool _isReturning;
-        private bool _queuedActivation;
+        private bool _isWaiting;
         private bool _loopingBackToStart;
 
-        private float _waitTimer;
-        private float _elapsedSegmentTime;
-        private int _currentSegmentIndex;
-        private int _completedLoops;
+        private Vector3[] _pathPoints;
+        private bool _queuedActivation;
+        private float _returnDuration;
+        private float _returnElapsed;
 
         private Vector3 _returnStart;
-        private float _returnElapsed;
-        private float _returnDuration;
+        private float[] _segmentDurations;
 
-        private const float _epsilon = 0.01f;
+        private float _waitTimer;
 
         public override bool IsActive => _isMoving;
 
@@ -56,6 +54,42 @@ namespace NJG.Runtime.Interactables
         {
             _mover.MoverController = this;
             SetupPath();
+        }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (_waypoints == null || _waypoints.Length < 2)
+                return;
+
+            Gizmos.color = Color.cyan;
+            for (int i = 0; i < _waypoints.Length; i++)
+            {
+                if (_waypoints[i] != null)
+                    Gizmos.DrawSphere(_waypoints[i].position, 0.1f);
+
+                if (i < _waypoints.Length - 1 && _waypoints[i] != null && _waypoints[i + 1] != null)
+                    Gizmos.DrawLine(_waypoints[i].position, _waypoints[i + 1].position);
+            }
+
+            // Loop line from end to start
+            if (_infiniteLoops && _waypoints[^1] != null && _waypoints[0] != null)
+                Gizmos.DrawLine(_waypoints[^1].position, _waypoints[0].position);
+        }
+#endif
+
+        public void UpdateMovement(out Vector3 goalPosition, out Quaternion goalRotation, float deltaTime)
+        {
+            Vector3 prePos = transform.position;
+            Quaternion preRot = transform.rotation;
+
+            EvaluateNextPosition(deltaTime);
+
+            goalPosition = transform.position;
+            goalRotation = transform.rotation;
+
+            transform.position = prePos;
+            transform.rotation = preRot;
         }
 
         private void SetupPath()
@@ -106,20 +140,6 @@ namespace NJG.Runtime.Interactables
             {
                 _isMoving = false;
             }
-        }
-
-        public void UpdateMovement(out Vector3 goalPosition, out Quaternion goalRotation, float deltaTime)
-        {
-            Vector3 prePos = transform.position;
-            Quaternion preRot = transform.rotation;
-
-            EvaluateNextPosition(deltaTime);
-
-            goalPosition = transform.position;
-            goalRotation = transform.rotation;
-
-            transform.position = prePos;
-            transform.rotation = preRot;
         }
 
         private void EvaluateNextPosition(float deltaTime)
@@ -216,27 +236,5 @@ namespace NJG.Runtime.Interactables
             _completedLoops = 0;
             _loopingBackToStart = false;
         }
-
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            if (_waypoints == null || _waypoints.Length < 2)
-                return;
-
-            Gizmos.color = Color.cyan;
-            for (int i = 0; i < _waypoints.Length; i++)
-            {
-                if (_waypoints[i] != null)
-                    Gizmos.DrawSphere(_waypoints[i].position, 0.1f);
-
-                if (i < _waypoints.Length - 1 && _waypoints[i] != null && _waypoints[i + 1] != null)
-                    Gizmos.DrawLine(_waypoints[i].position, _waypoints[i + 1].position);
-            }
-
-            // Loop line from end to start
-            if (_infiniteLoops && _waypoints[^1] != null && _waypoints[0] != null)
-                Gizmos.DrawLine(_waypoints[^1].position, _waypoints[0].position);
-        }
-#endif
     }
 }

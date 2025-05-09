@@ -4,14 +4,14 @@
     {
         protected StateMachine<T> _stateMachine;
 
-        protected BaseState(StateMachine<T> stateMachine)
-        {
-            _stateMachine = stateMachine;
-        }
+        protected BaseState(StateMachine<T> stateMachine) => _stateMachine = stateMachine;
 
         public virtual void Enter() { }
+
         public virtual void LogicUpdate() { }
+
         public virtual void PhysicsUpdate() { }
+
         public virtual void Exit() { }
     }
 }

@@ -1,5 +1,4 @@
-﻿using NJG.Utilities.PredicateStateMachines;
-using UnityEngine;
+﻿using UnityEngine;
 using CharacterController = NJG.Runtime.Entities.CharacterController;
 
 namespace NJG.Runtime.Entity

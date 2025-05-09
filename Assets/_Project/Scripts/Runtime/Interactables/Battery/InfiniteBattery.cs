@@ -6,17 +6,16 @@ namespace NJG.Runtime.Interactables
 {
     public class InfiniteBattery : Battery
     {
-        [FoldoutGroup("Test"), SerializeField, PropertyTooltip("attaches the battery at start (if not null)")] 
-        BatteryInteractable _batteryInteractable;
+        [FoldoutGroup("Test"), SerializeField, PropertyTooltip("attaches the battery at start (if not null)")]
+        private BatteryInteractable _batteryInteractable;
+
         private void Start()
         {
             AddCharge(_maxCharge);
             TryAttachAtStart();
         }
-        
-        public override void RemoveCharge(float amount)
-        {
-        }
+
+        public override void RemoveCharge(float amount) { }
 
         private void TryAttachAtStart()
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NJG.Utilities.EventBus
 {
     /// <summary>
-    /// A global event system.
+    ///     A global event system.
     /// </summary>
     public static class EventBus
     {
@@ -15,33 +15,25 @@ namespace NJG.Utilities.EventBus
         {
             Reset();
         }
-        
+
         public static void StartListening<T>(Action<T> listener)
         {
             Type eventType = typeof(T);
             if (_eventDictionary.ContainsKey(eventType))
-            {
                 _eventDictionary[eventType] = Delegate.Combine(_eventDictionary[eventType], listener);
-            }
             else
-            {
                 _eventDictionary[eventType] = listener;
-            }
         }
-        
+
         public static void StopListening<T>(Action<T> listener)
         {
             Type eventType = typeof(T);
             if (_eventDictionary.ContainsKey(eventType))
-            {
                 _eventDictionary[eventType] = Delegate.Remove(_eventDictionary[eventType], listener);
-            }
             else
-            {
                 Debug.LogWarning("Tried to remove a listener that was not in the collection: " + nameof(listener));
-            }
         }
-        
+
         public static void TriggerEvent<T>(T e)
         {
             Type eventType = typeof(T);
@@ -62,7 +54,7 @@ namespace NJG.Utilities.EventBus
                 Debug.LogWarning("Tried to trigger an event that did not have any listeners: " + nameof(e));
             }
         }
-        
+
         private static void Reset()
         {
             _eventDictionary.Clear();

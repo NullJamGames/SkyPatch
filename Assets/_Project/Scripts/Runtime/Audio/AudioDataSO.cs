@@ -24,6 +24,7 @@ namespace NJG.Runtime.Audio
 
         [field: FoldoutGroup("Player SFX"), SerializeField]
         public EventReference PlayerBounce { get; private set; }
+
         #endregion
 
         #region Interact SFX

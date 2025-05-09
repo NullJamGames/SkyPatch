@@ -6,7 +6,7 @@ namespace NJG.Runtime.Entity
     public class InteractState : BaseState
     {
         public InteractState(CharacterController character, Animator animator) : base(character, animator) { }
-        
+
         // public override void OnEnter()
         // {
         //     _animator.CrossFade(_attackHash, _crossFadeDuration);

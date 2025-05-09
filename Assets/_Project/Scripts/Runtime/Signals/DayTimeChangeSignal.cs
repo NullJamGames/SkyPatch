@@ -3,10 +3,7 @@
     public struct DayTimeChangeSignal
     {
         public bool IsDayTime { get; }
-        
-        public DayTimeChangeSignal(bool isDayTime)
-        {
-            IsDayTime = isDayTime;
-        }
+
+        public DayTimeChangeSignal(bool isDayTime) => IsDayTime = isDayTime;
     }
 }

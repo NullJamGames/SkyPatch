@@ -1,16 +1,17 @@
-using UnityEngine;
-using UnityEditor;
 using System.IO;
 using Sirenix.OdinInspector;
+using UnityEditor;
+using UnityEngine;
 
 namespace NJG.Utilities
 {
     [CreateAssetMenu(fileName = "PhysicsMaterialSetter", menuName = "NJG/Utility/PhysicsMaterialSetter")]
     public class PhysicsMaterialSetter : ScriptableObject
     {
-        [SerializeField] private PhysicsMaterial materialToApply;
+        [SerializeField]
+        private PhysicsMaterial materialToApply;
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         [Button]
         private void ApplyMaterial()
         {
@@ -42,6 +43,6 @@ namespace NJG.Utilities
             AssetDatabase.SaveAssets();
             Debug.Log("Applied material to all MeshColliders!");
         }
-        #endif
+#endif
     }
 }

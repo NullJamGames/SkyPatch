@@ -11,7 +11,7 @@ namespace NJG.Runtime.Interactables
     {
         [FoldoutGroup("References"), SerializeField, Anywhere]
         protected GameObject _waterVisual;
-        
+
         [FoldoutGroup("Settings"), SerializeField]
         private bool _unlimitedWater = true;
         [FoldoutGroup("Settings"), SerializeField, HideIf(nameof(_unlimitedWater))]
@@ -19,28 +19,32 @@ namespace NJG.Runtime.Interactables
 
         private Collider _collider;
         private int _remainingUses;
-        
+
         public bool ContainsWater { get; protected set; } = true;
-        
+
         public Transform Transform => transform;
-        
+
         public event Action<string> OnTooltipTextChanged;
 
         private void Awake()
         {
             _collider = GetComponent<Collider>();
-            
+
             _remainingUses = _numberOfUses;
             if (!_unlimitedWater && _remainingUses <= 0)
-            {
                 SetNoWater();
-            }
         }
 
         public void Interact(PlayerInventory playerInventory)
         {
             InteractionHelper.TryInteract(playerInventory, this);
             OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
+        }
+
+        public string GetTooltipText(PlayerInventory playerInventory)
+        {
+            string tooltipText = InteractionHelper.GetWaterSourceTooltip(playerInventory);
+            return $"WATER SOURCE\n{tooltipText}";
         }
 
         public void FillWater(WaterContainer waterContainer)
@@ -50,11 +54,9 @@ namespace NJG.Runtime.Interactables
 
             if (waterContainer.TryFillWater())
                 _remainingUses--;
-            
+
             if (!_unlimitedWater && _remainingUses <= 0)
-            {
                 SetNoWater();
-            }
         }
 
         public void SetUnlimitedWater()
@@ -71,12 +73,6 @@ namespace NJG.Runtime.Interactables
             ContainsWater = false;
             _waterVisual.SetActive(false);
             _collider.enabled = false;
-        }
-
-        public string GetTooltipText(PlayerInventory playerInventory)
-        {
-            string tooltipText = InteractionHelper.GetWaterSourceTooltip(playerInventory);
-            return $"WATER SOURCE\n{tooltipText}";
         }
     }
 }

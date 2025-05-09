@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace NJG.Utilities.ChannelEvents
@@ -26,6 +25,6 @@ namespace NJG.Utilities.ChannelEvents
             _unityEvent?.Invoke(value);
         }
     }
-    
+
     public class EventListener : EventListener<Empty> { }
 }

@@ -10,17 +10,13 @@ namespace NJG.Runtime.Interactables
         public void TurnOnVisuals()
         {
             foreach (GameObject _pipeVisual in _pipeVisuals)
-            {
                 _pipeVisual.SetActive(true);
-            }
         }
-        
+
         public void TurnOffVisuals()
         {
             foreach (GameObject _pipeVisual in _pipeVisuals)
-            {
                 _pipeVisual.SetActive(false);
-            }    
         }
     }
 }

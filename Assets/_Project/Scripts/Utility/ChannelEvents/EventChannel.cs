@@ -10,17 +10,16 @@ namespace NJG.Utilities.ChannelEvents
         public void Invoke(T value)
         {
             foreach (EventListener<T> observer in _observers)
-            {
                 observer.Raise(value);
-            }
         }
-        
+
         public void Register(EventListener<T> observer) => _observers.Add(observer);
+
         public void Deregister(EventListener<T> observer) => _observers.Remove(observer);
     }
-    
+
     public readonly struct Empty { }
-    
+
     [CreateAssetMenu(fileName = "Empty", menuName = "NJG/EventChannel/Empty")]
     public class EventChannel : EventChannel<Empty> { }
 }

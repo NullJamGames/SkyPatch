@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace NJG.Runtime.Entity
@@ -17,10 +16,8 @@ namespace NJG.Runtime.Entity
             transform.DOScale(Vector3.one, _animationDuration).SetEase(Ease.OutBack);
 
             if (_spawnVFX != null)
-            {
                 Instantiate(_spawnVFX, transform.position, Quaternion.identity);
-            }
-            
+
             //GetComponent<AudioSource>().Play();
         }
     }

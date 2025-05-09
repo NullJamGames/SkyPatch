@@ -1,27 +1,21 @@
-using Mono.CSharp;
-using NJG.Runtime.Audio;
 using NJG.Runtime.Entity;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace NJG.Runtime.Interactables
 {
     public class Battery : PickupableItem, IInteractablePickupable
     {
+        protected const float _maxCharge = 100f;
         [FoldoutGroup("References"), SerializeField]
         private Material _emptyMaterial;
         [FoldoutGroup("References"), SerializeField]
         private Material _notFullMaterial;
         [FoldoutGroup("References"), SerializeField]
         private Material _fullMaterial;
-        
+
         [field: SerializeField, ReadOnly]
-        public float CurrentCharge { get; private set; } = 0f;
-
-        protected const float _maxCharge = 100f;
-
-
+        public float CurrentCharge { get; private set; }
 
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
         {
@@ -35,7 +29,7 @@ namespace NJG.Runtime.Interactables
             CurrentCharge = Mathf.Clamp(CurrentCharge, 0f, _maxCharge);
             UpdateMaterial();
         }
-        
+
         public virtual void RemoveCharge(float amount)
         {
             CurrentCharge -= amount;

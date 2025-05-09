@@ -6,7 +6,7 @@ namespace NJG.Runtime.Entity
     public class DashState : BaseState
     {
         public DashState(CharacterController character, Animator animator) : base(character, animator) { }
-        
+
         // public override void OnEnter()
         // {
         //     _animator.CrossFade(_dashHash, _crossFadeDuration);

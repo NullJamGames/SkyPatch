@@ -6,6 +6,7 @@ namespace NJG.Runtime.Interfaces
     {
         public Vector3 StartPosition { get; }
         public Quaternion StartRotation { get; }
+
         public void ResetState();
     }
 }

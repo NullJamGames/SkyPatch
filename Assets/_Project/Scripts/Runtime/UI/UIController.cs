@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using UnityEngine;
 using MEC;
 using NJG.Runtime.Interactables;
 using NJG.Runtime.Manager;
 using NJG.Runtime.Managers;
-using Sirenix.OdinInspector;
+using TMPro;
+using UnityEngine;
 
 namespace NJG.Runtime.UI
 {
@@ -20,24 +19,20 @@ namespace NJG.Runtime.UI
         private TextMeshProUGUI _winText;
         [SerializeField]
         private TextMeshProUGUI _gameVersionText;
+        private CoroutineHandle _checkForWinRoutine;
 
         private List<RevivableTree> _revivableTrees;
-        private CoroutineHandle _checkForWinRoutine;
-        
+
         private void Start()
         {
             SetGameVersion();
-            
+
             // TODO: This is just for testing...
             _revivableTrees = new List<RevivableTree>();
             GameObject[] objectives = GameObject.FindGameObjectsWithTag("Objective");
             foreach (GameObject go in objectives)
-            {
                 if (go.TryGetComponent(out RevivableTree tree))
-                {
                     _revivableTrees.Add(tree);
-                }
-            }
 
             if (_revivableTrees.Count > 0)
                 _checkForWinRoutine = Timing.RunCoroutine(CheckForWinRoutine());
@@ -51,19 +46,20 @@ namespace NJG.Runtime.UI
             while (true)
             {
                 float treesAlive = 0;
-                foreach (RevivableTree tree in _revivableTrees.Where(tree => tree.State == RevivableTree.ObjectiveState.Completed))
+                foreach (RevivableTree tree in _revivableTrees.Where(tree =>
+                             tree.State == RevivableTree.ObjectiveState.Completed))
                     treesAlive++;
-                
+
                 if (treesAlive >= _revivableTrees.Count)
                 {
                     ActivateEndScreen();
                     yield break;
                 }
-                
+
                 yield return Timing.WaitForSeconds(checkInterval);
             }
         }
-    
+
         private void ActivateEndScreen()
         {
             _winScreen.SetActive(true);
@@ -74,11 +70,11 @@ namespace NJG.Runtime.UI
 
         private void TryShowScore()
         {
-            ScoreManager scoreManager = GameObject.FindObjectOfType<ScoreManager>();
-            if(scoreManager == null)
+            ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+            if (scoreManager == null)
                 return;
-            
-            SScoreRank scoreRank  = scoreManager.GetScoreRank();
+
+            SScoreRank scoreRank = scoreManager.GetScoreRank();
             _scoreText.gameObject.SetActive(true);
             _scoreText.text = $"Score: {scoreRank.Score} \n Rank: {scoreRank.Rank}";
         }

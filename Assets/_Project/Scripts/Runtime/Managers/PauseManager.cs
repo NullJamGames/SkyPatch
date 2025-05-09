@@ -9,24 +9,24 @@ namespace NJG.Runtime.Managers
     {
         [FoldoutGroup("References"), SerializeField]
         private InputReader _input;
-        
+
         [FoldoutGroup("References"), SerializeField]
         private GameObject pauseMenu;
-        
-        private bool _isPaused = false;
-        
+
         private GameManager _gameManager;
 
+        private bool _isPaused;
+
         [Inject]
-        void Construct(GameManager gameManager)
+        private void Construct(GameManager gameManager)
         {
-           _gameManager = gameManager; 
+            _gameManager = gameManager;
         }
-        
-        void Update()
+
+        private void Update()
         {
-            if(UnityEngine.Input.GetKeyDown(KeyCode.Tab))
-                if(_isPaused)
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Tab))
+                if (_isPaused)
                     Resume();
                 else
                     Pause();

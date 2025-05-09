@@ -1,5 +1,4 @@
-﻿using NJG.Runtime.Managers;
-using Zenject;
+﻿using Zenject;
 
 namespace NJG.Runtime.Installers
 {

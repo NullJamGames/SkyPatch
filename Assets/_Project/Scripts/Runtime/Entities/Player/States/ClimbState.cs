@@ -1,4 +1,3 @@
-using NJG.Runtime.Entities;
 using NJG.Runtime.Interactables;
 using UnityEngine;
 using CharacterController = NJG.Runtime.Entities.CharacterController;
@@ -7,11 +6,20 @@ namespace NJG.Runtime.Entity
 {
     public class ClimbState : BaseState
     {
-        protected enum ClimbingState { Anchoring, Climbing, DeAnchoring}
-        
-        protected float _ladderUpDownInput;
-        protected Ladder _activeLadder { get; set; }
+        protected Vector3 _anchoringStartPosition = Vector3.zero;
+        protected Quaternion _anchoringStartRotation = Quaternion.identity;
+        protected float _anchoringTimer;
         protected ClimbingState _internalClimbingState;
+        protected Vector3 _ladderTargetPosition;
+        protected Quaternion _ladderTargetRotation;
+
+        protected float _ladderUpDownInput;
+        protected float _onLadderSegmentState;
+        protected Quaternion _rotationBeforeClimbing = Quaternion.identity;
+
+        public ClimbState(CharacterController character, Animator animator) : base(character, animator) { }
+
+        protected Ladder _activeLadder { get; set; }
         protected ClimbingState _climbingState
         {
             get => _internalClimbingState;
@@ -23,15 +31,6 @@ namespace NJG.Runtime.Entity
                 _anchoringStartRotation = _character.Motor.TransientRotation;
             }
         }
-        protected Vector3 _ladderTargetPosition;
-        protected Quaternion _ladderTargetRotation;
-        protected float _onLadderSegmentState = 0;
-        protected float _anchoringTimer = 0f;
-        protected Vector3 _anchoringStartPosition = Vector3.zero;
-        protected Quaternion _anchoringStartRotation = Quaternion.identity;
-        protected Quaternion _rotationBeforeClimbing = Quaternion.identity;
-        
-        public ClimbState(CharacterController character, Animator animator) : base(character, animator) { }
 
         public override void OnEnter()
         {
@@ -42,9 +41,13 @@ namespace NJG.Runtime.Entity
             _climbingState = ClimbingState.Anchoring;
 
             // Store the target position and rotation to snap to
-            _ladderTargetPosition = _activeLadder.ClosestPointOnLadderSegment(_character.Motor.TransientPosition, out _onLadderSegmentState);
+            _ladderTargetPosition =
+                _activeLadder.ClosestPointOnLadderSegment(_character.Motor.TransientPosition,
+                    out _onLadderSegmentState);
             _ladderTargetRotation = _activeLadder.transform.rotation;
         }
+
+        protected enum ClimbingState { Anchoring, Climbing, DeAnchoring }
 
         // public override void HandleInputs(ref PlayerCharacterInputs inputs)
         // {

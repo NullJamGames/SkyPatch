@@ -8,22 +8,22 @@ namespace NJG.Runtime.Interactables
     {
         [FoldoutGroup("References"), SerializeField]
         private BatteryPowered _batteryPowered;
-        
+
         [FoldoutGroup("Settings"), SerializeField]
         private float _activationDelay = 0.5f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainPerInterval = 1f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _drainInterval = 1f;
-        
-        private CountdownTimer _drainTimer;
         private CountdownTimer _delayTimer;
+
+        private CountdownTimer _drainTimer;
 
         private void Awake()
         {
             _drainTimer = new CountdownTimer(_drainInterval);
             _drainTimer.OnTimerStop += OnDrainBattery;
-            
+
             _delayTimer = new CountdownTimer(_activationDelay);
             _delayTimer.OnTimerStop += ActivatePlatform;
         }
@@ -32,7 +32,7 @@ namespace NJG.Runtime.Interactables
         {
             if (_battery.CurrentCharge <= 0f)
                 return;
-            
+
             if (!_delayTimer.IsRunning)
                 _delayTimer.Start();
         }
@@ -47,7 +47,7 @@ namespace NJG.Runtime.Interactables
         {
             if (_delayTimer.IsRunning)
                 _delayTimer.Pause();
-            
+
             _batteryPowered.Deactivate();
             _drainTimer.Stop();
         }
@@ -63,7 +63,7 @@ namespace NJG.Runtime.Interactables
                 _batteryPowered.Deactivate();
                 return;
             }
-                
+
             _drainTimer.Start();
         }
     }

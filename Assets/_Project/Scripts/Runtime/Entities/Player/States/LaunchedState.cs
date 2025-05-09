@@ -5,9 +5,7 @@ namespace NJG.Runtime.Entity
 {
     public class LaunchedState : BaseState
     {
-        public LaunchedState(CharacterController character, Animator animator) : base(character, animator)
-        {
-        }
+        public LaunchedState(CharacterController character, Animator animator) : base(character, animator) { }
 
         // public override void FixedUpdate()
         // {

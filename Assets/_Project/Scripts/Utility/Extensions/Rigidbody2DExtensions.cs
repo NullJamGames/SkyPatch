@@ -3,8 +3,8 @@ using UnityEngine;
 namespace NJG.Utilities.Extensions
 {
     /// <summary>
-    /// Extends Rigidbody2D with methods to manage collisions more flexibly,
-    /// allowing for dynamic collision rules and bulk operations on collider interactions.
+    ///     Extends Rigidbody2D with methods to manage collisions more flexibly,
+    ///     allowing for dynamic collision rules and bulk operations on collider interactions.
     /// </summary>
     public static class Rigidbody2DExtensions
     {
@@ -20,9 +20,7 @@ namespace NJG.Utilities.Extensions
             Collider2D[] colliders = self.GetAllColliders();
 
             for (int colliderIndex = 0; colliderIndex < colliders.Length; colliderIndex++)
-            {
                 Physics2D.IgnoreCollision(colliders[colliderIndex], collider, ignore);
-            }
         }
 
         public static void IgnoreCollision(this Rigidbody2D self, Rigidbody2D other, bool ignore)
@@ -33,9 +31,7 @@ namespace NJG.Utilities.Extensions
             for (int colliderIndex = 0; colliderIndex < colliders.Length; colliderIndex++)
             {
                 for (int otherColliderIndex = 0; otherColliderIndex < otherColliders.Length; otherColliderIndex++)
-                {
                     Physics2D.IgnoreCollision(colliders[colliderIndex], otherColliders[otherColliderIndex], ignore);
-                }
             }
         }
     }

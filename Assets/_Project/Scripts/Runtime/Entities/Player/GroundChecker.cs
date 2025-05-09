@@ -11,25 +11,25 @@ namespace NJG.Runtime.Entity
         private float _radius = 0.45f;
         [FoldoutGroup("Settings"), SerializeField]
         private float _yOffset = 0.4f;
-        
+        private readonly Collider[] _hitColliders = new Collider[1];
+
         public bool IsGrounded { get; private set; }
-        private Collider[] _hitColliders = new Collider[1];
 
         private void Update() => CheckIfGrounded();
 
-        private void CheckIfGrounded()
-        {
-            Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
-            IsGrounded = Physics.OverlapSphereNonAlloc(position, _radius, _hitColliders, _groundLayers) > 0;
-        }
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            Vector3 position = new (transform.position.x, transform.position.y + _yOffset, transform.position.z);
+            Vector3 position = new(transform.position.x, transform.position.y + _yOffset, transform.position.z);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(position, _radius);
         }
-        #endif
+#endif
+
+        private void CheckIfGrounded()
+        {
+            Vector3 position = new(transform.position.x, transform.position.y + _yOffset, transform.position.z);
+            IsGrounded = Physics.OverlapSphereNonAlloc(position, _radius, _hitColliders, _groundLayers) > 0;
+        }
     }
 }

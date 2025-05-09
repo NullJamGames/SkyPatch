@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MEC;
-using NJG.Runtime.Managers;
+﻿using NJG.Runtime.Managers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -20,7 +17,7 @@ namespace NJG.Runtime.UI
         {
             _gameManager = gameManager;
         }
-        
+
         private void Start()
         {
             UpdateEnergy();
