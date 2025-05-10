@@ -28,6 +28,11 @@ namespace NJG.Runtime.LevelChangeSystem
         {
             LoadScene("3_Level01");
         }
+        
+        public void LoadGameScene(int levelIndex)
+        {
+            LoadScene(_levelHolder.GetSceneWithIndex(levelIndex));
+        }
 
         public void LoadMenuScene()
         {
