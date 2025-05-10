@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2388954609189834713
 Transform:
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8591836338104841196
 Transform:
   m_ObjectHideFlags: 0
@@ -409,9 +409,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1396ce5c3afc9d24080f83f5e00245ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aliveTreeVersion: {fileID: 0}
-  _deadTreeVersion: {fileID: 0}
-  _compostPlacedVisual: {fileID: 0}
+  _leavesVisuals: {fileID: 1822377741395585000}
+  _compostPlacedVisual: {fileID: 5592786687552989424}
+  _compostRenderer: {fileID: 2364445218919061957}
+  _shaderRoughnessRef: _Roughness
+  _unwateredRoughness: 0.1
+  _wateredRoughness: 0.5
+  _trunkRenderer: {fileID: 2328027932121676143}
+  _shaderSaturationRef: _Saturation
+  _deadSaturation: 0.5
+  _aliveSaturation: 1
   _reviveDelay: 1
   _splashDelay: 0.1
   _splashOffset: {x: 0, y: 1, z: 0}

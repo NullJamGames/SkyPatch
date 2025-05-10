@@ -45,7 +45,7 @@ Material:
     m_Floats:
     - _ColorValue: 0.5
     - _QueueControl: 0
-    - _Roughness: 0.445
+    - _Roughness: 0.1
     - _Tile: 4.04
     m_Colors: []
   m_BuildTextureStacks: []
