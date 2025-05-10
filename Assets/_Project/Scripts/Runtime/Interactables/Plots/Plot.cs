@@ -15,6 +15,8 @@ namespace NJG.Runtime.Interactables
 
         [FoldoutGroup("References"), SerializeField]
         private PlotDataSO _plotData;
+        [FoldoutGroup("References"), SerializeField]
+        private Transform _spawnPoint;
 
         [FoldoutGroup("Settings"), SerializeField]
         private float _growTime = 5f;
@@ -63,7 +65,7 @@ namespace NJG.Runtime.Interactables
 
             State = _plotData.IsHarvestable ? PlotState.HarvestReady : PlotState.NoHarvest;
             Destroy(_currentVisual);
-            _currentVisual = Instantiate(_plotData.FullyGrownPrefab, transform.position, transform.rotation, transform);
+            _currentVisual = Instantiate(_plotData.FullyGrownPrefab, _spawnPoint.position, _spawnPoint.rotation, _spawnPoint);
         }
 
         private void AssertState(PlayerInventory playerInventory)
@@ -87,7 +89,7 @@ namespace NJG.Runtime.Interactables
         private void EmptyPlotInteraction()
         {
             State = PlotState.Growing;
-            _currentVisual = Instantiate(_plotData.SeedPrefab, transform.position, Quaternion.identity, transform);
+            _currentVisual = Instantiate(_plotData.SeedPrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint);
             _audioManager.PlayOneShotAndForget(_audioManager.AudioData.Plant);
         }
 
@@ -105,8 +107,8 @@ namespace NJG.Runtime.Interactables
 
         private void SpawnHarvest()
         {
-            float yOffset = transform.position.y + _harvestSpawnOffset;
-            Vector3 spawnPosition = new(transform.position.x, yOffset, transform.position.z);
+            float yOffset = _spawnPoint.position.y + _harvestSpawnOffset;
+            Vector3 spawnPosition = new(_spawnPoint.position.x, yOffset, _spawnPoint.position.z);
             Instantiate(_plotData.HarvestablePlantPrefab, spawnPosition, Quaternion.identity);
             _audioManager.PlayOneShotAndForget(_audioManager.AudioData.PickupPlant);
         }
