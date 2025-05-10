@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3412961640412865666}
   - component: {fileID: 1572473973253850423}
   - component: {fileID: 1728212946296229133}
+  - component: {fileID: 6574878782424355544}
   m_Layer: 0
   m_Name: SM_RopeFenceB
   m_TagString: Untagged
@@ -87,3 +88,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6574878782424355544
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384252272500494779}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.22679041, y: 0.95002717, z: 2.6008868}
+  m_Center: {x: -0.0007011369, y: 0.46296147, z: -0.00028651953}
