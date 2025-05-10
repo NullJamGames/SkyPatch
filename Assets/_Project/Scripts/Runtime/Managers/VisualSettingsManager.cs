@@ -20,8 +20,8 @@ namespace NJG.Runtime.Managers
         const string _cameraSensitivitySaveString = "VisualSettings_CameraSensitivity";
         const string _bloomSaveString = "VisualSettings_Bloom";
 
-        public event Action<float> Ev_BrightnessChanged;
-        public event Action<bool> Ev_BloomChanged;
+        public event Action Ev_BrightnessChanged;
+        public event Action Ev_BloomChanged;
         
         
         public bool IsFullScreen => _isFullScreen;
@@ -82,7 +82,7 @@ namespace NJG.Runtime.Managers
             if(_brightness == brightness)
                 return;
             _brightness = brightness;
-            Ev_BrightnessChanged?.Invoke(brightness);
+            Ev_BrightnessChanged?.Invoke();
             SaveSettings();
         }
 
@@ -99,7 +99,7 @@ namespace NJG.Runtime.Managers
             if(_bloom == bloom)
                 return;
             _bloom = bloom;
-            Ev_BloomChanged?.Invoke(bloom);
+            Ev_BloomChanged?.Invoke();
             SaveSettings();
         }
 
