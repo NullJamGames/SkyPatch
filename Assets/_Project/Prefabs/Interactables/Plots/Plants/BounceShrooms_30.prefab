@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1597131132546394994}
   - component: {fileID: 389631428057173201}
   m_Layer: 0
-  m_Name: BounceShrooms_40
+  m_Name: BounceShrooms_30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,4 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cad68133b642558507fcdcde6d44bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: {x: 0, y: 40, z: 0}
+  _force: {x: 0, y: 30, z: 0}

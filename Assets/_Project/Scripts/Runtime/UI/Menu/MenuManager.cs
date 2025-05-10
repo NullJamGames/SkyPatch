@@ -60,7 +60,6 @@ namespace NJG.Runtime.UI
         private void OnPlay()
         {
             _audioManager.PlayOneShotAndForget(_audioManager.AudioData.UIPositive);
-            _levelChangeManager.LoadGameScene();
         }
 
         private void OnExit()

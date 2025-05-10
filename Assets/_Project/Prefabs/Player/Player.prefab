@@ -1422,7 +1422,7 @@ MonoBehaviour:
   <OrientationSharpness>k__BackingField: 20
   <OrientationMethod>k__BackingField: 1
   <MaxAirMoveSpeed>k__BackingField: 4
-  <AirAccelerationSpeed>k__BackingField: 20
+  <AirAccelerationSpeed>k__BackingField: 0.8
   Drag: 0
   <AllowJumping>k__BackingField: 0
   <AllowJumpingWhenSliding>k__BackingField: 0
@@ -1501,6 +1501,20 @@ MonoBehaviour:
   _character: {fileID: 8185698461323900220}
   _characterCamera: {fileID: 0}
   _input: {fileID: 11400000, guid: 222b1a21795386d4eb65ee252ac2cf44, type: 2}
+  _maleVisuals:
+  - {fileID: 2758005348655621165}
+  - {fileID: 5843980214887504012}
+  - {fileID: 9101888703856906529}
+  - {fileID: 2411161270536883284}
+  - {fileID: 3898804721519890914}
+  - {fileID: 4144146983632472913}
+  _femaleVisuals:
+  - {fileID: 8649245711007430816}
+  - {fileID: 599243667461018094}
+  - {fileID: 1680810285212065429}
+  - {fileID: 1747792243934919383}
+  - {fileID: 5128014523258265860}
+  - {fileID: 2456043736284177301}
 --- !u!114 &5570923870184142802
 MonoBehaviour:
   m_ObjectHideFlags: 0

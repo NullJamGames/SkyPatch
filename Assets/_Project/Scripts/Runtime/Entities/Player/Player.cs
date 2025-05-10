@@ -2,8 +2,10 @@
 using KinematicCharacterController;
 using NJG.Runtime.Entity;
 using NJG.Runtime.Input;
+using NJG.Runtime.Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Entities
 {
@@ -17,10 +19,19 @@ namespace NJG.Runtime.Entities
         [FoldoutGroup("References"), SerializeField, Anywhere]
         private InputReader _input;
 
+        [FoldoutGroup("Visual Setup"), SerializeField]
+        private GameObject[] _maleVisuals;
+        [FoldoutGroup("Visual Setup"), SerializeField]
+        private GameObject[] _femaleVisuals;
+
         private PhysicsMover _physicsMover;
+        private SaveManager _saveManager;
 
         public PlayerInteractor Interactor { get; private set; }
         public PlayerInventory Inventory { get; private set; }
+
+        [Inject]
+        private void Construct(SaveManager saveManager) => _saveManager = saveManager;
 
         private void Awake()
         {
@@ -35,6 +46,7 @@ namespace NJG.Runtime.Entities
 
         private void Start()
         {
+            SetupCharacterVisuals();
             //Cursor.lockState = CursorLockMode.Locked;
             _input.EnablePlayerActions();
 
@@ -83,6 +95,29 @@ namespace NJG.Runtime.Entities
 
             if (_input != null)
                 _input.DisablePlayerActions();
+        }
+
+        private void SetupCharacterVisuals()
+        {
+            if (!_saveManager.HasCharacter(out bool isMale))
+                return;
+
+            if (isMale)
+            {
+                foreach (GameObject visual in _maleVisuals)
+                    visual.SetActive(true);
+
+                foreach (GameObject visual in _femaleVisuals)
+                    visual.SetActive(false);
+            }
+            else
+            {
+                foreach (GameObject visual in _femaleVisuals)
+                    visual.SetActive(true);
+
+                foreach (GameObject visual in _maleVisuals)
+                    visual.SetActive(false);
+            }
         }
 
         // TODO: This is a temp fix..

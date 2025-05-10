@@ -14,11 +14,6 @@ namespace NJG.Runtime.Managers
         [FoldoutGroup("References"), SerializeField]
         private Volume _levelPPVolume;
         
-        [FoldoutGroup("Scene References"), SerializeField]
-        private string _nextLevelName = "";
-        [FoldoutGroup("Scene References"), SerializeField]
-        private string _mainMenuName = "2_MainMenu";
-
         private GameManager _gameManager;
         private LevelChangeManager _levelChangeManager;
 
@@ -40,9 +35,9 @@ namespace NJG.Runtime.Managers
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        public void LoadMainMenu() => _levelChangeManager.LoadScene(_nextLevelName);
+        public void LoadMainMenu() => _levelChangeManager.LoadMenuScene();
 
-        public void LoadNextLevel() => _levelChangeManager.LoadScene(_nextLevelName);
+        public void LoadNextLevel() => _levelChangeManager.LoadNextScene();
 
         public void ExitGame() => Application.Quit();
     }
