@@ -42,9 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _G_Opacity: 0.643
     - _InvertVertexColor: 1
     - _QueueControl: 0
-    - _TileBase: 0.71
+    - _R_Opacity: 1
+    - _R_Tile: 1.5
+    - _TileBase: 1.5
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
