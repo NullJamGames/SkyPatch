@@ -6,10 +6,8 @@ namespace NJG.Runtime.Interactables
 {
     public class Battery : PickupableItem, IInteractablePickupable
     {
-        protected const float _maxCharge = 100f;
-        [FoldoutGroup("References"), SerializeField]
-        private Material _chargeMaterial;
-        
+        [FoldoutGroup("Shader Setup"), SerializeField]
+        private int _materialIndex = 3;
         [FoldoutGroup("Shader Setup"), SerializeField]
         private string _chargeSliderRef = "_ChargeSlider";
         [FoldoutGroup("Shader Setup"), SerializeField]
@@ -21,9 +19,11 @@ namespace NJG.Runtime.Interactables
 
         [FoldoutGroup("VFX"), SerializeField]
         private GameObject _particleEffect;
-
+        
         [field: SerializeField, ReadOnly]
         public float CurrentCharge { get; private set; }
+        
+        protected const float _maxCharge = 100f;
 
         public void InteractWith(IInteractable interactable, PlayerInventory playerInventory)
         {
@@ -53,9 +53,12 @@ namespace NJG.Runtime.Interactables
 
         private void UpdateShader()
         {
+            if (_renderer.materials.Length <= _materialIndex)
+                return;
+            
             float convertedCharge = CurrentCharge / _maxCharge;
-            _chargeMaterial.SetFloat(_chargeSliderRef, convertedCharge);
-            _chargeMaterial.SetColor(_chargeColorRef, CurrentCharge < _maxCharge ? _chargingColor : _chargedColor);
+            _renderer.materials[_materialIndex]?.SetFloat(_chargeSliderRef, convertedCharge);
+            _renderer.materials[_materialIndex]?.SetColor(_chargeColorRef, CurrentCharge < _maxCharge ? _chargingColor : _chargedColor);
         }
     }
 }

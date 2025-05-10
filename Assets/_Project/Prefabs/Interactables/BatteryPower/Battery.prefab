@@ -95,11 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48be759808393448b3ffa038b6c74dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 0}
+  _renderer: {fileID: 3770671581341328053}
   _name: BATTERY
-  _emptyMaterial: {fileID: 2100000, guid: d0d7f80161900b54a9a9668a27a1c6d3, type: 2}
-  _notFullMaterial: {fileID: 2100000, guid: ad5a26bf741798f478a4c3754cf3ade2, type: 2}
-  _fullMaterial: {fileID: 2100000, guid: afd57c5898b4e994f8fb26c6f6e82ee3, type: 2}
+  _materialIndex: 3
+  _chargeSliderRef: _ChargeSlider
+  _chargeColorRef: _ChargedColor
+  _chargingColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _chargedColor: {r: 0, g: 1, b: 0, a: 1}
   _particleEffect: {fileID: 7680900537556279518, guid: a1c8c5c2ef911304494d7d7482e5d691, type: 3}
   <CurrentCharge>k__BackingField: 0
 --- !u!1001 &4416772800374494575
@@ -159,6 +161,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4cd3d49f6f5610428f9c5480f3c1daa, type: 3}
+--- !u!23 &3770671581341328053 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 657414111351502810, guid: f4cd3d49f6f5610428f9c5480f3c1daa, type: 3}
+  m_PrefabInstance: {fileID: 4416772800374494575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6308030116069255444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7692456636273392763, guid: f4cd3d49f6f5610428f9c5480f3c1daa, type: 3}
