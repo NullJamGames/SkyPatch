@@ -65,7 +65,7 @@ Material:
     - _RGB_Tile: 0.1
     - _R_Contrast: 0.49
     - _R_Value: 2
-    - _Saturation: 1
+    - _Saturation: 0.5
     m_Colors:
     - _AO_Color: {r: 0, g: 0, b: 0, a: 0}
     - _B_Color: {r: 0, g: 0, b: 1, a: 0}

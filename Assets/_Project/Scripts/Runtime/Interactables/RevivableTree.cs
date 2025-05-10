@@ -14,12 +14,28 @@ namespace NJG.Runtime.Interactables
         public enum ObjectiveState { NeedsCompost, NeedsWater, Reviving, Completed }
 
         [FoldoutGroup("References"), SerializeField]
-        private GameObject _aliveTreeVersion;
-        [FoldoutGroup("References"), SerializeField]
-        private GameObject _deadTreeVersion;
+        private GameObject _leavesVisuals;
         [FoldoutGroup("References"), SerializeField]
         private GameObject _compostPlacedVisual;
-
+        
+        [FoldoutGroup("Compost Shader"), SerializeField]
+        private MeshRenderer _compostRenderer;
+        [FoldoutGroup("Compost Shader"), SerializeField]
+        private string _shaderRoughnessRef = "_Roughness";
+        [FoldoutGroup("Compost Shader"), SerializeField, Range(0.1f, 0.6f)]
+        private float _unwateredRoughness = 0.1f;
+        [FoldoutGroup("Compost Shader"), SerializeField, Range(0.1f, 0.6f)]
+        private float _wateredRoughness = 0.5f;
+        
+        [FoldoutGroup("Trunk Shader"), SerializeField]
+        private MeshRenderer _trunkRenderer;
+        [FoldoutGroup("Trunk Shader"), SerializeField]
+        private string _shaderSaturationRef = "_Saturation";
+        [FoldoutGroup("Trunk Shader"), SerializeField, Range(0.5f, 1f)]
+        private float _deadSaturation = 0.5f;
+        [FoldoutGroup("Trunk Shader"), SerializeField, Range(0.5f, 1f)]
+        private float _aliveSaturation = 1f;
+        
         [FoldoutGroup("Settings"), SerializeField]
         private float _reviveDelay = 1f;
 
@@ -38,6 +54,12 @@ namespace NJG.Runtime.Interactables
 
         [Inject]
         private void Construct(AudioManager audioManager) => _audioManager = audioManager;
+
+        private void Start()
+        {
+            _trunkRenderer.material.SetFloat(_shaderSaturationRef, _deadSaturation);
+            _compostRenderer.material.SetFloat(_shaderRoughnessRef, _unwateredRoughness);
+        }
 
         public void ApplyCompost(Compost compost, PlayerInventory playerInventory)
         {
@@ -72,6 +94,7 @@ namespace NJG.Runtime.Interactables
                 return;
 
             State = ObjectiveState.Reviving;
+            _compostRenderer.material.SetFloat(_shaderRoughnessRef, _wateredRoughness);
             _audioManager.StartKeyedInstance(gameObject, _audioManager.AudioData.ReviveTree);
             if (!_reviveRoutine.IsRunning)
                 _reviveRoutine = Timing.RunCoroutine(ReviveTreeRoutine(playerInventory));
@@ -81,9 +104,8 @@ namespace NJG.Runtime.Interactables
         {
             yield return Timing.WaitForSeconds(_reviveDelay);
 
-            _compostPlacedVisual.SetActive(false);
-            _deadTreeVersion.SetActive(false);
-            _aliveTreeVersion.SetActive(true);
+            _leavesVisuals.SetActive(true);
+            _trunkRenderer.material.SetFloat(_shaderSaturationRef, _aliveSaturation);
             State = ObjectiveState.Completed;
             OnTooltipTextChanged?.Invoke(GetTooltipText(playerInventory));
         }
