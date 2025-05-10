@@ -1,7 +1,9 @@
-﻿using NJG.Runtime.LevelChangeSystem;
+﻿using System;
+using NJG.Runtime.LevelChangeSystem;
 using NJG.Utilities.Singletons;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -9,6 +11,9 @@ namespace NJG.Runtime.Managers
 {
     public class LevelManager : Singleton<LevelManager>
     {
+        [FoldoutGroup("References"), SerializeField]
+        private Volume _levelPPVolume;
+        
         [FoldoutGroup("Scene References"), SerializeField]
         private string _nextLevelName = "";
         [FoldoutGroup("Scene References"), SerializeField]
