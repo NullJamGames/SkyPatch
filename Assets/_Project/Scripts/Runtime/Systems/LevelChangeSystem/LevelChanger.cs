@@ -80,7 +80,7 @@ namespace NJG.Runtime.LevelChangeSystem
 
             _loadingScreen.DOKill();
             _loadingScreen.localPosition = new Vector3(_startX, 0f, 0f);
-            _loadingScreen.DOLocalMove(Vector3.zero, _enterTime).SetEase(Ease.OutQuint);
+            _loadingScreen.DOLocalMove(Vector3.zero, _enterTime).SetEase(Ease.OutQuint).SetUpdate(true);
         }
 
         private void HideLoadingScreen()
