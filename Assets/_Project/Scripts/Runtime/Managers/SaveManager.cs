@@ -5,7 +5,14 @@ namespace NJG.Runtime.Managers
 {
     public class SaveManager : IInitializable, ILateDisposable
     {
-        public void Initialize() { }
+        public void Initialize()
+        {
+            UnlockLevel(0);
+            #if UNITY_EDITOR
+            for(int i=0; i<25; i++)
+                UnlockLevel(i);
+            #endif
+        }
 
         public void LateDispose() { }
 

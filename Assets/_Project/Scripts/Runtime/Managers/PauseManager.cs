@@ -25,7 +25,7 @@ namespace NJG.Runtime.Managers
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Tab))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
                 if (_isPaused)
                     Resume();
                 else
