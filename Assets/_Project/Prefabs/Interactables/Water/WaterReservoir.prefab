@@ -279,6 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754d3007c8b357547913860e7ba68066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waterVisual: {fileID: 0}
+  _waterVisual: {fileID: 2233851929676368704}
   _unlimitedWater: 1
   _numberOfUses: 3
