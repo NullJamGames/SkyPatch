@@ -1,6 +1,7 @@
 ﻿using NJG.Runtime.Audio;
 using NJG.Runtime.LevelChangeSystem;
 using NJG.Runtime.Managers;
+using NJG.Runtime.Scriptables;
 using NJG.Runtime.Signals;
 using NJG.Utilities;
 using UnityEngine;
@@ -21,6 +22,9 @@ namespace NJG.Runtime.Installers
 
         [SerializeField, Tooltip("Level Change system")]
         private LevelChangeManager _levelChangeSystem;
+        
+        [SerializeField, Tooltip("Path to the LevelHolder SO.")]
+        private string _levelHolderPath = "SO_LevelHolder";
 
         public override void InstallBindings()
         {
@@ -49,6 +53,11 @@ namespace NJG.Runtime.Installers
                 Container.BindInstance(audioData).AsSingle();
                 Container.Bind<GameObject>().FromInstance(gameObject).WhenInjectedInto<AudioManager>();
                 Container.BindInterfacesAndSelfTo<AudioManager>().AsSingle().NonLazy();
+            }
+
+            if (Tools.TryLoadResource(_levelHolderPath, out LevelHolderSO levelHolder))
+            {
+                Container.BindInstance(levelHolder).AsSingle();
             }
 
             // Other - will probably later use a settings SO...
