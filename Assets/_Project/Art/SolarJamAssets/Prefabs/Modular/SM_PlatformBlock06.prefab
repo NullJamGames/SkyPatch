@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6812432363055200725}
   - component: {fileID: 1985584872610451744}
   - component: {fileID: 7038062915427544095}
+  - component: {fileID: 8092643774268363067}
   m_Layer: 0
   m_Name: SM_PlatformBlock06
   m_TagString: Untagged
@@ -1293,3 +1294,24 @@ MonoBehaviour:
   m_SkinMeshRef: {fileID: 0}
   m_OriginalMeshObject: {fileID: 5202790353287131488, guid: ccf19d2f60203404eb9e76a5b6d55984, type: 3}
   m_Mode: 0
+--- !u!65 &8092643774268363067
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960228844753131257}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 1, y: 1, z: -1}

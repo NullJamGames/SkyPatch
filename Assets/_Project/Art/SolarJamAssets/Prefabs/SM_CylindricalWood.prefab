@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6902471615520610814}
   - component: {fileID: 2613870776359913454}
   - component: {fileID: 4791451689338821428}
+  - component: {fileID: 2088788522979324751}
   m_Layer: 0
   m_Name: SM_CylindricalWood
   m_TagString: Untagged
@@ -86,3 +87,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2088788522979324751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7730603021022482593}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1646615, y: 0.97500014, z: 0.16466153}
+  m_Center: {x: 0, y: 0.48750007, z: 0.000000018626451}

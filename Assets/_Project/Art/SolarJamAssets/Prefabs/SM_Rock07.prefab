@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4074059764586353155}
   - component: {fileID: 5355948707189955811}
   - component: {fileID: 2920002791352897928}
+  - component: {fileID: 4552790204669307611}
   m_Layer: 0
   m_Name: SM_Rock07
   m_TagString: Untagged
@@ -11082,3 +11083,25 @@ MonoBehaviour:
   m_SkinMeshRef: {fileID: 0}
   m_OriginalMeshObject: {fileID: 8460130681585895120, guid: fa3b70e7fd7daf44a84d4c7d129e5128, type: 3}
   m_Mode: 0
+--- !u!64 &4552790204669307611
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5635105525758453552}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8460130681585895120, guid: fa3b70e7fd7daf44a84d4c7d129e5128, type: 3}
