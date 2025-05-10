@@ -517,7 +517,7 @@ MonoBehaviour:
   _waypoints:
   - {fileID: 6880607513570520831}
   - {fileID: 8279032886955865854}
-  _platformSpeed: 1
+  _platformSpeed: 1.5
   _returnToStartOnDeactivate: 0
   _infiniteLoops: 1
   _loops: 3
