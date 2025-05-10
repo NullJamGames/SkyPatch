@@ -55,6 +55,8 @@ namespace NJG.Runtime.Installers
             Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
 
             Container.Bind<LevelChangeManager>().FromComponentInNewPrefab(_levelChangeSystem).AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<VisualSettingsManager>().AsSingle().NonLazy();
         }
 
         private void DeclareSignals()
