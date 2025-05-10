@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6821a51ed608849846e307d027b3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startScale: 0.2
+  _startScale: 0.5
   _animTime: 0.3
 --- !u!1 &6701497775293605315
 GameObject:
