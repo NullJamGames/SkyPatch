@@ -8,13 +8,18 @@ namespace NJG.Runtime.Interactables
     {
         protected const float _maxCharge = 100f;
         [FoldoutGroup("References"), SerializeField]
-        private Material _emptyMaterial;
-        [FoldoutGroup("References"), SerializeField]
-        private Material _notFullMaterial;
-        [FoldoutGroup("References"), SerializeField]
-        private Material _fullMaterial;
+        private Material _chargeMaterial;
+        
+        [FoldoutGroup("Shader Setup"), SerializeField]
+        private string _chargeSliderRef = "_ChargeSlider";
+        [FoldoutGroup("Shader Setup"), SerializeField]
+        private string _chargeColorRef = "_ChargedColor";
+        [FoldoutGroup("Shader Setup"), SerializeField]
+        private Color _chargingColor = Color.yellow;
+        [FoldoutGroup("Shader Setup"), SerializeField]
+        private Color _chargedColor = Color.green;
 
-        [FoldoutGroup("References"), SerializeField]
+        [FoldoutGroup("VFX"), SerializeField]
         private GameObject _particleEffect;
 
         [field: SerializeField, ReadOnly]
@@ -30,14 +35,14 @@ namespace NJG.Runtime.Interactables
         {
             CurrentCharge += amount;
             CurrentCharge = Mathf.Clamp(CurrentCharge, 0f, _maxCharge);
-            UpdateMaterial();
+            UpdateShader();
         }
 
         public virtual void RemoveCharge(float amount)
         {
             CurrentCharge -= amount;
             CurrentCharge = Mathf.Clamp(CurrentCharge, 0f, _maxCharge);
-            UpdateMaterial();
+            UpdateShader();
         }
 
         public void OnBatteryPlaced()
@@ -46,14 +51,11 @@ namespace NJG.Runtime.Interactables
                 Instantiate(_particleEffect, transform.position, Quaternion.identity);
         }
 
-        private void UpdateMaterial()
+        private void UpdateShader()
         {
-            _renderer.material = CurrentCharge switch
-            {
-                <= 0f => _emptyMaterial,
-                < _maxCharge => _notFullMaterial,
-                _ => _fullMaterial
-            };
+            float convertedCharge = CurrentCharge / _maxCharge;
+            _chargeMaterial.SetFloat(_chargeSliderRef, convertedCharge);
+            _chargeMaterial.SetColor(_chargeColorRef, CurrentCharge < _maxCharge ? _chargingColor : _chargedColor);
         }
     }
 }
