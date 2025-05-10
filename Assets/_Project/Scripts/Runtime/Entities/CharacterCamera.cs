@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using KBCore.Refs;
+using NJG.Runtime.Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace NJG.Runtime.Entities
 {
@@ -72,6 +74,14 @@ namespace NJG.Runtime.Entities
         public Vector3 PlanarDirection { get; set; }
         public float TargetDistance { get; set; }
 
+        private VisualSettingsManager _visualSettingsManager;
+
+        [Inject]
+        void Construct(VisualSettingsManager visualSettingsManager)
+        {
+            _visualSettingsManager = visualSettingsManager;
+        }
+
         private void Awake()
         {
             Transform = transform;
@@ -107,6 +117,7 @@ namespace NJG.Runtime.Entities
 
         public void UpdateWithInput(float deltaTime, float zoomInput, Vector3 rotationInput)
         {
+            rotationInput *= _visualSettingsManager.CameraSensitivity;
             if (FollowTransform)
             {
                 if (_invertX)
