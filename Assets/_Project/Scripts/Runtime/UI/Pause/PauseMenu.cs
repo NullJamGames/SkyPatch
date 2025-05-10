@@ -22,6 +22,8 @@ namespace NJG.Runtime.UI
         private Button _restartButton;
         [FoldoutGroup("References"), SerializeField]
         private Button _mainMenuButton;
+        [FoldoutGroup("References"), SerializeField]
+        private GameObject[] _disableOnStart;
 
         private readonly List<GameObject> _panels = new();
 
@@ -31,6 +33,14 @@ namespace NJG.Runtime.UI
         private void Construct(LevelChangeManager levelChangeManager)
         {
             _levelChangeManager = levelChangeManager;
+        }
+
+        void Start()
+        {
+            foreach(GameObject g in _disableOnStart)
+            {
+                g.SetActive(false);
+            }
         }
 
         private void OnEnable()
