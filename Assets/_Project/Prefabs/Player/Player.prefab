@@ -1422,7 +1422,7 @@ MonoBehaviour:
   <OrientationSharpness>k__BackingField: 20
   <OrientationMethod>k__BackingField: 1
   <MaxAirMoveSpeed>k__BackingField: 4
-  <AirAccelerationSpeed>k__BackingField: 20
+  <AirAccelerationSpeed>k__BackingField: 0.8
   Drag: 0
   <AllowJumping>k__BackingField: 0
   <AllowJumpingWhenSliding>k__BackingField: 0
